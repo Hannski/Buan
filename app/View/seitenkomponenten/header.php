@@ -1,18 +1,32 @@
-<?php require "./app/languageCheck.php";?>
+<?php
+ require "./app/languageCheck.php";
+ require "./app/styleCheck.php";
+?>
 <!DOCTYPE html>
- <html lang="en">
+<!-- Sprachinformationen fuer HTML dynamisch anpassen (Default-Wert ist Deutsch) -->
+ <html lang="<?php  echo $lang = isset($_SESSION['language']) ? $_SESSION['language'] : "de"; ?>">
  <head>
    <meta charset="UTF-8">
-   <title>Document</title>
-   <!-- Bootstrap Style Einbindung -->
-   <!-- Einbinden von JQuery -->
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-   <!-- Einbinden Popper.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="
-  sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <!-- Einbinden Bootstrap.css -->
-   <script src="./app/View/styleBootstrap/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="./app/View/styleBootstrap/css/bootstrap.css" type="text/css">
+   <title>Buan19</title>
+     <!-- Bootstrap Style Einbindung -->
+
+     <!-- Einbinden von JQuery -->
+     <script src="./app/jquery.js" integrity="" crossorigin="anonymous"></script>
+     <!-- Einbinden Bootstrap.js -->
+     <script src="./app/View/styleBootstrap/js/bootstrap.js"></script>
+     <!-- Einbinden Bootstrap.CSS -->
+     <link rel="stylesheet"  type="text/css" href="./app/View/styleBootstrap/css/bootstrap.min.css"/>
+     <!-- Einbinden des Custom Styles, wenn User diesen gewaelt hatte -->
+     <?php 
+     // Test: print_r($_SESSION['style']);
+     if (isset($_SESSION['style']) && $_SESSION['style'] == "dark") {
+      echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"./app/View/styleBootstrap/customStyles/dark.css\">";
+     }
+
+     ?>
+     
+
+     <!-- Ende Einbinden -->
  </head>
  <body>
 

@@ -11,8 +11,6 @@ class IndexCtrl extends Router
 	{
 	
 	
-	
-
 	require BASEPATH.'/app/Controller/AdminCtrl.php';
 	
 			
