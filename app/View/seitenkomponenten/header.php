@@ -1,9 +1,5 @@
-<?php
- require "./app/languageCheck.php";
- require "./app/styleCheck.php";
-?>
 <!DOCTYPE html>
-<!-- Sprachinformationen fuer HTML dynamisch anpassen (Default-Wert ist Deutsch) -->
+<!-- Sprachinformationen fuer HTML -->
  <html lang="<?php  echo $lang = isset($_SESSION['language']) ? $_SESSION['language'] : "de"; ?>">
  <head>
    <meta charset="UTF-8">
@@ -28,5 +24,5 @@
 
      <!-- Ende Einbinden -->
  </head>
- <body>
+ <body class="text-center">
 

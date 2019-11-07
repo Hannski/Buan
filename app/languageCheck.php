@@ -1,8 +1,9 @@
 <?php
-/*	
+		/*	
 		Spachwahl ueber Buttonklick in der Navigationsleiste pruefen
 		*/
-		/*ist eine Sprachwahl breits erfolgt und keine Neuwahl:*/
+	
+/*ist eine Sprachwahl breits erfolgt und keine Neuwahl:*/
 		if(isset($_SESSION['language']) && !isset($_POST['language']))
 		{
 			$_SESSION['language'] == $_SESSION['language'];
@@ -32,3 +33,5 @@
 			include 'language/de.php';
 			
 		}
+			
+	

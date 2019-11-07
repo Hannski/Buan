@@ -1,48 +1,48 @@
 <?php
 
 /* In dieser Datei werden Url-Parameter geprüft und entsprechend verarbeitet. */
-
-class Router
+class Router extends App
 {
-	
-function __construct()
+protected $_templateDatei  = null;
+public function __construct()
 {
-require_once 'View/seitenkomponenten/header.php';
-require_once 'View/templates/home.html';
-require BASEPATH.'/app/Controller/IndexCtrl.php';
+    
 
-
-echo $langArray[0]['button'];
-$index = new IndexCtrl();
-
- if(isset($_GET['url']))
+require "./app/languageCheck.php";
+include_once 'config.php';
+if(isset($_GET['url']))
  {
 
- $urlArray = explode('/', $_GET['url']);
-// Hilfe: print_r($urlArray[0]);
- echo "<br> hi from router ";
 
+ $urlArray = explode('/', $_GET['url']);
 
  switch ($urlArray[0])
  {
 
- //UserProfil anzeigen und mit Daten füllen
-   
- // case 'profile':
- //   $this->view->message("hello from message");
- //   $this->view->message("hello from message2");
- //   //Neues Spiel starten
- //   if(isset($_POST['neuesSpiel']))
- //    { 
-     
- //     header("Location: kategorie");
-     //Kategire auswählen
-     // url: aa_game/profile/kategorie
-    }
-    }
-    require_once 'View/seitenkomponenten/footer.php';
-    }
-   
+   //AdminLogin
+   case ('adminlogin' && class_exists('\Controller\AdminCtrl')):
   
+   if (isset($_POST['a_login']))
+   {
+   $admin = new \Controller\AdminCtrl();
+   $admin->name = $_POST['name'];
+   $admin->pw   = $_POST['password'];
+   $admin->loginA($admin->name,$admin->pw);
+   if ($admin->login($admin->name,$admin->pw) !== true)
+   {
+      echo $langArray[$admin->login($admin->name,$admin->pw)];
+   };
+
+   }
+   
+   include_once 'View/templates/adminlogin.html';
+   break;
+
+    
+   
+   } //switch ende
+}
+ }
+
 }
 	
