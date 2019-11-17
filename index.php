@@ -1,4 +1,5 @@
 <?php
+
 class Start
 {
 	function __construct()
@@ -25,6 +26,7 @@ class Start
 		});
 
 		//start
+
 		$app = new App();	
 	}
 

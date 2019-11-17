@@ -3,10 +3,11 @@ namespace Model\Resource;
 use Model\AdminMdl as AdminModel;
 class AdminMdl extends Base
 {
-	public function getA()
+	public function authorizeAdmin()
     {
+        $base= new Base();
         $sql = "SELECT a_id,a_nname,a_vorname,a_pwmd5 FROM admin";
-        $dbResult = $this->connect()->query($sql);
+        $dbResult = $base->connect()->query($sql);
         $adminArray = array();
         while ($row = $dbResult->fetch(\PDO::FETCH_ASSOC))
         {
@@ -15,7 +16,7 @@ class AdminMdl extends Base
             $admin->setAId($row['a_id']);
             $admin->setANname($row['a_nname']);
             $admin->setAVorname($row['a_vorname']);
-           ;
+            $admin->setAPw($row['a_pwmd5']);
 
             //Ins array schreiben
             $adminArray[] = $admin;

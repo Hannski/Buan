@@ -22,3 +22,6 @@ $langArray[0]["adminSignin"] = "Welcome back";
 //Anmeldefehler info an den user
 //nicht alle Felder augefuellt:
  $langArray['emptyFields'] = "Fields cannot be empty!";
+ // Username Falsch oder Passwort falsch
+$langArray['nameNot'] ="Password or Username wrong";
+$langArray['pwNot'] ="Password  wrong";

@@ -6,40 +6,56 @@ class Router extends App
 protected $_templateDatei  = null;
 public function __construct()
 {
-    
-
 require "./app/languageCheck.php";
 include_once 'config.php';
 if(isset($_GET['url']))
  {
-
-
  $urlArray = explode('/', $_GET['url']);
-
+//je nach Url Paramatetern, Controller und Templates laden
  switch ($urlArray[0])
  {
-
+    //url = Buan/adminlogin
    //AdminLogin
-   case ('adminlogin' && class_exists('\Controller\AdminCtrl')):
-  
-   if (isset($_POST['a_login']))
+   case ('adminlogin'):
+   //Wenn klasse existiert: Inhalte anzeigen, sonst 404 fehler
+   if (class_exists('\Controller\Admin')) {
+
+   echo $view = App::render('admin.html', array());
+   //isPost aus app/App.php
+   if ($this->isPost())
    {
-   $admin = new \Controller\AdminCtrl();
-   $admin->name = $_POST['name'];
-   $admin->pw   = $_POST['password'];
-   $admin->loginA($admin->name,$admin->pw);
-   if ($admin->login($admin->name,$admin->pw) !== true)
+    //controller instanzieren
+   $admin = new \Controller\Admin();
+   //Login funktion gibt Fehlermeldungen in einem Array zurueck, vergleicht Daten in DB
+   $admin->login($_POST['name'],$_POST['password']);
+   if (!empty($admin->errorArray))
    {
-      echo $langArray[$admin->login($admin->name,$admin->pw)];
-   };
+    foreach ($admin->errorArray as $value)
+    {
+    //Fehler ausgeben
+    echo $langArray[$value];
+    }
+   }
+   else
+   {
+    //Anmeldung erfolgreich, weiterleiten zum Admin dashboard
+    header("Location: adminhome");
 
    }
-   
-   include_once 'View/templates/adminlogin.html';
+ }else
+ {
+  //TODO: 404 Fehler
+  echo "no";
+ }
+  }
+   break;
+   //Url = Buan/admin-home
+   case ('adminhome'):
+   include('View/templates/adminhome.html');
+   echo "string";
+  echo "<h1>nice</h1>";
    break;
 
-    
-   
    } //switch ende
 }
  }

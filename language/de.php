@@ -23,3 +23,6 @@ $langArray[0]["loginButton"] = "anmelden";
 //Anmeldevorgang Fehlerbenachichtigungen
 //nicht alle Felder ausgefuellt:
 $langArray['emptyFields'] = "Alle Felder m&uuml;ssen ausgef&uuml;llt werden";
+// Username Falsch oder Passwort falsch
+$langArray['nameNot'] ="Passwort oder Anmeldename falsch";
+$langArray['pwNot'] ="Passwort oder Anmeldename falsch";
