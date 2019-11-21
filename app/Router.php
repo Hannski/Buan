@@ -1,48 +1,76 @@
 <?php
 
 /* In dieser Datei werden Url-Parameter geprüft und entsprechend verarbeitet. */
+use \Controller\AdminCtrl;
+use View\View;
 class Router extends App
 {
-protected $_templateDatei  = null;
+
 public function __construct()
 {
-    
-
-require "./app/languageCheck.php";
+include_once BASEPATH.'/app/includes/languageCheck.php';
 include_once 'config.php';
+}
+
+//Url verarbeiten
+public static function checkUrl()
+{
 if(isset($_GET['url']))
  {
-
-
+//Abgfrage der Werte 'x' : Server/Projektname/x
  $urlArray = explode('/', $_GET['url']);
-
- switch ($urlArray[0])
+  /*je nach Url Paramateter 'x' an der Stelle "0" im Url Array, Controller und Templates laden*/
+  switch ($urlArray[0])
  {
-
-   //AdminLogin
-   case ('adminlogin' && class_exists('\Controller\AdminCtrl')):
-  
-   if (isset($_POST['a_login']))
+   case ('adminlogin'):
+   //url = Buan/adminlogin
+   //Wenn klasse existiert: Inhalte anzeigen, sonst 404 fehler
+   //Template ausgeben 
+    $view = new View();
+    $view->adminlogin();
+    if(App::adminSess()== true)
+     {
+     //Admin bereits eingeloggt, verweise auf dashboard.
+      echo "<script> window.location.href = \"admin-home\"</script>";
+     }
+    $ctrl = new AdminCtrl();
+    $ctrl->loginAdmin();
+    $view->footer();
+  break;
+  case ('admin-home'):
+   //Url = Buan/admin-home
+   $view = new View();
+   $ctrl = new AdminCtrl();
+   //Wenn Admin eingeloggt ist:
+   if($ctrl->verifyAdmin() == false)
+   {//kein Zugriff, wenn nicht eingeloggt, redirect
+   echo "<script> window.location.href = \"adminlogin\"</script>";
+   }else
    {
-   $admin = new \Controller\AdminCtrl();
-   $admin->name = $_POST['name'];
-   $admin->pw   = $_POST['password'];
-   $admin->loginA($admin->name,$admin->pw);
-   if ($admin->login($admin->name,$admin->pw) !== true)
+   echo $view->adminDashboard();
+   //anzeigen der verschiedenen Optionen im Admin Dashboard
+   if(isset($_POST['dashboard']))
    {
-      echo $langArray[$admin->login($admin->name,$admin->pw)];
-   };
-
+   $a_view=$ctrl->isPost($_POST['dashboard']); 
+    echo App::render($ctrl->isPost($_POST['dashboard']), array());
    }
-   
-   include_once 'View/templates/adminlogin.html';
-   break;
+   }
+   $view->adminFooter();
+  break;
 
-    
-   
+  default:
+  $view = new View();
+  echo "404 Fehler";
+  $view->footer();
+ break;
    } //switch ende
 }
- }
-
+else
+{
+  //Urlrray[0] = "": default = indexView
+  $view = new View();
+  $view->footer();
 }
-	
+} /*Ende function CheckUrl*/
+}
+?>

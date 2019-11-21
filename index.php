@@ -25,6 +25,7 @@ class Start
 		});
 
 		//start
+		include 'app/config.php';
 		$app = new App();	
 	}
 
