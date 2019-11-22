@@ -1,41 +1,37 @@
 <?php
-
 use View\Template;
-class App 
+class App
 {
-	function __construct()
+ 	function __construct()
 	{
-	require "./app/languageCheck.php";
-	include "config.php";
-	//header, Navigationsleiste
-	require_once 'View/seitenkomponenten/header.php';
-	require_once 'View/templates/home.html';
+    include BASEPATH."/app/includes/languageCheck.php";
 	//Url verarbeiten->Inhalte einfuegen
 	$url = new Router();
-		//Footer
-	
-	require_once 'View/seitenkomponenten/footer.php'; 
+	//Url auf Englisch und Deutsch Abfragen und verarbeiten
+	//Beispiel: Aktionen fuer /admin/add-produkt <==> /admin/produkt-hinzufuegen
+	$url->checkUrl($langArray,$_SESSION['language']);
 	}
-	//Post Anfragen verarbeiten
-	public function isPost()
+	//Templates mit Daten rendern
+	// siehe /View/Template
+	public function render($template, array $data)
 	{
-		if(count($_POST)>0)
+	include BASEPATH."/app/includes/languageCheck.php";
+	$langArray = $langArray;
+    $view = new \View\Template($template);
+    return $view->renderTemplate($data, $langArray);
+	}
+	//Sessions verwalten:
+	public function adminSess()
+	{
+		if(isset($_SESSION['admin']) == "loggedIn")
 		{
+
 			return true;
 		}
 		else
 		{
+
 			return false;
 		}
-	}
-
-	//Templates mit Daten rendern
-	public function render($template, array $data)
-	{
-   
-  // <!--  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"> -->
-
-    $view = new \View\Template($template);
-    return $view->renderTemplate($data);
 	}
 }

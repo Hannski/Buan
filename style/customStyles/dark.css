@@ -11,8 +11,8 @@ html, body
 /* Schriftfarbe- und groesse */
 html,body  
 {
-    color: #fff;
-    font-size:17px;
+    color: #fff!important;
+    font-size:17px!important;
 }
 /* hintergrundfarbe Navigationsleiste */
  .bg-light 
@@ -24,3 +24,8 @@ html,body
 {
 color: #fff!important;
 }
+.d-button
+{
+	background-color: 	rgb(105,105,105,.8)!important;;
+}
+

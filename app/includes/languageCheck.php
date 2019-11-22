@@ -1,37 +1,36 @@
 <?php
+	 include BASEPATH.'/language/lang.php';
 		/*	
-		Spachwahl ueber Buttonklick in der Navigationsleiste pruefen
+		Spachwahl ueber POST-Buttons in Navigationsleiste /templates/pages/home.html pruefen
 		*/
-	
-/*ist eine Sprachwahl breits erfolgt und keine Neuwahl:*/
+
+
+       /*ist eine Sprachwahl breits erfolgt und keine Neuwahl:*/
 		if(isset($_SESSION['language']) && !isset($_POST['language']))
 		{
 			$_SESSION['language'] == $_SESSION['language'];
-			include 'language/'.$_SESSION['language'].".php";
+			$opt  = $_SESSION['language'];
 		}
 		elseif(isset($_POST['language']))
 			{
 				/* erfolgt eine Erstwahl: */
 		switch ($_POST['language']){
 			case $_POST['language'] = "en":
-				$_SESSION['language'] = $_POST['language'];
-				
-				include 'language/en.php';
+				$_SESSION['language'] = 1;
+				$opt  = $_SESSION['language'];
 				
 				break;
 			case $_POST['language'] = "de":
-				$_SESSION['language'] = $_POST['language'];
-				
-				include 'language/de.php';
+				$_SESSION['language'] = 0 ;
+				$opt  = $_SESSION['language'];
 				
 				break;
 		}
 		}
 		else
 		{
+			$opt  = 0;
 			/* Standardwahl: Deutsche Sprache*/
-			include 'language/de.php';
 			
 		}
 			
-	

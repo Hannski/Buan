@@ -1,3 +1,17 @@
+
+/*Custom CSS HANNAH ECKHARDT*/
+#wrapper
+{
+  height:90vh;
+  overflow-y: scroll;
+}
+footer
+{
+  height: 10vh;
+}
+/* siehe auch Zeile 3856 -> sprach en:"englische anweisung" de:"deutsche anweisung"*/
+/*Custom CSS HANNAH ECKHARDT Ende*/
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -3838,10 +3852,14 @@ input[type="button"].btn-block {
   background-color: #e9ecef;
 }
 
+/*HANNAH ECKHARDT CUSTOM CSS*/
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: "Browse";
 }
-
+.custom-file-input:lang(de) ~ .custom-file-label::after {
+  content: "durchsuchen";
+}
+/*HANNAH ECKHARDT CUSTOM CSS ENDE*/
 .custom-file-input ~ .custom-file-label[data-browse]::after {
   content: attr(data-browse);
 }

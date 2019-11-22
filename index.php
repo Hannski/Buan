@@ -1,11 +1,12 @@
 <?php
-
 class Start
 {
 	function __construct()
 	{
 		//Session starten
 		session_start();
+		define ("BASEPATH",dirname(__FILE__));
+		require BASEPATH."/app/includes/styleCheck.php";
 
 		//Klassen laden
 	    spl_autoload_register(function($class)
@@ -26,7 +27,7 @@ class Start
 		});
 
 		//start
-
+		
 		$app = new App();	
 	}
 

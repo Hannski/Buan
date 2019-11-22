@@ -1,64 +1,75 @@
 <?php
 
 /* In dieser Datei werden Url-Parameter geprüft und entsprechend verarbeitet. */
+use \Controller\AdminCtrl;
+use View\View;
 class Router extends App
 {
-protected $_templateDatei  = null;
+
 public function __construct()
 {
-require "./app/languageCheck.php";
-include_once 'config.php';
+
+
+}
+
+//Url verarbeiten
+public static function checkUrl($langArray,$opt)
+{
 if(isset($_GET['url']))
  {
+//Abgfrage der Werte 'x' : Server/Projektname/x
  $urlArray = explode('/', $_GET['url']);
-//je nach Url Paramatetern, Controller und Templates laden
- switch ($urlArray[0])
+  /*je nach Url Paramateter 'x' an der Stelle "0" im Url Array, Controller und Templates laden*/
+  switch ($urlArray[0])
  {
-    //url = Buan/adminlogin
-   //AdminLogin
    case ('adminlogin'):
+   //url = Buan/adminlogin
    //Wenn klasse existiert: Inhalte anzeigen, sonst 404 fehler
-   if (class_exists('\Controller\Admin')) {
-
-   echo $view = App::render('admin.html', array());
-   //isPost aus app/App.php
-   if ($this->isPost())
-   {
-    //controller instanzieren
-   $admin = new \Controller\Admin();
-   //Login funktion gibt Fehlermeldungen in einem Array zurueck, vergleicht Daten in DB
-   $admin->login($_POST['name'],$_POST['password']);
-   if (!empty($admin->errorArray))
-   {
-    foreach ($admin->errorArray as $value)
-    {
-    //Fehler ausgeben
-    echo $langArray[$value];
-    }
-   }
-   else
-   {
-    //Anmeldung erfolgreich, weiterleiten zum Admin dashboard
-    header("Location: adminhome");
-
-   }
- }else
- {
-  //TODO: 404 Fehler
-  echo "no";
- }
-  }
-   break;
+   //Template ausgeben 
+    $view = new View();
+    $view->adminlogin();
+    if(App::adminSess()== true)
+     {
+     //Admin bereits eingeloggt, verweise auf dashboard.
+      echo "<script> window.location.href = \"admin-home\"</script>";
+     }
+    $ctrl = new AdminCtrl();
+    $ctrl->loginAdmin();
+    $view->footer();
+  break;
+  case ('admin-home'):
    //Url = Buan/admin-home
-   case ('adminhome'):
-   include('View/templates/adminhome.html');
-   echo "string";
-  echo "<h1>nice</h1>";
-   break;
+   $view = new View();
+   $ctrl = new AdminCtrl();
+   //Wenn Admin eingeloggt ist:
+   if($ctrl->verifyAdmin() == false)
+   {//kein Zugriff, wenn nicht eingeloggt, redirect
+   
+   echo "<script> window.location.href = \"adminlogin\"</script>";
+   }else
+   {
+   echo $view->adminDashboard();
+     $view->adminFooter();
+   }
+  break;
+  case 'admin-home' && $_GET['url'] == $langArray[$opt]['p_einstellen']:
+  echo "hello from produkte";
+  break;
 
+  default:
+  $view = new View();
+  echo "404 Fehler";
+
+  $view->footer();
+ break;
    } //switch ende
 }
- }
-
+else
+{
+  //Urlrray[0] = "": default = indexView
+  $view = new View();
+  $view->adminLoginFooter();
 }
-	
+} /*Ende function CheckUrl*/
+}
+?>
