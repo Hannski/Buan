@@ -5,11 +5,13 @@ use \Controller\AdminCtrl;
 use View\View;
 class Router extends App
 {
+  public $lang = array();
 
 public function __construct()
 {
 
-
+ include BASEPATH."/app/includes/languageCheck.php";
+ $this->lang = array_merge($this->lang,$langArray);
 }
 
 //Url verarbeiten
@@ -49,11 +51,13 @@ if(isset($_GET['url']))
    }else
    {
    echo $view->adminDashboard();
-     $view->adminFooter();
+   echo $view->adminFooter();
    }
   break;
   case 'admin-home' && $_GET['url'] == $langArray[$opt]['p_einstellen']:
-  echo "hello from produkte";
+  $view = new View();
+  echo $view->adminDashboard();
+  echo $view->addProducts();
   break;
 
   default:
