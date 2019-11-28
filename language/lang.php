@@ -81,7 +81,7 @@ $langArray[1]['Platzh_P_beschr'] 	= "description";
 $langArray[0]['Platzh_P_Name'] 		= "name";
 $langArray[1]['Platzh_P_Name'] 		= "name";
 
-
+//Fehlerausgaben
 //Anmeldefehler info an den user
 //nicht alle Felder augefuellt:
 $langArray[0]['emptyFields'] 		= "Alle Felder m&uuml;ssen ausgef&uuml;llt werden!";
@@ -94,3 +94,16 @@ $langArray[1]['nameNot'] 			="Password or Username wrong";
 $langArray[0]['pwNot'] 				="Passwort oder Username falsch";
 $langArray[1]['pwNot'] 				="Password or username wrong";
 
+//Produkteinstellungsformular
+//Produktnamen
+$langArray[0]['emptyPname']  		= "Produktnamen m&uuml;ssen ausgef&uuml;llt werden";
+$langArray[1]['emptyPname']  		= "Productnames cannot be empty";
+//Produktbeschreibungen
+$langArray[0]['emptyDes']  			= "Produktbeschreibungen d&uuml;rfen nicht leer sein";
+$langArray[1]['emptyDes']  			= "Product descriptios cannot be empty";
+//Produktpreis 0 oder -Wert
+$langArray[0]['preiszuklein']  		= "Preis darf nicht Null oder weniger sein";
+$langArray[1]['preiszuklein']  		= "Price cannot be zero or less";
+//Dateityp nicht erlaub
+$errorArray[0]['Dateityp']     		= "erlaubte Dateitypen : .jpg, .png";
+$errorArray[1]['Dateityp']     		= "permittet filetypes : .jpg, .png";

@@ -2,6 +2,7 @@
 
 /* In dieser Datei werden Url-Parameter geprüft und entsprechend verarbeitet. */
 use \Controller\AdminCtrl;
+use \Controller\ProduktCtrl;
 use View\View;
 class Router extends App
 {
@@ -26,7 +27,6 @@ if(isset($_GET['url']))
  {
    case ('adminlogin'):
    //url = Buan/adminlogin
-   //Wenn klasse existiert: Inhalte anzeigen, sonst 404 fehler
    //Template ausgeben 
     $view = new View();
     $view->adminlogin();
@@ -40,13 +40,14 @@ if(isset($_GET['url']))
     $view->footer();
   break;
   case ('admin-home'):
+   if (App::adminSess() == true) {
    //Url = Buan/admin-home
-   $view = new View();
+   $view = new View();}
    $ctrl = new AdminCtrl();
+
    //Wenn Admin eingeloggt ist:
    if($ctrl->verifyAdmin() == false)
    {//kein Zugriff, wenn nicht eingeloggt, redirect
-   
    echo "<script> window.location.href = \"adminlogin\"</script>";
    }else
    {
@@ -54,10 +55,30 @@ if(isset($_GET['url']))
    echo $view->adminFooter();
    }
   break;
-  case 'admin-home' && $_GET['url'] == $langArray[$opt]['p_einstellen']:
-  $view = new View();
+  case 'admin-home' && $_GET['url'] == "neues-produkt" || "new-product":
+  if (App::adminSess() == true) {
+   $view = new View();
   echo $view->adminDashboard();
   echo $view->addProducts();
+  if (isset($_POST['add_p']))
+  {
+    //$_FILES statt $_POST laut Empfehlung von https://www.php.net
+    $ctrl = new ProduktCtrl();
+    $ctrl->addProduct();
+    $ctrl->addFile();
+    //reset();
+  }
+  else
+  {
+    echo "Problems";
+  }
+}
+
+  else
+  {
+    header("location: Buan/");
+  }
+  
   break;
 
   default:

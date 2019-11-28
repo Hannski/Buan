@@ -17,7 +17,8 @@ class AdminCtrl
     return true;
   }
   }
-   public function showErrors()
+
+  public function showErrors()
    {
    	 foreach ($this->errorArray as $value)
     {
@@ -25,13 +26,13 @@ class AdminCtrl
     include BASEPATH.'/app/includes/languageCheck.php';
     return  $langArray[$opt][$value];
     }
-   }
+  }
 
     public function tryLogin($name,$nachname,$password)
     { 
     $adminArray = AdminMdl::authorizeAdmin();
     foreach ($adminArray as $key)
-	    {
+	 {
 			$pass = $key->getAPw();
 			$a_name = $key->getAVorname();
 			$a_nachname = $key->getANname();
