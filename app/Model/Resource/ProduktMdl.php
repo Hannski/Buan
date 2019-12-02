@@ -3,6 +3,8 @@ namespace Model\Resource;
 use Model\ProduktMdl as ProduktModel;
 class ProduktMdl extends Base
 {
+
+//Produktinformationen in Datenbank schreiben
  public function insertProdukt( $produkt)
  {
  		$base= new Base();
@@ -35,5 +37,30 @@ class ProduktMdl extends Base
         
 
  }
+
+//Alle Produktinformationen aus der Datenbank
+ public function getAllProducts()
+ {
+        $base= new Base();
+        $sql = "SELECT id,name_de,name_en,beschreibung_de,beschreibung_en,preis,dateiname FROM items";
+        $dbResult = $base->connect()->query($sql);
+        $productArray = array();
+        while ($row = $dbResult->fetch(\PDO::FETCH_ASSOC))
+        {
+            //Instanzierung der Klasse Produkt in Model/Produkt.php (setters und Getters)
+            $product = new ProduktModel();
+            $product->setId($row['id']);
+            $product->setNameDe($row['name_de']);
+            $product->setNameEn($row['name_en']);
+            $product->setBeschreibungDe($row['beschreibung_de']);
+            $product->setBeschreibungEn($row['beschreibung_en']);
+            $product->setPreis($row['preis']);
+            $product->setDateiname($row['dateiname']);
+            //Ins array schreiben
+            $productArray[] = $product;
+        }
+        return $productArray;
+ }
+
 }
 

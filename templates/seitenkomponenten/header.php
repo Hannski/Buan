@@ -27,5 +27,4 @@
  <body class="text-center ">
     <!-- Beginn Wrapper -->
 <div id="wrapper" class ="m-0 p-0">
-    <div id="message"></div>
-
+   

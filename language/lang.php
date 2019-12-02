@@ -105,5 +105,5 @@ $langArray[1]['emptyDes']  			= "Product descriptios cannot be empty";
 $langArray[0]['preiszuklein']  		= "Preis darf nicht Null oder weniger sein";
 $langArray[1]['preiszuklein']  		= "Price cannot be zero or less";
 //Dateityp nicht erlaub
-$errorArray[0]['Dateityp']     		= "erlaubte Dateitypen : .jpg, .png";
-$errorArray[1]['Dateityp']     		= "permittet filetypes : .jpg, .png";
+$langArray[0]['dateityp']     		= "erlaubte Dateitypen : .jpg, .png";
+$langArray[1]['dateityp']     		= "permittet filetypes : .jpg, .png";

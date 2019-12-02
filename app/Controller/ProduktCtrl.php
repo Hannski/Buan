@@ -6,6 +6,26 @@ class ProduktCtrl
 {
 	public $errorArray = array();
 
+
+	//Alle produkte 
+	public function showProducts()
+	{
+
+		   // resource model instanzieren
+        /** @var \Model\Resource\Bild $model */
+        $model = App::getResourceModel('ProduktMdl');
+
+        // bilder abrufen
+        $produkteArray = $model->getAllProducts();
+
+        // bilder darstellen / template
+        return App::renderData('home', array('produkteArray' => $produkteArray));
+
+	
+	}
+
+
+
 	public function addProduct()
 	{
 	    $name_de = $_POST['pd_name'];
@@ -14,9 +34,9 @@ class ProduktCtrl
 	    $beschreibung_en = $_POST['pe_beschreibung'];
 	    $preis = $_POST['p_preis'];
 	    $dateiname = $_FILES['dateiname']['name'];
-	    $dateityp = $_FILES['dateiname']['type'];
+	    echo $dateityp = $_FILES['dateiname']['type'];
 	    // fhler abfangen : var_dump($_FILES) ;
-	    if ($this->checkForm ($name_de,$name_en,$beschreibung_de,$beschreibung_en,$preis,$dateityp) &&empty($this->errorArray))
+	    if ($this->checkForm ($name_de,$name_en,$beschreibung_de,$beschreibung_en,$preis,$dateityp) && empty($_SESSION['errors']))
 	    {
 	    //Zuweisung werte
 		$produkt = App::getModel('ProduktMdl');
@@ -33,7 +53,7 @@ class ProduktCtrl
 	    }
 	    else
 	    {
-	    	$this->showErrors();
+	    	 var_dump($_SESSION['errors']);
 	    }
 	   
     }
@@ -50,49 +70,37 @@ class ProduktCtrl
         move_uploaded_file($tmp_name,$uploadfile);
     }
 
+    //TODO:: FEHLER ABFANGEN!!!
     public function checkForm($pd_name,$pe_name,$pd_beschreibung,$pe_beschreibung,$p_preis,$dateityp)
     {
-    if(empty($_POST['pd_name']) || empty($_POST['pe_name']))
-	{
-	$this->errorArray[] = "emptyPname";
-	return $this->errorArray;
-	}
-	elseif(empty($pd_beschreibung))
-	{
-		$this->errorArray[]= "emptyDes";
-		return $this->errorArray;
+    	
+    $fehler = $_SESSION['errors']; 
+ 	
+    if(empty($pd_name || $pe_name || $pd_beschreibung || $p_preis))
+	{ 
+	   $fehler[] = "emptyPname";
+	   $fehler[] = "emptyDes";
+	   $fehler[] = "emptyFields";
 	}
 	elseif ($p_preis<=0)
 	{
-		$this->errorArray[]= "preiszuklein";
-		return $this->errorArray;
+		$fehler[] = "preiszuklein";		
 	}
-	elseif($_FILES['dateiname']['type'] !== "image/jpg")
+	elseif( $dateityp !== "image/jpeg")
 	{
-		$this->errorArray[] = "Dateityp";
-		return $this->errorArray;
+		$fehler[] = "dateityp";
+		// echo $dateityp;
 	}
-	if(!empty($this->errorArray))
-   {
-    return $this->errorArray;
-   }
-   else
-   {
-   	return true;
-   }
+	else
+		{
 
+			if(!empty($fehler)){return $fehler;}
+			else
+				{return true;}
+		}
 
-  }	
-
-    public function showErrors()
-   {
-   	 foreach ($this->errorArray as $value)
-    {
-    //Fehler ausgeben
-    include BASEPATH.'/app/includes/languageCheck.php';
-    echo $langArray[$opt][$value];
-    }
-  }
+	
+	}
 
     
 

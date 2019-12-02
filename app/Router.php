@@ -6,6 +6,7 @@ use \Controller\ProduktCtrl;
 use View\View;
 class Router extends App
 {
+
   public $lang = array();
 
 public function __construct()
@@ -16,7 +17,7 @@ public function __construct()
 }
 
 //Url verarbeiten
-public static function checkUrl($langArray,$opt)
+public static function checkUrl($langArray)
 {
 if(isset($_GET['url']))
  {
@@ -93,6 +94,9 @@ else
 {
   //Urlrray[0] = "": default = indexView
   $view = new View();
+  $view->home();
+  $ctrl = new ProduktCtrl();
+  echo $ctrl->showProducts();
   $view->adminLoginFooter();
 }
 } /*Ende function CheckUrl*/

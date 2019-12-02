@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 14. Nov 2019 um 11:34
+-- Erstellungszeit: 29. Nov 2019 um 22:08
 -- Server-Version: 10.1.36-MariaDB
 -- PHP-Version: 7.2.11
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`a_id`, `a_nname`, `a_vorname`, `a_pwmd5`) VALUES
-(1, 'eckhardt', 'hannah', 'hallo');
+(2, 'eckhardt', 'hannah', '93715d17a0a3ac5dbc553e90926499d1');
 
 -- --------------------------------------------------------
 
@@ -50,18 +50,21 @@ INSERT INTO `admin` (`a_id`, `a_nname`, `a_vorname`, `a_pwmd5`) VALUES
 
 CREATE TABLE `items` (
   `id` int(100) NOT NULL,
+  `name_de` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name_en` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `beschreibung_de` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `beschreibung_en` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `preis` float NOT NULL,
-  `dateiname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `dateipfad` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+  `dateiname` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `items`
 --
 
-INSERT INTO `items` (`id`, `preis`, `dateiname`, `dateipfad`) VALUES
-(1, 20, '', ''),
-(3, 15, '', '');
+INSERT INTO `items` (`id`, `name_de`, `name_en`, `beschreibung_de`, `beschreibung_en`, `preis`, `dateiname`) VALUES
+(89, 'Hannah', 'Eckhardt', 'helohkjh', 'jhkhfjhfjgf', 50, 'BlackLight.jpg'),
+(90, 'Super Critical - Studio Album von 2014', 'Sper Critical - Studio Album from 2014', 'Das vierte Album  der britischen Band the Ting Tings', 'The fourth Album by the british Band The Ting Tings', 100, 'Download.jpg');
 
 -- --------------------------------------------------------
 
@@ -115,13 +118,13 @@ ALTER TABLE `items_language`
 -- AUTO_INCREMENT für Tabelle `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `a_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `a_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT für Tabelle `items_language`
