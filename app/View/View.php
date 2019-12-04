@@ -1,5 +1,6 @@
 <?php
 namespace View;
+use \Controller\Captcha;
 use App;
 class View 
 {
@@ -47,6 +48,11 @@ class View
 	{
 	echo App::render('pages/nav');
 	
+	}
+	public function userLogin()
+	{
+
+	echo App::render('pages/user-login');
 	}
 
 }

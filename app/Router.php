@@ -3,6 +3,7 @@
 /* In dieser Datei werden Url-Parameter geprüft und entsprechend verarbeitet. */
 use \Controller\AdminCtrl;
 use \Controller\ProduktCtrl;
+use \Controller\CartCtrl;
 use View\View;
 class Router extends App
 {
@@ -15,7 +16,6 @@ public function __construct()
  include BASEPATH."/app/includes/languageCheck.php";
  $this->lang = array_merge($this->lang,$langArray);
 }
-
 //Url verarbeiten
 public static function checkUrl($langArray)
 {
@@ -26,6 +26,11 @@ if(isset($_GET['url']))
   /*je nach Url Paramateter 'x' an der Stelle "0" im Url Array, Controller und Templates laden*/
   switch ($urlArray[0])
  {
+   case 'user-login':
+   $view = new View();
+   $view->userlogin();
+   $view->footer();
+   break;
    case ('adminlogin'):
    //url = Buan/adminlogin
    //Template ausgeben 
@@ -77,7 +82,7 @@ if(isset($_GET['url']))
 
   else
   {
-    header("location: Buan/");
+    // header("location: Buan/");
   }
   
   break;
@@ -92,11 +97,14 @@ if(isset($_GET['url']))
 }
 else
 {
-  //Urlrray[0] = "": default = indexView
+  //Urlrray[0] = "": default = indexView 
   $view = new View();
   $view->home();
-  $ctrl = new ProduktCtrl();
-  echo $ctrl->showProducts();
+  echo ProduktCtrl::showProducts(); 
+  if (isset($_POST['to_cart']))
+  {
+  CartCtrl::addToCart();
+  } 
   $view->adminLoginFooter();
 }
 } /*Ende function CheckUrl*/

@@ -10,8 +10,7 @@ class ProduktCtrl
 	//Alle produkte 
 	public function showProducts()
 	{
-
-		   // resource model instanzieren
+		// resource model instanzieren
         /** @var \Model\Resource\Bild $model */
         $model = App::getResourceModel('ProduktMdl');
 
@@ -20,8 +19,6 @@ class ProduktCtrl
 
         // bilder darstellen / template
         return App::renderData('home', array('produkteArray' => $produkteArray));
-
-	
 	}
 
 
@@ -34,9 +31,10 @@ class ProduktCtrl
 	    $beschreibung_en = $_POST['pe_beschreibung'];
 	    $preis = $_POST['p_preis'];
 	    $dateiname = $_FILES['dateiname']['name'];
-	    echo $dateityp = $_FILES['dateiname']['type'];
+	    $dateityp = $_FILES['dateiname']['type'];
+	    $menge = $_POST['Menge'];
 	    // fhler abfangen : var_dump($_FILES) ;
-	    if ($this->checkForm ($name_de,$name_en,$beschreibung_de,$beschreibung_en,$preis,$dateityp) && empty($_SESSION['errors']))
+	    if ($this->checkForm ($name_de,$name_en,$beschreibung_de,$beschreibung_en,$preis,$dateityp,$menge) && empty($_SESSION['errors']))
 	    {
 	    //Zuweisung werte
 		$produkt = App::getModel('ProduktMdl');
@@ -46,6 +44,7 @@ class ProduktCtrl
 		$produkt->setBeschreibungEn($beschreibung_en);
 		$produkt->setPreis($preis);
 		$produkt->setDateiname($dateiname);
+		$produkt->setMenge($menge);
 		//In Datenbank schreiben
 		$resource = App::getResourceModel('ProduktMdl');
 		$resource->insertProdukt($produkt); 

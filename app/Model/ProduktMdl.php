@@ -10,6 +10,7 @@ private $beschreibung_en;
 private $preis;
 private $dateiname;
 private $dateipfad;
+private $menge;
 
 //setters und getters generiert per SublimeText3 plugin "PHP getters and Setters: https://github.com/francodacosta/sublime-php-getters-setters"
     /**
@@ -168,6 +169,26 @@ private $dateipfad;
     public function setDateipfad($dateipfad)
     {
         $this->dateipfad = $dateipfad;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenge()
+    {
+        return $this->menge;
+    }
+
+    /**
+     * @param mixed $menge
+     *
+     * @return self
+     */
+    public function setMenge($menge)
+    {
+        $this->menge = $menge;
 
         return $this;
     }

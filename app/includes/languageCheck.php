@@ -29,6 +29,7 @@
 		}
 		else
 		{
+			$_SESSION['language'] = 0;
 			$opt  = 0;
 			/* Standardwahl: Deutsche Sprache*/
 			
