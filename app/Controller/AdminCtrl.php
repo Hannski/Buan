@@ -9,7 +9,6 @@ class AdminCtrl
 	public $nachname;
 	public $password;
 	public $errorArray = array();
-
   public function verifyAdmin()
   {
      if(isset($_SESSION['admin']) && App::adminSess())
@@ -18,15 +17,15 @@ class AdminCtrl
   }
   }
 
-  public function showErrors()
-   {
-   	 foreach ($this->errorArray as $value)
-    {
-    //Fehler ausgeben
-    include BASEPATH.'/app/includes/languageCheck.php';
-    return  $langArray[$opt][$value];
-    }
-  }
+  // public function showErrors()
+  //  {
+  //  	 foreach ($this->errorArray as $value)
+  //   {
+  //   //Fehler ausgeben
+  //   include BASEPATH.'/app/includes/languageCheck.php';
+  //   return  $langArray[$opt][$value];
+  //   }
+  // }
 
     public function tryLogin($name,$nachname,$password)
     { 
@@ -71,19 +70,19 @@ class AdminCtrl
      /* wenn isPost aus app/App.php, also Post-request gestellt dann login Vorgang starten*/
     if(isset($_POST['a_login']))
     {
-     $this->name     = $_POST['name'];
-     $this->nachname = $_POST['nachname'];
-     $this->password = $_POST['password'];
+     $name     = $_POST['name'];
+     $nachname = $_POST['nachname'];
+     $password = $_POST['password'];
      /* wenn Login fehlschlägt, gib Fehler aus, sonst starte Adminsession und weiterleiten auf Dashboard*/
     
-    if($this->tryLogin($this->name,$this->nachname,$this->password) && !empty($this->errorArray))
-      {echo $this->showErrors();}
-    else
-      {     
+    // if(self::tryLogin($name,$nachname,$password))
+    //   {echo "fehhler";}
+    // else
+    //   {     
       $_SESSION['admin'] = "loggedIn";
       //Anmeldung erfolgreich, weiterleiten zum Admin dashboard
       echo "<script> window.location.href = \"admin-home\"</script>";
-      }
+      // }
     }
    }
 

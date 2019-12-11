@@ -11,6 +11,7 @@ private $preis;
 private $dateiname;
 private $dateipfad;
 private $menge;
+private $status;
 
 //setters und getters generiert per SublimeText3 plugin "PHP getters and Setters: https://github.com/francodacosta/sublime-php-getters-setters"
     /**
@@ -189,6 +190,26 @@ private $menge;
     public function setMenge($menge)
     {
         $this->menge = $menge;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
         return $this;
     }

@@ -13,8 +13,8 @@ class Template
     public function renderTemplate(array $data)
     {
         extract($data);
-
         ob_start();
+        include BASEPATH. "/app/includes/languageCheck.php";
         require_once BASEPATH . '/templates/pages/' . $this->_tmplFile.".php";
         $htmlResponse  = ob_get_contents();
         ob_end_clean();

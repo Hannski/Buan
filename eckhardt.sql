@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 04. Dez 2019 um 09:52
+-- Erstellungszeit: 11. Dez 2019 um 09:06
 -- Server-Version: 10.1.36-MariaDB
 -- PHP-Version: 7.2.11
 
@@ -80,41 +80,20 @@ CREATE TABLE `items` (
   `beschreibung_en` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `preis` float NOT NULL,
   `dateiname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `bestand` int(100) NOT NULL
+  `bestand` int(100) NOT NULL,
+  `gesperrt` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `items`
 --
 
-INSERT INTO `items` (`id`, `name_de`, `name_en`, `beschreibung_de`, `beschreibung_en`, `preis`, `dateiname`, `bestand`) VALUES
-(89, 'Hannah', 'Eckhardt', 'helohkjh', 'jhkhfjhfjgf', 50, 'BlackLight.jpg', 55),
-(90, 'Super Critical - Studio Album von 2014', 'Sper Critical - Studio Album from 2014', 'Das vierte Album  der britischen Band the Ting Tings', 'The fourth Album by the british Band The Ting Tings', 100, 'Download.jpg', 80),
-(91, 'Sounds From Nowhere - Album von 2012', 'Sounds From Nowhere - Album from 2012', 'erstes Album', 'first Album', 150, 'SoundsFromNowhere.jpg', 0),
-(92, 'We Started Nothing- Album von 2009', 'We Started Nothing- Album from 2009', 'weiteres Album', 'another Album', 200, 'WeStartetNothing.jpg', 0),
-(93, 'Match Of The Day- Album von 2009', 'Match Of The Day- Album from 2009', 'wirklich das erste', 'Really the first one', 250, 'MatchOfTheDay.jpg', 0);
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `items_language`
---
-
-CREATE TABLE `items_language` (
-  `language` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `info` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `art_id` int(100) NOT NULL,
-  `id` int(100) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Daten für Tabelle `items_language`
---
-
-INSERT INTO `items_language` (`language`, `info`, `art_id`, `id`, `name`) VALUES
-('de', 'Wollsocken mit hohem Bund', 1, 1, 'Wollsocken'),
-('en', 'woolsocks with high rim', 1, 2, 'Wool Socks');
+INSERT INTO `items` (`id`, `name_de`, `name_en`, `beschreibung_de`, `beschreibung_en`, `preis`, `dateiname`, `bestand`, `gesperrt`) VALUES
+(89, 'Die Tings', 'the ting tings', 'Tolles Album', 'nice album', 50, 'BlackLight.jpg', 600, 0),
+(90, 'Super critical ist ein Album', 'Sper Critical - Studio Album from 2014', 'Das vierte Album  der britischen Band the Ting Tings', 'The fourth Album by the british Band The Ting Tings', 100, 'MatchOfTheDay.jpg', 600, 1),
+(91, 'Sounds From Nowhere - Album von 2012', 'Sounds From Nowhere - Album from 2012', 'erstes Album', 'first Album', 150, 'SoundsFromNowhere.jpg', 200, 0),
+(92, 'We Started Nothing- Album von 2009', 'We Started Nothing- Album from 2009', 'weiteres Album', 'another Album', 200, 'WeStartetNothing.jpg', 500, 0),
+(93, 'Match Of The Day- Album von 2009', 'Match Of The Day- Album from 2009', 'wirklich das erste', 'Really the first one', 250, 'MatchOfTheDay.jpg', 200, 0);
 
 --
 -- Indizes der exportierten Tabellen
@@ -133,12 +112,6 @@ ALTER TABLE `items`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `items_language`
---
-ALTER TABLE `items_language`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
@@ -153,12 +126,6 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `items`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
-
---
--- AUTO_INCREMENT für Tabelle `items_language`
---
-ALTER TABLE `items_language`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

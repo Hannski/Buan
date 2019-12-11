@@ -9,7 +9,7 @@ html, body
     background-color:#05041B;
 }
 /* Schriftfarbe- und groesse */
-html,body  
+html,body,td,table,tr
 {
     color: #fff!important;
     font-size:17px!important;
@@ -28,4 +28,7 @@ color: #fff!important;
 {
 	background-color: 	rgb(105,105,105,.8)!important;;
 }
-
+.border
+{
+	border-color: #fff!important;
+}

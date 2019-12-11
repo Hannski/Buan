@@ -7,22 +7,50 @@ class ProduktCtrl
 	public $errorArray = array();
 
 
-	//Alle produkte 
+	//abrufen: Alle produkte die in Bestand sind und nicht gesperrt
 	public function showProducts()
 	{
 		// resource model instanzieren
-        /** @var \Model\Resource\Bild $model */
+       
         $model = App::getResourceModel('ProduktMdl');
 
-        // bilder abrufen
+        // Produkte abrufen
         $produkteArray = $model->getAllProducts();
 
-        // bilder darstellen / template
-        return App::renderData('home', array('produkteArray' => $produkteArray));
+        // Produkte-array fuer Anzeige in Array bereitstellen
+        return array('produkteArray'=> $produkteArray);
 	}
 
 
+	//abrufen:Alle alle produkte, egal ob auf Lager oder Gesperrt
+	public function showAdminProducts()
+	{
+		// resource model instanzieren
+      
+        $model = App::getResourceModel('ProduktMdl');
 
+        // Produkte abrufen
+        $produkteArray = $model->getAllAdminProducts();
+
+        // Produkte darstellen / template
+        return array('produkteArray'=> $produkteArray);
+	}
+   
+   //Abrufen: Produkt mit einer bestimmten id abrufen
+    public function showProductById($id)
+    {
+    	// resource model instanzieren
+        $model = App::getResourceModel('ProduktMdl');
+
+        // bilder abrufen
+        $produkteArray = $model-> getProduktById($id);
+
+        // bilder darstellen / template
+        return array('produkteArray'=> $produkteArray);
+
+    }
+
+    //schreiben:: produkt in die Datenbank schreiben
 	public function addProduct()
 	{
 	    $name_de = $_POST['pd_name'];
@@ -56,18 +84,69 @@ class ProduktCtrl
 	    }
 	   
     }
+    //schreiben:Datei in den Ordner: Projektordner/Assets kopieren 
     public function addFile()
     {
     	//Datei in den Ordner /Assets verschieben
    		$uploads_dir = BASEPATH.'/Assets/';
    		$uploadfile = $uploads_dir . basename($_FILES['dateiname']['name']);
-   		//Fehlerhilfe
+   		//Debugging:
     	//var_dump($_FILES);
     	// echo is_uploaded_file($_FILES['dateiname']['tmp_name']);
         $tmp_name = $_FILES["dateiname"]["tmp_name"];
         $name = basename($_FILES["dateiname"]["name"]);
         move_uploaded_file($tmp_name,$uploadfile);
     }
+    //Bearbeiten: 
+    public function updateProduct()
+    {
+    	/* der Einfachheithalber wird an dieser Stelle nicht mit gettern und settern gearbeitet, sondern Werte direkt an das resource-model uebermittelt*/
+    	//Wert des Formular-Buttons Beispiel: "Dateiname" 
+    	$edit = $_POST['aendern'];
+    	//Produkt-Id
+    	$id = $_POST ['id'];
+    	$resource = App::getResourceModel('ProduktMdl');
+    	//Name-Deutsch aendern
+    	if ($edit=="name_de")
+    	{$value=$_POST['name_de'];}
+    	elseif ($edit=="name_en")
+		{ $value = $_POST['name_en'];}
+		elseif($edit=="beschreibung_de"){$value = $_POST['desc_de'];}
+		elseif($edit=="beschreibung_en"){$value = $_POST['desc_en'];}
+		elseif($edit=="preis"){$value= $_POST['preis'];}
+		elseif($edit=="bestand"){$value= $_POST['bestand'];}
+		elseif($edit=="dateiname"){$value= $_POST['dateiname'];}
+		elseif($edit == "gesperrt"){$value= $_POST['gesperrt'];}
+		$resource->UpdateProdukt($id,$edit,$value);
+    }
+ 	// bearbeiten: Bilddatei in unterordner ggf. ersetzen : "Projektordner/Assets/"
+ 	public function updateFile()
+ 	{
+ 		if (isset($_POST['datei']))
+ 		{
+ 			//Deteinamen in Datenbank Aendern:
+ 			$id = $_POST ['id'];
+    		$resource = App::getResourceModel('ProduktMdl');
+    		$edit= "dateiname";
+    		$value = $_FILES['dateiname']['name'];
+    		$resource->UpdateProdukt($id,$edit,$value);
+    		//debuging:: echo $_POST['dateiAlt'];
+    		//alte Datei in Assetordner loeschen, wenn vorhanden: 
+    		if(file_exists(BASEPATH."/Assets/".$_POST['dateiAlt']))
+    		{
+    		//@: Fehler unterdruecken falls beispielsweise "aktualisieren" mehrmals akiviert wird.
+    		$file_to_delete = $_POST['dateiAlt'];
+			 @unlink(BASEPATH."/Assets/".$file_to_delete);
+    		}else{
+    		
+    		}
+   			
+    		//Datei in Assetordner kopieren:
+    		self::addFile();
+ 
+    		
+ 		}
+ 	}
 
     //TODO:: FEHLER ABFANGEN!!!
     public function checkForm($pd_name,$pe_name,$pd_beschreibung,$pe_beschreibung,$p_preis,$dateityp)

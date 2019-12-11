@@ -40,12 +40,12 @@ class ProduktMdl extends Base
 
  }
 
-//Alle Produktinformationen aus der Datenbank
+/*Alle Produktinformationen aus der Datenbank wo Lagerbestände positiv sind und nicht gesperrt*/
  public function getAllProducts()
  {
         $base= new Base();
         //Nur Produkte, die auf Lager sind anzeigen. 
-        $sql = "SELECT id,name_de,name_en,beschreibung_de,beschreibung_en,preis,dateiname  FROM items WHERE bestand > 0";
+        $sql = "SELECT id,name_de,name_en,beschreibung_de,beschreibung_en,preis,dateiname  FROM items WHERE bestand > 0 AND gesperrt = 0";
         $dbResult = $base->connect()->query($sql);
         $productArray = array();
         while ($row = $dbResult->fetch(\PDO::FETCH_ASSOC))
@@ -65,10 +65,42 @@ class ProduktMdl extends Base
         return $productArray;
  }
 
+ //Alle Produkte, Egal welche Bestände und Sperrstatus
+ public function getAllAdminProducts()
+ {
+    $base= new Base();
+        //Nur Produkte, die auf Lager sind anzeigen. 
+        $sql = "SELECT id,name_de,name_en,beschreibung_de,beschreibung_en,preis,dateiname,bestand,gesperrt  FROM items ";
+        $dbResult = $base->connect()->query($sql);
+        $productArray = array();
+        while ($row = $dbResult->fetch(\PDO::FETCH_ASSOC))
+        {
+            //Instanzierung der Klasse Produkt in Model/Produkt.php (setters und Getters)
+            $product = new ProduktModel();
+            $product->setId($row['id']);
+            $product->setNameDe($row['name_de']);
+            $product->setNameEn($row['name_en']);
+            $product->setBeschreibungDe($row['beschreibung_de']);
+            $product->setBeschreibungEn($row['beschreibung_en']);
+            $product->setPreis($row['preis']);
+            $product->setDateiname($row['dateiname']);
+            $product->setMenge($row['bestand']);
+           //Verständnis für Admin verbessern. statt 0 und 1 : sichtbar oder gesperrt
+            if($row['gesperrt']== NULL){
+                 $product->setStatus("sichtbar");
+            }else{
+            $product->setStatus("gesperrt");
+            }
+            //Ins array schreiben
+            $productArray[] = $product;
+        }
+        return $productArray;
+
+ }
+
  //Produkt nach ID
  public function getProduktById($id)
  {
-
             $base = new Base();
             $sql = ("SELECT * FROM items WHERE id=$id");
             $dbResult = $base->connect()->query($sql);
@@ -84,11 +116,26 @@ class ProduktMdl extends Base
             $product->setPreis($row['preis']);
             $product->setDateiname($row['dateiname']);
             $product->setMenge($row['bestand']);
+             if($row['gesperrt']==0){
+                 $product->setStatus("sichtbar");
+            }else{
+            $product->setStatus("gesperrt");
+            }
            
             //Ins array schreiben
             $produktArray[] = $product;
         }
             return $produktArray;
+ }
+
+ //Produktinformationen aktualisieren
+ public function UpdateProdukt($id,$edit,$value)
+ {
+        $base= new Base();
+        $sql ="UPDATE items SET $edit = ? WHERE id = ?";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$edit=$value,$id]);        
  }
 
 }

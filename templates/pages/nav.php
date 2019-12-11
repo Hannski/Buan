@@ -1,5 +1,4 @@
-
-	<!--Navigationsleiste teilweise kopiert von: https://getbootstrap.com/docs/4.3/components/navbar/	 -->
+<!--Navigationsleiste teilweise kopiert von: https://getbootstrap.com/docs/4.3/components/navbar/	 -->
 	<nav class="navbar custom-vg navbar-expand-lg navbar-light bg-light" id="nav">
   <a class="navbar-brand" href="#">Buan19</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

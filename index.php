@@ -12,7 +12,6 @@ class Start
 		  TODO:: besteht noch ein cart->Cookie? Wenn nicht-> Warenkorb in DB löschen
 		*/
 		
-			
 		require BASEPATH."/app/includes/styleCheck.php";
 
 		//Klassen laden

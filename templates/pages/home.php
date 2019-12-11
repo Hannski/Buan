@@ -19,7 +19,7 @@
 			$preis = $key->getPreis();
 			$file = $key->getDateiname();
 		 ?>
-	<div class="col-sm-12 col-md-6 col-lg-4">
+	<div class="col-sm-12 col-md-12 col-lg-4">
     <div class="card bg-light mb-4" >	
     <img  class="card-img-top" src="Assets/<?php echo $file; ?>" alt="<?php echo $file ?>">	
       <div class="card-body">

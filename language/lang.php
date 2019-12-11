@@ -28,10 +28,10 @@ $langArray[1]['logout']				= "Logout";
 //Buttons Adminseite
 $langArray[0]['p_add']				= "Produkte Hinzuf&uuml;gen";
 $langArray[1]['p_add']				= "add products";
-$langArray[0]['p_edit']				= "Produkte verwalten";
-$langArray[1]['p_edit']				= "edit products";
-$langArray[0]['u_edit']				="Benutzer verwalten";
-$langArray[1]['u_edit']				="User administration";
+$langArray[0]['p_edit']				= "produkteverwaltung";
+$langArray[1]['p_edit']				= "producteditor";
+$langArray[0]['u_edit']				= "Benutzer verwalten";
+$langArray[1]['u_edit']				= "User administration";
 $langArray[0]['pd_name']			= "Produktname Deutsch";
 $langArray[1]['pd_name']			= "product name German";
 $langArray[0]['pe_name']			= "Produktname Englisch";
@@ -46,6 +46,9 @@ $langArray[0]['datei'] 				= "Datei ausw&auml;hlen";
 $langArray[1]['datei'] 				= "choose file";
 $langArray[0]['btn_p_add']			= "Produkt einstellen";
 $langArray[1]['btn_p_add']			= "Submit Product";
+//Produktinformationen Aktualisieren
+$langArray[0]['aendern']			= "aktualisieren";
+$langArray[1]['aendern']			= "update";
 
 
 //Ende Buttons 

@@ -1,16 +1,18 @@
 <?php
+/*Nachfolgend sind alle Dateipfade fuer verschiedene Templates in funktionen gespeichert, die beliebig aufgerufen werden können. Neue Templates können hier als neue Funktion definiert werden, die vermittlung von Anzeigen findet in /app/Router.php statt */
 namespace View;
 use \Controller\Captcha;
 use App;
 class View 
 {
-	function __construct()
+
+	public function header()
 	{   
 		//HTML Header
 		echo App::render('seitenkomponenten/header');
 		
 	}
-	/*alle Template-funktionen "t_" für "template"*/
+	
 	public function footer()
 	{
 		echo App::render('seitenkomponenten/footer');
@@ -30,30 +32,32 @@ class View
 	{
 	 echo App::render('pages/nav');
 	 echo App::render('seitenkomponenten/errors');
-  	 echo App::render('pages/adminlogin');
+  	 echo App::render('pages/admin/adminlogin');
 	}
 	public function adminDashboard()
 	{
-
-		 echo App::render('pages/adminNav');
-		 echo App::render('seitenkomponenten/errors');
-		 echo App::render('pages/adminhome');
+		 echo App::render('pages/admin/adminNav');
+		 echo App::render('pages/admin/adminhome');
 	}
-
+     //produkte hinzufuegen Formular
     public function addProducts()
     {
-    echo App::render('/pages/add_p');
+    echo App::render('/pages/products/add_p');
     }
-	public function home()
+    /*Produkte bearbeiten-Formular (kann je nach Datenbankabfrage beliebig viele "Karten mit Produktdetails anzeigen")*/
+    public function editProducts()
+    {
+    	
+    	echo App::render('pages/products/editp');
+    }
+    /*Navigation*/
+	public function nav()
 	{
 	echo App::render('pages/nav');
-	
 	}
 	public function userLogin()
 	{
-
-	echo App::render('pages/user-login');
+	echo App::render('pages/user/user-login');
 	}
 
 }
-?>
