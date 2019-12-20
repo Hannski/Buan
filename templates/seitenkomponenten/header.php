@@ -8,10 +8,11 @@
    <title>Buan19</title>
      <!-- Bootstrap Style Einbindung -->
 
-     <!-- Einbinden von JQuery -->
-     <script src="./app/style/jquery/jquery.js" integrity="" crossorigin="anonymous"></script>
-     <!-- Einbinden Bootstrap.js -->
-     <script src="./app/style/js/bootstrap.js"></script>
+     <!-- Einbinden von JQuery src="https://code.jquery.com/jquery-3.4.1.min.js"-->
+     <script src="style/jQuery/jquery.js" integrity="" crossorigin="anonymous"></script>
+     <!-- Einbinden Bootstrap.js src= "https://getbootstrap.com/" -->
+     <script src="style/js/bootstrap.js"></script>
+     <script src="../style/js/bootstrap.js"></script>
      <!-- Einbinden Bootstrap.CSS, verschiedene Pfade, je nach Url -->
      <link rel="stylesheet"  type="text/css" href="style/css/bootstrap.css"/>
      <link rel="stylesheet"  type="text/css" href="../style/css/bootstrap.css"/>

@@ -49,6 +49,12 @@ $langArray[1]['btn_p_add']			= "Submit Product";
 //Produktinformationen Aktualisieren
 $langArray[0]['aendern']			= "aktualisieren";
 $langArray[1]['aendern']			= "update";
+//Nutzerregistrierung
+$langArray[0]["antragSubmit"]		= "Antrag absenden";
+$langArray[1]["antragSubmit"]		= "submit Application";
+//Administrator hinzufuegen
+$langArray[0]["addAdmin"]			= "Admin bestaetigen";
+$langArray[1]["addAdmin"]			= "confirm admin";
 
 
 //Ende Buttons 
@@ -60,7 +66,10 @@ $langArray[1]['p_einstellen'] 		= "new-product";
 
 //
  
-//text
+//texte
+//Registrierungsformular für neue Nutzer:
+$langArray[0]["register"] 			= "Mitgliedskonto beantragen";
+$langArray[1]["register"] 			= "Apply for Membership";
 
 /*Admin Login Formular*/
 $langArray[0]["adminSignin"] 		= "wilkommen zur&uuml;ck";
@@ -70,6 +79,8 @@ $langArray[1]["adminSignin"] 		= "Welcome back";
 //Anmeldevorgang
 $langArray[0]["PlatzhalterPw"] 		= "Passwort";
 $langArray[1]["PlatzhalterPw"] 		= "password";
+$langArray[0]["PlatzhalterPwRepeat"]= "Passwort wiederholen";
+$langArray[1]["PlatzhalterPwRepeat"]= "repeat password";
 $langArray[0]["PlatzhalterVorname"] = "Vorname";
 $langArray[1]["PlatzhalterVorname"] = "first&nbsp;name";
 $langArray[0]["PlatzhalterNname"] 	= "Nachname";
@@ -83,8 +94,18 @@ $langArray[0]['Platzh_P_beschr'] 	= "beschreibung";
 $langArray[1]['Platzh_P_beschr'] 	= "description";
 $langArray[0]['Platzh_P_Name'] 		= "name";
 $langArray[1]['Platzh_P_Name'] 		= "name";
+//Amdinbereich: Amdinistratoren bearbeiten
+$langArray[0]['aktiv'] 		= "aktiv";
+$langArray[1]['aktiv'] 		= "active";
+$langArray[0]['gesperrt'] 		= "gesperrt";
+$langArray[1]['gesperrt'] 		= "locked";
+
 
 //Fehlerausgaben
+//Etwas funktioniert absolut nicht
+$langArray[0]['nope'] 		= "Upps!. Hier ist leider etwas schief gelaufen";
+$langArray[1]['nope'] 		= "Oops! Something went terribly wrong!";
+
 //Anmeldefehler info an den user
 //nicht alle Felder augefuellt:
 $langArray[0]['emptyFields'] 		= "Alle Felder m&uuml;ssen ausgef&uuml;llt werden!";
@@ -110,3 +131,6 @@ $langArray[1]['preiszuklein']  		= "Price cannot be zero or less";
 //Dateityp nicht erlaub
 $langArray[0]['dateityp']     		= "erlaubte Dateitypen : .jpg, .png";
 $langArray[1]['dateityp']     		= "permittet filetypes : .jpg, .png";
+//Adminlogin
+$langArray[0]['locked']     		= "Ihr Konto wurde eventuell  gesperrt, bitte wenden Sie sich an der Seitenadministrator.";
+$langArray[1]['locked']     		= "Your account may have been locked, please contact the site administrator.";

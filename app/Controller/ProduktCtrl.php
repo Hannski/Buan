@@ -4,8 +4,6 @@ use \Model\Resource\ProduktMdl ;
 use App;
 class ProduktCtrl
 {
-	public $errorArray = array();
-
 
 	//abrufen: Alle produkte die in Bestand sind und nicht gesperrt
 	public function showProducts()
@@ -61,9 +59,8 @@ class ProduktCtrl
 	    $dateiname = $_FILES['dateiname']['name'];
 	    $dateityp = $_FILES['dateiname']['type'];
 	    $menge = $_POST['Menge'];
-	    // fhler abfangen : var_dump($_FILES) ;
-	    if ($this->checkForm ($name_de,$name_en,$beschreibung_de,$beschreibung_en,$preis,$dateityp,$menge) && empty($_SESSION['errors']))
-	    {
+	  
+	 
 	    //Zuweisung werte
 		$produkt = App::getModel('ProduktMdl');
 		$produkt->setNameDe($name_de);
@@ -77,12 +74,7 @@ class ProduktCtrl
 		$resource = App::getResourceModel('ProduktMdl');
 		$resource->insertProdukt($produkt); 
 		
-	    }
-	    else
-	    {
-	    	 var_dump($_SESSION['errors']);
-	    }
-	   
+	 
     }
     //schreiben:Datei in den Ordner: Projektordner/Assets kopieren 
     public function addFile()

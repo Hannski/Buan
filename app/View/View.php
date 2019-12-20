@@ -12,6 +12,10 @@ class View
 		echo App::render('seitenkomponenten/header');
 		
 	}
+	public function errors()
+	{
+		echo App::render('seitenkomponenten/errors');
+	}
 	
 	public function footer()
 	{
@@ -34,11 +38,18 @@ class View
 	 echo App::render('seitenkomponenten/errors');
   	 echo App::render('pages/admin/adminlogin');
 	}
+
 	public function adminDashboard()
 	{
-		 echo App::render('pages/admin/adminNav');
+		echo App::render('pages/admin/adminNav');
+	}
+	//Dasboard Superadmin
+	public function superAdminDashboard()
+	{
+		 echo App::render('pages/admin/SuperadminNav');
 		 echo App::render('pages/admin/adminhome');
 	}
+	
      //produkte hinzufuegen Formular
     public function addProducts()
     {
@@ -58,6 +69,23 @@ class View
 	public function userLogin()
 	{
 	echo App::render('pages/user/user-login');
+	}
+	/*Startseite: User muss sich entschieden ob einloggen oder registrieren*/
+	public function enterSite()
+	{
+	echo App::render('pages/user/enterSite');
+	}
+	public function userRegister()
+	{
+		echo App::render('pages/user/userRegistration');
+	}
+	public function addAdmins()
+	{
+		echo App::render('pages/admin/editAdmins');
+	}
+	public function updateUser()
+	{
+		echo App::render('pages/admin/updateUser');
 	}
 
 }

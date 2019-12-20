@@ -24,6 +24,10 @@ html,body,td,table,tr
 {
 color: #fff!important;
 }
+.dropdown-item:hover
+{
+background-color: grey;
+}
 .d-button
 {
 	background-color: 	rgb(105,105,105,.8)!important;;

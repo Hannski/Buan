@@ -13,11 +13,16 @@
 		<a href="./produkte-bearbeiten">produkte-bearbeiten</a>
 	    </button>	
 	</div>
+	<!-- Link Unauthorisierte Nutzer Bearbeiten -->
+	<div class="d-button border m-1 rounded col-md-3 col-sm-12 col-lg-3"> 
+		<button class="btn btn-sm btn-outline my-1 my-sm-0" name="dashboard" value="add_p">
+		<a href="./user-authorisierung">Nutzer authorisieren</a>
+	    </button>	
+	</div>
 		
 		
 
 	
 
-	<form action ="" method="POST" class="border d-button rounded m-1 col-md-3 col-sm-12 col-lg-3"><button class="btn btn-sm btn-outline my-1 my-sm-0" name="dashboard" value="change_u"><?php echo $langArray[$opt]['u_edit']; ?></button></form>
 </div>
 </div>

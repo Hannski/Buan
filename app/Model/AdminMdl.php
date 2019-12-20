@@ -6,6 +6,8 @@ private $a_id = 0;
 private $a_nname = "";
 private $a_vorname ="";
 private $a_pw = "";
+private $status ="";
+private $super="";
 
 
     /**
@@ -73,4 +75,44 @@ private $a_pw = "";
         $this->a_pw = $a_pw;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSuper()
+    {
+        return $this->super;
+    }
+
+    /**
+     * @param mixed $super
+     *
+     * @return self
+     */
+    public function setSuper($super)
+    {
+        $this->super = $super;
+
+        return $this;
+    }
 }

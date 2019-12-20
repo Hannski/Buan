@@ -5,64 +5,105 @@ use App;
 
 class AdminCtrl 
 {	
-	public $name;
-	public $nachname;
-	public $password;
-	public $errorArray = array();
-  public function verifyAdmin()
-  {
-     if(isset($_SESSION['admin']) && App::adminSess())
-  { 
-    return true;
-  }
-  }
+  public $a_id="";
+	public $name="";
+	public $nachname="";
+	public $password="";
+  public $status="";
+	
 
-  // public function showErrors()
-  //  {
-  //  	 foreach ($this->errorArray as $value)
-  //   {
-  //   //Fehler ausgeben
-  //   include BASEPATH.'/app/includes/languageCheck.php';
-  //   return  $langArray[$opt][$value];
-  //   }
-  // }
-
-    public function tryLogin($name,$nachname,$password)
-    { 
-    $adminArray = AdminMdl::authorizeAdmin();
-    foreach ($adminArray as $key)
-	 {
-			$pass = $key->getAPw();
-			$a_name = $key->getAVorname();
-			$a_nachname = $key->getANname();
-		}
+  /*Login-Formular Auswertung*/
+    public function adminLoginForm()
+    {
     
-    if(empty($this->name) && empty($this->nachname) && empty($this->pw))
-	{
-	$this->errorArray[] = "emptyFields";
-	return $this->errorArray;
-	}
-	elseif ($this->name !== $a_name)
-	{
-		$this->errorArray[]= "nameNot";
-		return $this->errorArray;
-	}
-	elseif ($this->nachname !== $a_nachname)
-	{
-		$this->errorArray[]= "nameNot";
-		return $this->errorArray;
-	}
-	elseif(md5($this->password) !== $pass)
-	{
-		$this->errorArray[]= "pwNot";
-		return $this->errorArray;
-	}
-	if(!empty($this->errorArray))
-   {
-    return $this->errorArray;
-   }
+    $vname = $_POST['name'];
+    $nname = $_POST['nachname'];
+    //md5 verschluesselung fuer Abgleich, Passwort ist verschluesselt in DB hinterlegt.
+    $pw = md5($_POST['password']);
+   
+    if(empty($vname) || empty($nname) || empty($pw))
+      {
+      //Alle Felder leer: bitte alle felder ausfuellen
+      $_SESSION["errors"] ="emptyFields";
+      }else{
+         //authorizeAdmin gibt AdminModel(wenn Eintrag gefunden) mit daten des passenden Datensatzes in DB zurueck
+          if(AdminMdl::authorizeAdmin($vname,$nname,$pw))
+          {
+            $admin = AdminMdl::authorizeAdmin($vname,$nname,$pw);
+            /*Wenn Status = 1, dann ist der Administrator gesperrt worden
+            * -Nachricht ueber Sperrung an Nutzer
+            */
+              if($admin->getStatus()==1)
+              {
+                $_SESSION["errors"]="locked";
+              }
+              elseif($admin->getSuper()==1)
+              {
+                /* Wenn Asmin=SuperAdmin, Sesison setzen, da Superadmin erweiterte AdminRechte besitzt
+                *   -superAdminSession speichern.
+                *   -freigabe zur weiterleitung nach Admin-Dashboard
+                */
+                $_SESSION['super']="super";
+                return true;
+              }
+              else
+              {
+                //Freigabe zur Weiterleitung zu Amdindashboard.
+                return true;
+              }
+           }
+            else
+            {//Fehler im Code: "OOPS!-Meldung"
+              $_SESSION["errors"] = "nope";
+            }
+        }
+      }
+  
+  
+  /*handelt es sich bei dem eingeloggten Admin um den Super Admin? */
+  public function isSuperAdmin()
+  {
+    if(isset($_SESSION['super'])=="super") 
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
 
-  }	
+   /*Ist der Admin eingeloggt? */
+   //Sessions verwalten:
+  public function isAdmin()
+  {
+    if(isset($_SESSION['admin']) == "loggedIn")
+    {
+
+      return true;
+    }
+    else
+    {
+
+      return false;
+    }
+  }
+  public function returnAdminStatus()
+  {
+    if(self::isSuperAdmin())
+    {
+      return "superAdminDashboard";
+    }
+    elseif (self::isAdmin())
+    {
+      return "adminDashboard";
+    }
+    else
+    {
+      return false;
+    }
+  }
+
 
 
   public function loginAdmin()
@@ -73,18 +114,16 @@ class AdminCtrl
      $name     = $_POST['name'];
      $nachname = $_POST['nachname'];
      $password = $_POST['password'];
-     /* wenn Login fehlschlägt, gib Fehler aus, sonst starte Adminsession und weiterleiten auf Dashboard*/
     
-    // if(self::tryLogin($name,$nachname,$password))
-    //   {echo "fehhler";}
-    // else
-    //   {     
-      $_SESSION['admin'] = "loggedIn";
-      //Anmeldung erfolgreich, weiterleiten zum Admin dashboard
+     $_SESSION['admin'] = "loggedIn";
+      
       echo "<script> window.location.href = \"admin-home\"</script>";
-      // }
+   
     }
    }
+
+
+
 
    //Im Admin Dashboard Optionen zur Bearbeitung, erstellung und Sperrung von Produkten und Nutzern
    public function adminOption($dashboardview)
@@ -97,7 +136,56 @@ class AdminCtrl
     {
       echo "error";
     }
-}
+  }
+
+
+
+
+
+
+
+    /*
+  * Formularfehler abfangen
+  *-Alle Felder muessen ausgefuellt werden
+  *-Passwoerter bestimme laenge
+  *-PAsswoerter stimmen ueberein
+  *-
+  */
+    public function addAdminForm()
+    {
+      return true;
+    }
+        /*
+  * Formularfehler abfangen
+  *-Alle Felder muessen ausgefuellt werden
+  *-Passwoerter bestimme laenge
+  *-PAsswoerter stimmen ueberein
+  *-
+  */
+    public function addAdmin()
+    {
+    $admin = App::getModel('AdminMdl');
+    $admin->setANname($_POST['nachname']);
+    $admin->setAVorname($_POST['vorname']);
+    $admin->setAPw(md5($_POST['password1']));
+    //In Datenbank schreiben
+    $resource = App::getResourceModel('AdminMdl');
+    $resource->insertAdmin($admin); 
+    }
+  /*
+  *Alle Administratoren abrufen 
+  * - mit Ausnahme von Superadmin
+  *
+  */
+  public function showAllSubAdmins()
+  {
+      // resource model instanzieren  
+        $model = App::getResourceModel('AdminMdl');
+        //Daten abrufen
+        $adminArray = $model->getAllAdmins();
+        // adminArray fuer Anzeige in Array bereitstellen
+        return array('adminArray'=> $adminArray);
+  }
 }
 
  

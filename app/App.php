@@ -4,23 +4,12 @@ class App
 	public $langArray = array();
  	function __construct()
 {
-    include BASEPATH."/app/includes/languageCheck.php";
-    $this->langArray = $langArray;
+  
+
 
 	//Url verarbeiten->Inhalte einfuegen
 	$url = new Router();
-
-
-	//Url auf Englisch und Deutsch Abfragen und verarbeiten
-	//Beispiel: Aktionen fuer /admin/add-produkt <==> /admin/produkt-hinzufuegen
-	// if (!isset($_SESSION['language']))
-	// {
-	// 	$_SESSION['language']="0";
-	// }
-	// else{
- //     $url->checkUrl($langArray,$_SESSION['language']);
-	// }
-	$url->checkUrl($this->langArray);
+	$url->checkUrl();
 	}
 	//Namespace Model-Pfad
 	 public static function getModel(string $model) {

@@ -28,19 +28,22 @@ class ProduktMdl extends Base
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
-        $stmt->bindValue('name_de', 		$produkt->getNameDe());
-        $stmt->bindValue('name_en', 		$produkt->getNameEn());
-        $stmt->bindValue('beschreibung_de', $produkt->getBeschreibungDe());
-        $stmt->bindValue('beschreibung_en', $produkt->getBeschreibungEn());
-        $stmt->bindValue('preis', 			$produkt->getPreis()); 
-        $stmt->bindValue('dateiname',		$produkt->getDateiname());
-        $stmt->bindValue('bestand',         $produkt->getMenge());
+        $stmt->bindValue(':name_de', 		$produkt->getNameDe());
+        $stmt->bindValue(':name_en', 		$produkt->getNameEn());
+        $stmt->bindValue(':beschreibung_de', $produkt->getBeschreibungDe());
+        $stmt->bindValue(':beschreibung_en', $produkt->getBeschreibungEn());
+        $stmt->bindValue(':preis', 			$produkt->getPreis()); 
+        $stmt->bindValue(':dateiname',		$produkt->getDateiname());
+        $stmt->bindValue(':bestand',         $produkt->getMenge());
         $stmt->execute();
         
 
  }
 
-/*Alle Produktinformationen aus der Datenbank wo Lagerbestände positiv sind und nicht gesperrt*/
+/*Alle Produktinformationen aus der Datenbank zur Anzeige fuer Nutzer wo:
+*   -Lagerbestände positiv sind 
+*   -nicht gesperrt
+*/
  public function getAllProducts()
  {
         $base= new Base();
@@ -65,7 +68,10 @@ class ProduktMdl extends Base
         return $productArray;
  }
 
- //Alle Produkte, Egal welche Bestände und Sperrstatus
+ /*Alle Produkte zur Anzeige fuer den Administrator:
+ *  -Egal welche Bestandszahlen 
+ *  -unabhaengig von Sperrstatus 
+ */
  public function getAllAdminProducts()
  {
     $base= new Base();
@@ -98,7 +104,8 @@ class ProduktMdl extends Base
 
  }
 
- //Produkt nach ID
+ /* Bestimmtes Produkt nach ID aus der DB
+ */
  public function getProduktById($id)
  {
             $base = new Base();
@@ -128,7 +135,7 @@ class ProduktMdl extends Base
             return $produktArray;
  }
 
- //Produktinformationen aktualisieren
+ /*Produktinformationen aktualisieren*/
  public function UpdateProdukt($id,$edit,$value)
  {
         $base= new Base();

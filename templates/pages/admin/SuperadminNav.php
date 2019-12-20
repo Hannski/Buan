@@ -57,6 +57,22 @@
       <!-- Dropdown Administratoren -->
 
 
+          <li class="nav-item dropdown">
+        <!-- ueberschrift -->
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Admins
+        </a>
+
+        <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
+         <!-- Produkte einstellen -->
+     <a class="dropdown-item" href="./admin-erstellen">Admin erstellen</a>
+      <div class="dropdown-divider"></div>
+        <!-- Alle produkte Verwalten -->
+        <a class="dropdown-item" href="./admin-verwaltung">Admins bearbeiten</a>
+
+        </div>
+      </li>
+
       
     </ul>
   </div>
