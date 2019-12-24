@@ -50,8 +50,8 @@ $langArray[1]['btn_p_add']			= "Submit Product";
 $langArray[0]['aendern']			= "aktualisieren";
 $langArray[1]['aendern']			= "update";
 //Nutzerregistrierung
-$langArray[0]["antragSubmit"]		= "Antrag absenden";
-$langArray[1]["antragSubmit"]		= "submit Application";
+$langArray[0]["submitRegister"]		= "Antrag absenden";
+$langArray[1]["submitRegister"]		= "submit Application";
 //Administrator hinzufuegen
 $langArray[0]["addAdmin"]			= "Admin bestaetigen";
 $langArray[1]["addAdmin"]			= "confirm admin";
@@ -110,6 +110,25 @@ $langArray[1]['nope'] 		= "Oops! Something went terribly wrong!";
 //nicht alle Felder augefuellt:
 $langArray[0]['emptyFields'] 		= "Alle Felder m&uuml;ssen ausgef&uuml;llt werden!";
 $langArray[1]['emptyFields'] 		= "Fields cannot be empty!";
+$langArray[0]['emptyPassword1']     = "Passwort 1 muss ausgef&uuml;llt werden!";
+$langArray[1]['emptyPassword1']      = "Password 1 cannot be empty!";
+$langArray[0]['emptyPassword2']     = "Passwort 2 muss ausgef&uuml;llt werden!";
+$langArray[1]['emptyPassword2']      = "Password 2 cannot be empty!";
+$langArray[0]['emptyMsg']           = "Bitte geben Sie eine Beitrittsbegr&uuml;ndung an!";
+$langArray[1]['emptyMsg']           = "Please leave the reason for your application. ";
+$langArray[0]['noMatch']            = "Passw&ouml;rter stimmen nicht &uuml;berein";
+$langArray[1]['noMatch']            = "the passwords you entered do ot match";
+$langArray[0]['notCaptcha']            = "Der eingegebene Captcha stimmt nicht ueberein";
+$langArray[1]['notCaptcha']            = "Der eingegebene Captcha stimmt nicht ueberein";
+
+$langArray[0]['emptyPassword']      = "Passwort muss ausgef&uuml;llt werden!";
+$langArray[1]['emptyPassword']      = "Password cannot be empty!";
+$langArray[0]['emptyUsername']      = "Username muss ausgef&uuml;llt werden!";
+$langArray[1]['emptyUsername']      = "Username cannot be empty!";
+$langArray[0]['emptyCaptcha']       = "Captcha muss ausgef&uuml;llt werden!";
+$langArray[1]['emptyCaptcha']       = "Captcha cannot be empty!";
+
+
  // Username Falsch oder Passwort falsch
 $langArray[0]['nameNot'] 			="Passwort oder Username falsch";
 $langArray[1]['nameNot'] 			="Password or Username wrong";

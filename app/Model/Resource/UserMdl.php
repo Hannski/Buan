@@ -4,25 +4,34 @@ use Model\UserMdl as UserModel;
 class UserMdl extends Base
 {
     /*User authetifizierung */
-	public function authorizeUser()
+	public function authenticateUser($username,$password)
     {
-        $base= new Base();
-        $sql = "SELECT id,username,pwmd5,gesperrt FROM user";
-        $dbResult = $base->connect()->query($sql);
-        $userArray = array();
-        while ($row = $dbResult->fetch(\PDO::FETCH_ASSOC))
+        $sql = "SELECT id,username,pwmd5,gesperrt FROM user WHERE username = ? AND pwmd5 = ? AND gesperrt = 0";
+        $pwmd5 = md5($password);
+        $base = new Base();
+        $connection = $base->connect();
+
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue('username', $username);
+        $stmt->bindValue('pwmd5', $pwmd5);
+        $dbresult = $connection->query($sql);
+
+        while ($row =$dbresult->fetch(\PDO::FETCH_ASSOC))
         {
             //Instanzierung der Klasse UserMdl in Model/UserMdl.php (setters und Getters)
             $user = new UserModel();
             $user->setId($row['id']);
             $user->setUsername($row['username']);
             $user->setPwmd5($row['pwmd5']);
-            $user->setgesperrt($row['gesperrt']);
+            echo $row['id'];
+            //Objekt
+            return $user;
 
-            //Ins array schreiben
-            $userArray[] = $user;
         }
-        return $userArray;
+
+        return false;
+
     }
     /*neuen User (noch nicht authorisiert) in die Datenbank schreiben: diesen Nutzenden zeichent aus, dass er oder sie gesperrt sind und kein konfirmations-datum festgelet wird*/
     public function insertUser($user)
@@ -67,7 +76,7 @@ class UserMdl extends Base
     {
     $base  = new Base();
     $sql  = "UPDATE  user SET confirm_datum = CURRENT_DATE(), gesperrt=:gesperrt WHERE id=:id";
-    $connection = $base->connect(); 
+    $connection = $base->connect();
     $stmt= $connection->prepare($sql);
     $stmt->bindValue(':gesperrt', $user->getStatus());
     $stmt->bindValue(':id', $user->getId());
@@ -80,7 +89,7 @@ class UserMdl extends Base
     public function getAllAuthUsers()
     {
         $base= new Base();
-        //Nur Produkte, die auf Lager sind anzeigen. 
+        //Nur Produkte, die auf Lager sind anzeigen.
         $sql = "SELECT id,username,confirm_datum,gesperrt FROM user WHERE confirm_datum > 0000-00-00";
         $dbResult = $base->connect()->query($sql);
         $userArray = array();
@@ -91,7 +100,7 @@ class UserMdl extends Base
             $user->setId($row['id']);
             $user->setUsername($row['username']);
             /*Datumsausgabe aus dem Format : Year-month-day zu: Tag.Monat.Jahr 8-stellig- 00.00.0000*/
-            $date = date_create($row['confirm_datum']);            
+            $date = date_create($row['confirm_datum']);
             $user->setAcceptiondate(date_format($date,'d.m.Y'));
             $user->setStatus($row['gesperrt']);
             //Ins array schreiben
@@ -99,6 +108,8 @@ class UserMdl extends Base
         }
         return $userArray;
     }
+
+
 
 
 

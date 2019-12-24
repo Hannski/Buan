@@ -1,13 +1,14 @@
 <?php
+session_start();
 	/*diese datei wird als quelle fuer ein <img> in der Datei: root/templates/pages/user-login aufgerufen*/
-	function createCaptcha()
-	{
-//Zugelassene Zeichen: I&l + 0&Oo entnommen da verwechslungsgefahr!
-$captcha_num = 'ABCDEFGHJKLMNPQRSTUVWXYZ123456789abcdefghijkmnpqrstuvwxyz';
+
+//Zugelassene Zeichen: Der Einfachheit halber: nur grosse Buchstaben!
+$captcha_num = 'ABCDEFGHJKLMNPQRSTUWXYZ23456789';
 /*substr: Gibt einen Teil eines Strings zurück, str_shuffle: mischt Zeichen im String nach dem Zufallsprinzip*/
 $captcha_num = substr(str_shuffle($captcha_num), 0, 6);
+
 //Captcha für überprüfung in session speichern.
-$_SESSION["code"] = $captcha_num;
+$_SESSION['captcha'] = $captcha_num;
 // Zeichengroesse
 $font_size = 15;
 //Breite und Hoehe des generierten Bildes
@@ -26,8 +27,12 @@ $font= dirname(__FILE__)."/font24.ttf";
 /*imagettftext — Schreibe Text ins Bild unter Verwendung von True-Type-Schriftarten*/
 /*reihenfolge: hintergrundbild , schriftgroesse , rotation , x-achse , y-achse , schriftfarbe , $font , captchatext*/
 imagettftext($image, $font_size, 0, 15, 30, $text_color,$font , $captcha_num);
+//Captcha für überprüfung in session speichern.
+
 //imagejpeg — Gibt das Bild im Browser oder einer Datei aus.
 imagejpeg($image);
-	}
+
+
+
 //Funktion ausfuehren: Captcha-jpeg wird erzeugt und ausgegeben
-createCaptcha();
+

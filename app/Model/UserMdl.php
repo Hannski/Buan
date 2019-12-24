@@ -2,13 +2,13 @@
 namespace Model;
 class UserMdl
 {
-	private $id=0;
-	private $username="";
-	private $pwmd5="";
-	private $acceptiondate="";
-	private $status="";
-	private $temppw="";
-    private $appMsg ="";
+	private $id;
+	private $username;
+	private $pwmd5;
+	private $acceptiondate;
+	private $status;
+	private $temppw;
+    private $appMsg;
 	
 
 

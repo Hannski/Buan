@@ -1,9 +1,29 @@
 <?php
 namespace Controller;
 use \Model\Resource\UserMdl ;
-use App;
-class UserCtrl
+use \Form\UserLoginForm;
+use \Form\UserRegisterForm;
+
+class UserCtrl extends AbstractController
 {
+
+    /*
+     * /user-register
+     * user-registrierung
+     */
+    public function registerAction()
+    {
+        $form = new UserRegisterForm();
+        $errorArray = $form->getErrorList();
+        echo $this->render('seitenkomponenten/header');
+        echo $this->render('seitenkomponenten/nav');
+        echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+        echo $this->render('pages/user/userRegistration');
+        echo $this->render('seitenkomponenten/footer');
+    }
+
+
+
 	/*
 	* Nutzer sendet Registrierungsanfrage:
 	*-Formularfehler abfangen:
@@ -11,27 +31,56 @@ class UserCtrl
 	*		-Passwoerter stimmen nicht ueberein
 	*
 	*/
-	public function RegisterUserForm()
+	public function registerForm()
 	{
-		$message="";
-		if (empty($_POST['username']) || empty($_POST['password1']) || empty($_POST["password2"])||empty($_POST['msg']))
-		{ 
-			$message = "Alle Felder muessen ausgefuellt werden";
-		}
-		elseif($_POST['password1'] !== $_POST["password2"])
-		{
-			$message="Passwoerter stimmen nicht ueberein";
-		}
-		if(!empty($message))
-		{
-		$_SESSION['errors'] = $message;
-		}
-		else
-		{
-			$_SESSION['errors']="";
-			return true;
-		}
+
 	}
+
+	/*
+    *  Buan/user-login
+    * user anmeldung
+    */
+    public function loginAction()
+    {
+        echo $this->render('seitenkomponenten/header');
+        echo $this->render('seitenkomponenten/nav');
+        if($this->isPost("loginButton"))
+        {
+            $form = new UserLoginForm();
+            $errorArray = $form->getErrorList();
+           if(!empty($errorArray)){
+            echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+           }
+           elseIf($this->authenticateUser()){
+               header('Location: user-home');}
+           else{
+               $errorArray = array();
+               $errorArray[] = 'nameNot';
+               echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+           }
+
+        }
+        echo $this->render('pages/user/user-login');
+        echo $this->render('seitenkomponenten/footer');
+
+    }
+
+    public function homeAction()
+    {
+        echo $this->render('seitenkomponenten/header');
+        echo $this->render('seitenkomponenten/nav');
+        echo $this->render('seitenkomponenten/footer');
+
+    }
+
+    public function authenticateUser()
+    {
+      UserMdl::authenticateUser($_POST['username'],$_POST['password']);
+      var_dump($user);
+    }
+
+
+
 
 	/*
 	*
@@ -110,5 +159,7 @@ class UserCtrl
         // Produkte darstellen / template
         return array('userArray'=> $userArray);
 	}
+
+
 
 }

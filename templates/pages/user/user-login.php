@@ -7,14 +7,10 @@
 	<span><h1><?php echo $langArray[0]["adminSignin"]?></h1></span>
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
 		<?php
-		echo "<input class=\"form-control\" type=\"text\"  name=\"name\" placeholder=".$langArray[$opt]['PlatzhalterVorname'].">";
+		echo "<input class=\"form-control\" type=\"text\"  name=\"username\" placeholder=".$langArray[$opt]['PlatzhalterVorname'].">";
 		?>
 	</div>
-	<div class=" mt-2 input-group input-group-lg mr-sm-2">
-		<?php
-		echo "<input class=\"form-control\" type=\"text\"  name=\"nachname\" placeholder=".$langArray[$opt]['PlatzhalterNname'].">";
-		?>
-	</div>
+
 
 	<div class=" mt-2 input-group input-group-lg mr-sm-2">
 		<?php
@@ -29,7 +25,7 @@
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
 		
       	 <?php
-		echo "<input class=\"form-control\" type=\"text\"  name=\"captcha\" placeholder=".$langArray[$opt]['PlatzhalterPw'].">";
+		echo "<input class=\"form-control\" type=\"text\"  name=\"captcha\" >";
 		?>
 		
 	</div>

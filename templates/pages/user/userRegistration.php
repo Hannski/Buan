@@ -1,5 +1,5 @@
 <?php 
-   /*Template: nutzeranmeldung. Formular fuer die Anmeldung der Nutzer*/
+   /*Template:Nutzerregistrierung*/
 ?>
 <div class="login h-50 d-flex-flex-col row m-1">
 
@@ -7,9 +7,9 @@
 	
 	<span><h1><?php echo $langArray[$opt]["register"]?></h1></span>
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
-		<?php
-		echo "<input class=\"form-control\" type=\"text\"  name=\"username\" placeholder=\"vorname\">";
-		?>
+
+	<input class="form-control" type="text" name="username" placeholder="vorname">
+
 	</div>
 
 
@@ -39,7 +39,7 @@
 	
 	<div class="mt-2  p-4">
 	<button type="submit " class=" m-2 btn bnt-lg btn-outline-success my-2 my-sm-0" name="u_register">
-		<?php echo $langArray[$opt]["antragSubmit"]?>
+		<?php echo $langArray[$opt]["submitRegister"]?>
 			
 	</button></div>
 	
