@@ -3,17 +3,38 @@
 stattdessen die weniger empfohlene "bad-practice" !important zum ueberschrieben der styles gewaehlt da der Fokus des Projektes weniger auf dem Front- als auf dem 
 Backend liegt */
 /* HIntergrund */
-html, body
+html, body, #wrapper
 {
     height: 100%!important;
     background-color:#05041B;
 }
 /* Schriftfarbe- und groesse */
+.font-reverse
+{
+    color: #1b1e21!important;
+}
 html,body,td,table,tr
 {
     color: #fff!important;
     font-size:17px!important;
 }
+hr,.hr
+{
+    background-color: #fff!important;
+}
+/*Hintergrund fuer Karten und Textausgaben in Listenform*/
+.card,.data
+{
+    background-color: #332e2e!important;
+}
+
+.list-group-item
+{
+    border-bottom: 1px solid #ffffff!important;
+    border-top:1px solid #ffffff!important;
+
+}
+
 /* hintergrundfarbe Navigationsleiste */
  .bg-light 
 {
@@ -30,9 +51,11 @@ background-color: grey;
 }
 .d-button
 {
-	background-color: 	rgb(105,105,105,.8)!important;;
+	background-color: 	rgb(105,105,105,0.8)!important;;
 }
 .border
 {
 	border-color: #fff!important;
 }
+
+

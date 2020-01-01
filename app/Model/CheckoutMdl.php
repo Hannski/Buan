@@ -1,6 +1,6 @@
 <?php
 namespace Model;
-class CartMdl
+class CheckoutMdl
 {
 public $user_id = "";
 public $produkt_id = "";

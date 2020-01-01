@@ -28,7 +28,7 @@
         <p>Lagerbestand:&nbsp; 				<b><?php echo $lager ?></b></p>
         <p>Status:&nbsp;					<b><?php echo $status ?></b></p>
         <p> 
-    <p class="p-4"> <form action="produkteverwaltung/" class="text-center" method="GET">
+    <p class="p-4"> <form action="produkt-bearbeiten/" class="text-center" method="GET">
     <input type="hidden"  name="id" value ="<?php echo $id ?>">
     <button type="submit" class="btn  btn-danger">Bearbeiten</button>
     </form>

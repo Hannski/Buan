@@ -1,7 +1,7 @@
 <?php
 /*Template: User Bearbeiten: jeweils eine Karte für einen User wird gelistet. per GET- bei absenden des formulars, wird der einzelne, zu bearbeitende User als Einzelansicht aufgerufen*/
  ?>
-<div class="container mt-3">
+<div class="container mt-4">
 	<div class="row p-4">
 		
 			<?php
@@ -25,7 +25,7 @@
 
         <p>Beschreibung Deutsch:&nbsp; 		<b><?php  ?></b></p>
         <p> 
-    <p class="p-4"> <form action="nutzerdaten-bearbeiten" class="text-center" method="GET">
+    <p class="p-4"> <form action="user-bearbeiten/" class="text-center" method="GET">
     <input type="hidden"  name="id" value ="<?php echo $id ?>">
     <button type="submit" class="btn btn-danger">Bearbeiten</button>
     </form>

@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
     public function defaultAction():void
     {
         echo $this->render('seitenkomponenten/header');
-        echo $this->render('seitenkomponenten/nav');
+        echo $this->render('pages/seitenkomponenten/nav');
         echo $this->render('pages/user/enterSite');
         echo $this->render('seitenkomponenten/footer');
 

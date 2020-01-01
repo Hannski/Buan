@@ -30,10 +30,10 @@
 
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
          <!-- Produkte einstellen -->
-      <?php echo"<a class=\"dropdown-item\" href=".$langArray[$opt]['p_einstellen'].">".$langArray[$opt]['p_einstellen']."</a>";?>
+      <?php echo"<a class=\"dropdown-item\" href=\"./produkt-erstellen\">".$langArray[$opt]['p_einstellen']."</a>";?>
       <div class="dropdown-divider"></div>
         <!-- Alle produkte Verwalten -->
-        <a class="dropdown-item" href="./produkte-bearbeiten">produkte-bearbeiten</a>
+        <a class="dropdown-item" href="./produkt-verwalten">produkte-verwalten</a>
 
         </div>
       </li>
@@ -47,10 +47,10 @@
         </a>
          <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
          <!-- Nutzer authorisieren -->
-  <a class="dropdown-item" href="./user-authorisierung">Nutzer authorisieren</a>
+  <a class="dropdown-item" href="./user-authorisierung">user-authorisieren</a>
       <div class="dropdown-divider"></div>
         <!-- Alle produkte Verwalten -->
-        <a class="dropdown-item" href="./nutzer-verwalten">Nutzer Verwalten</a>
+        <a class="dropdown-item" href="./user-verwalten">user-Verwalten</a>
   
         </div>
       </li>

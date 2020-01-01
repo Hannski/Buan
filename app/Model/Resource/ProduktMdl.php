@@ -124,7 +124,7 @@ class ProduktMdl extends Base
             $product->setDateiname($row['dateiname']);
             $product->setMenge($row['bestand']);
              if($row['gesperrt']==0){
-                 $product->setStatus("sichtbar");
+                 $product->setStatus("aktiv");
             }else{
             $product->setStatus("gesperrt");
             }
@@ -136,7 +136,7 @@ class ProduktMdl extends Base
  }
 
  /*Produktinformationen aktualisieren*/
- public function UpdateProdukt($id,$edit,$value)
+ public function updateProdukt($id,$edit,$value)
  {
         $base= new Base();
         $sql ="UPDATE items SET $edit = ? WHERE id = ?";

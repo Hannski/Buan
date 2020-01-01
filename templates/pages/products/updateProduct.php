@@ -16,7 +16,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="card bg-light" >	
 		<div class="text-center">
-    	<img  class="mt-2 mb-2 img-thumbnail rounded" src="./Assets/<?php echo $file; ?>" alt="<?php echo $file ?>">
+    	<img  class="mt-2 mb-2 img-thumbnail rounded" src="../Assets/<?php echo $file; ?>" alt="<?php echo $file ?>">
 	</div>
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="h-25 m-1 input-group d-flex align-items-center">

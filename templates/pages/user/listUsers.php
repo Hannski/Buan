@@ -4,12 +4,13 @@
 			
 			<?php
 			
-			foreach ($userArray as $key){
-			$id = $key->getId();
-	 	 	$username = $key->getUsername();
-			$status = $key->getStatus();
-		
-			echo "<tr><td>$id</td></tr>";
+			foreach ($userArray as $key) {
+                $id = $key->getId();
+                $username = $key->getUsername();
+                $status = $key->getStatus();
+
+                echo "<tr><td>$id</td></tr>";
+            }
 			?>
 		</table>
 	</div>

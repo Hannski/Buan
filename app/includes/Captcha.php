@@ -1,11 +1,11 @@
 <?php
 session_start();
-	/*diese datei wird als quelle fuer ein <img> in der Datei: root/templates/pages/user-login aufgerufen*/
+	/*diese datei wird als quelle fuer ein <img> in der Datei: root/alerts/pages/user-login aufgerufen*/
 
 //Zugelassene Zeichen: Der Einfachheit halber: nur grosse Buchstaben!
 $captcha_num = 'ABCDEFGHJKLMNPQRSTUWXYZ23456789';
 /*substr: Gibt einen Teil eines Strings zurück, str_shuffle: mischt Zeichen im String nach dem Zufallsprinzip*/
-$captcha_num = substr(str_shuffle($captcha_num), 0, 6);
+$captcha_num = substr(str_shuffle($captcha_num), 0, 1);
 
 //Captcha für überprüfung in session speichern.
 $_SESSION['captcha'] = $captcha_num;

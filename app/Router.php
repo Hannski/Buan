@@ -46,12 +46,16 @@ class Router
                 $controller->$methodName();
             } else {
                 //Problem: Kontroller gefunden, Methode nicht.
-                echo "404-Fehler: die $url wurde ausgewrtet, der $controllerClass 
-        Kontroller wurde gefunden aber die methode $methodName nicht";
+                echo Controller\AbstractController::render('seitenkomponenten/header');
+                echo  Controller\AbstractController::render('seitenkomponenten/nav');
+                echo Controller\AbstractController::render('pages/alerts/404');
+
             }
         } else {
-            //Problem:Controller nicht gefunden:
-            echo "404-fehler: die" . $_GET['url'] . "wurde ausgewertet: der Kontroller Kontroller konnte nicht gefunden werden.";
+          echo  Controller\AbstractController::render('seitenkomponenten/header');
+          echo  Controller\AbstractController::render('seitenkomponenten/nav');
+          echo Controller\AbstractController::render('pages/alerts/404');
+
 
         }
 

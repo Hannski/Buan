@@ -4,7 +4,7 @@
 <div class="login h-50 d-flex-flex-col row m-1">
 <form method="POST" class="form-signin bg-light container p-4 d-flex-flex-col justify-content-center">
 	
-	<span><h1><?php echo $langArray[0]["adminSignin"]?></h1></span>
+	<span><h1><?php echo $langArray[$opt]["adminSignin"]?></h1></span>
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
 		<?php
 		echo "<input class=\"form-control\" type=\"text\"  name=\"username\" placeholder=".$langArray[$opt]['PlatzhalterVorname'].">";

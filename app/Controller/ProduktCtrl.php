@@ -2,21 +2,30 @@
 namespace Controller;
 use \Model\Resource\ProduktMdl ;
 use App;
-class ProduktCtrl
+class ProduktCtrl extends AbstractController
 {
+
+    //Produkte verwalten
+    public function verwaltenAction()
+    {
+        $this->getNav();
+        $resource = new ProduktMdl();
+        $produkteArray = $resource->getAllProducts();
+        echo $this->render('pages/products/editp',array('produkteArray'=>$produkteArray));
+    }
 
 	//abrufen: Alle produkte die in Bestand sind und nicht gesperrt
 	public function showProducts()
 	{
 		// resource model instanzieren
        
-        $model = App::getResourceModel('ProduktMdl');
+        $model = new ProduktMdl();
 
         // Produkte abrufen
         $produkteArray = $model->getAllProducts();
 
         // Produkte-array fuer Anzeige in Array bereitstellen
-        return array('produkteArray'=> $produkteArray);
+        return (array('produkteArray'=> $produkteArray));
 	}
 
 
@@ -47,6 +56,25 @@ class ProduktCtrl
         return array('produkteArray'=> $produkteArray);
 
     }
+
+
+    //Produkt-erstellen Action
+    public function erstellenAction()
+    {
+        $this->getNav();
+        echo $this->render('pages/products/add_p');
+        echo $this->render('seitenkomponenten/footer');
+    }
+
+    //Produkt bearbeiten Action
+    public function bearbeitenAction()
+    {
+        $this->getNav();
+        $resource = new ProduktMdl();
+        $produkteArray = $resource->getProduktById($_GET['id']);
+        echo $this->render('pages/products/updateProduct',array('produkteArray'=>$produkteArray));
+    }
+
 
     //schreiben:: produkt in die Datenbank schreiben
 	public function addProduct()

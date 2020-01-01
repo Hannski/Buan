@@ -23,10 +23,8 @@ Template: Administratoren bearbeiten, wird nur dem Superadmin als Option gegeben
         <p>Vorname:&nbsp;			<b><?php echo $vorname  ?></b></p>
         <p>Nachname:&nbsp; 			<b><?php echo $nachname ?></b></p>
         <p>Status:&nbsp; 			<b><?php echo $langArray[$opt][$status] ?></b></p>
-     
-        
-    <p class="p-4"> <form action="nutzer-verwalten/" class="text-center" method="GET">
-   <!--  <input type="hidden"  name="id" value ="<?php echo $id ?>"> -->
+    <p class="p-4"> <form action="admin-verwalten/" class="text-center" method="GET">
+   <input type="hidden"  name="id" value ="<?php echo $id ?>">
     <button type="submit" class="btn  btn-danger">Bearbeiten</button>
     </form>
     </p>	

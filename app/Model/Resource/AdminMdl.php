@@ -1,8 +1,25 @@
 <?php
 namespace Model\Resource;
-use Model\AdminMdl as AdminModel;
+use \Model\AdminMdl as AdminModel;
 class AdminMdl extends Base
 {
+    public function adminExists($vname,$nname)
+    {
+        $base= new Base();
+        $sql = "SELECT a_nname,a_vorname FROM admin WHERE a_vorname = :vorname AND a_nname = :nachname";
+        $stmt = $base->connect()->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue(':vorname',$vname);
+        $stmt->bindValue(':nachname',$nname);
+        $stmt->execute();
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC))
+        {
+            return true;
+
+        }
+        return false;
+
+    }
     /*
     *Fuer abgleich der eingegeben Anmeldedaten : vergleichswerte aus der DB beziehen
     *    -Passwort(md5-verschluesselt)
@@ -38,6 +55,35 @@ class AdminMdl extends Base
         return false;
     }
 
+         public function authenticateAdmin($vorname,$nachname,$pwmd5)
+        {/*Nutzer darf angemeldet werden wenn:
+        *   -von Admin authorisiert wurde
+        *  - nicht gesperrt ist(wird in Controller abgefragt)
+        *  - Ein passender Eintrag in Db ist.
+        */
+        $sql = "SELECT a_id,a_nname,a_vorname,a_pwmd5,gesperrt,superAdmin FROM admin
+                WHERE a_nname = :a_nname AND a_vorname = :a_vorname AND a_pwmd5 = :a_pwmd5";
+        $base = new Base();
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+            $stmt->bindValue('a_nname', $nachname);
+        $stmt->bindValue('a_vorname', $vorname);
+        $stmt->bindValue('a_pwmd5', $pwmd5);
+        $stmt->execute();
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)) {
+            //Instanzierung der Klasse UserMdl in Model/UserMdl.php (setters und Getters)
+            $admin  = new AdminModel();
+            $admin->setStatus($row['gesperrt']);
+            $admin->setSuper($row['superAdmin']);
+            //Objekt
+            return $admin;
+        }
+        //kein Admin gefunden
+        return false;
+        }
+
+
 
 
     /*
@@ -64,7 +110,7 @@ class AdminMdl extends Base
             }
             else
             {
-                $admin->setStatus("gesperrt");
+                $admin->setStatus("locked");
             }
            
 
@@ -84,16 +130,96 @@ class AdminMdl extends Base
     {
         $base= new Base();
         $sql = "INSERT INTO admin(a_nname,a_vorname,a_pwmd5) 
-        VALUES(:vorname,:nachname,:pwmd5)";
+        VALUES(:nachname,:vorname,:pwmd5)";
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
         $stmt->bindValue(':vorname', $admin->getAVorname());
-        $stmt->bindValue(':nachname',    $admin->getANname());
-        $stmt->bindValue(':pwmd5', $admin->getAPw());
+        $stmt->bindValue(':nachname',$admin->getANname());
+        $stmt->bindValue(':pwmd5',   $admin->getAPw());
         $stmt->execute();
 
     }
 
+    public function getAdminById($id)
+    {
+
+        $base= new Base();
+        $sql = "SELECT a_vorname, a_nname,gesperrt From admin WHERE a_id = :id";
+        $stmt = $base->connect()->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue(':id',$id);
+        $stmt->execute();
+        $adminArray = array();
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC))
+        {
+            //Daten an Model/Admin.php (setters und Getters) uebergeben
+            $admin = new AdminModel();
+            $admin->setANname($row['a_nname']);
+            $admin->setAVorname($row['a_vorname']);
+            if ($row['gesperrt']==0)
+            {
+                $admin->setStatus("aktiv");
+            }
+            else
+            {
+                $admin->setStatus("locked");
+            }
+
+            //Ins array schreiben
+            $adminArray[] = $admin;
+
+        }
+        return $adminArray;
+        vardump($adminArray);
+
+    }
+
+    //Gibt es diesen Administrator schon?
+    public function verifyNewFirst($edit,$curName):bool
+    {
+        $base = new base();
+        $sql="SELECT * FROM admin WHERE a_nname = :nachname AND a_vorname = :vorname";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(':nachname',$curName);
+        $stmt->bindValue(':vorname',$edit);
+        $stmt->execute();
+        //wenn es Ergebnisse gibt : return true
+        while ( $row = $stmt->fetch(\PDO::FETCH_ASSOC) )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //Gibt es diesen Administrator schon?
+    public function verifyNewLast($edit,$curName):bool
+    {
+        $base = new base();
+        $sql="SELECT * FROM admin WHERE a_nname = :nachname AND a_vorname = :vorname";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(':nachname',$edit);
+        $stmt->bindValue(':vorname',$curName);
+        $stmt->execute();
+        //wenn es Ergebnisse gibt : return true
+        while ( $row = $stmt->fetch(\PDO::FETCH_ASSOC) )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /*Admininformationen aktualisieren*/
+    public function updateAdmin($id,$row,$edit)
+    {
+        $base= new Base();
+        $sql ="UPDATE admin SET $row = ? WHERE a_id = ?";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(array($edit,$id));
+
+    }
 
 }

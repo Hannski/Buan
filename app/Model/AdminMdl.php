@@ -2,12 +2,12 @@
 namespace Model;
 class AdminMdl
 {
-private $a_id = 0;
-private $a_nname = "";
-private $a_vorname ="";
-private $a_pw = "";
-private $status ="";
-private $super="";
+private $a_id;
+private $a_nname;
+private $a_vorname;
+private $a_pw;
+private $status;
+private $super;
 
 
     /**

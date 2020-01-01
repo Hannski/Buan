@@ -2,10 +2,10 @@
 
 class Autoloader
 {
-    public function laod(string $class):void
+    public function load(string $class):void
     {
         $pathName = str_replace('\\','/',$class);
-        $path = sprintf('%s/app/%s.php'); BASEPATH,$pathName);
+        $path = sprintf('%s/app/%s.php'); BASEPATH.$pathName);
             if (!class_exists($class))
             {
                 if(file_exists($path))

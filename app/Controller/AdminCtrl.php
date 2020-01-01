@@ -1,16 +1,204 @@
 <?php
 namespace Controller;
+use Form\addAdminForm;
 use \Model\Resource\AdminMdl;
-use App;
+use Form\AdminLoginForm;
+use Form\AdminUpdateAdminData;
 
-class AdminCtrl 
-{	
-  public $a_id="";
-	public $name="";
-	public $nachname="";
-	public $password="";
-  public $status="";
-	
+
+class AdminCtrl extends AbstractController
+{
+
+    //Fehler rendern wenn Fehler vorhanden
+    public function renderErrors($errorArray)
+    {
+        if(empty($errorArray)){return false;}else {
+            echo $this->render('seitenkomponenten/errors', array('errorArray' => $errorArray));
+        }
+    }
+//einzelnen Amdinistrator bearbeiten
+public function verwaltenAction()
+{
+    if ($this->isPost('aendern')) {
+        //Fehlerarray
+        $errorArray = array();
+        //universalabfrage gilt in diesem Fall für alle Felder:
+        if(!empty($_POST['edit'])&& $_POST['aendern']!=='gesperrt') {
+            $resource = new AdminMdl();
+            //spalte die in der DB angepasst werden soll:
+            $row = $_POST['aendern'];
+            //neuer Wert
+            $edit = $_POST['edit'];
+            //id
+            $id = $_GET['id'];
+
+            //Abfangen: Admin gibt es bereits:
+            if ($row == 'a_vorname') {
+                //noch aktueller Nach -oder Vorname
+                $curName = $_POST['curName'];
+                //neuer Vorname + aktueller nachname bereits in Db
+                if ($resource->verifyNewFirst($edit, $curName)) {
+                    //fehler
+                    $errorArray[] = 'nameTaken';
+                    $this->renderErrors($errorArray);
+                } else {
+                    //Update
+                    $resource->updateAdmin($id, $row, $edit);
+                    header('refresh:0');
+                }
+            } elseif ($row == 'a_nname') {
+                $curName = $_POST['curName'];
+                //neuer Nachname + aktueller Vorname bereits in Db
+                if ($resource->verifyNewLast($edit, $curName)) {
+                    //Fehler
+                    $errorArray[] = 'nameTaken';
+                    $this->renderErrors($errorArray);
+                } else {
+                    //Update
+                    $resource->updateAdmin($id, $row, $edit);
+                    header('refresh:0');
+                }
+            }
+            elseif($row == 'a_pwmd5')
+            {
+                //pw-hashen
+                $resource->updateAdmin($id, $row, md5($edit));
+                header('refresh:0');
+            }
+
+        }elseif($_POST['aendern'] == 'gesperrt')
+        {
+
+          $resource = new AdminMdl();
+          $resource->updateAdmin($_GET['id'], $_POST['aendern'], $_POST['edit']);
+
+        }
+        //inputfeld ist leer:
+            else{
+                $errorArray[] = 'emptyFields';
+                $this->renderErrors($errorArray);
+
+        }
+
+
+    }
+
+    //Anzeige
+    echo $this->getNav();
+    $resource = new AdminMdl();
+    $adminArray = $resource->getAdminById($_GET['id']);
+    echo $this->render('pages/admin/UpdateAdmin',array('adminArray'=>$adminArray));
+
+}
+
+
+
+    //Admins verwalten´liste
+public function verwaltungAction()
+{
+echo $this->getNav();
+$adminArray = new AdminMdl();
+$adminArray = $adminArray->getAllAdmins();
+
+
+echo $this->render('pages/admin/listAdmins',array('adminArray'=>$adminArray));
+}
+
+
+
+    //Superadmin-> Admin erstellen
+    public function erstellenAction()
+    {
+        //Navigation je nach AdminTyp
+        $this->getNav();
+        if ($this->isPost('addAdmin'))
+        {
+            //Formularfehler abfangen
+            $form = new addAdminForm();
+            $errorArray=$form->getErrorList();
+            if(!empty($errorArray))
+            {
+                echo $this->render('seitenkomponenten/errors', array('errorArray' => $errorArray));
+            }
+            //gibt es den Admin schon?
+            elseif($this->adminExists())
+            {
+                $errorArray[] = "nameTaken";
+                echo $this->render('seitenkomponenten/errors', array('errorArray' => $errorArray));
+            }
+            else{
+                //ab in die Datenbank;
+                $this->addAdmin();
+            }
+        }
+        echo $this->render('pages/admin/AddAdmins');
+        echo $this->render('seitenkomponenten/footer');
+    }
+
+    //gibt es einen diesen Admin schon?
+    public function adminExists()
+    {
+        return AdminMdl::adminExists($_POST['vorname'],$_POST['nachname']);
+    }
+    //Dashboard
+    public function homeAction()
+    {
+        //Navigation je nach AdminTyp
+        $this->getNav();
+        echo $this->render("seitenkomponenten/footer");
+    }
+
+    //Login
+    public function loginAction()
+    {
+        $this->getNav();
+        if($this->isPost("a_login"))
+        {   $form = new AdminLoginForm();
+            $errorArray = $form->getErrorList();
+            if(!empty($errorArray)){
+                //Formularfehler
+                echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+            }
+            //keine Fehler-> in der DB User authentifizieren
+            elseIf($this->authenticateAdmin()){
+                $admin = $this->authenticateAdmin();
+                //User authentifiziert aber gesperrt?
+                if($admin->getStatus())
+                {
+                    $errorArray[] = 'gesperrt';
+                    echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+                }else
+                {
+                    $admin = $this->authenticateAdmin();
+                    $adminStatus = $admin->getSuper();
+                    if ($adminStatus == 1)
+                    {
+                        $_SESSION['super'] ="loggedIn";
+                        header('Location: Admin-home');
+                    }else
+                    {
+                        $_SESSION['admin'] ="loggedIn";
+                        header('Location: Admin-home');
+                    }
+                }
+            }
+            else{
+                //Authetifizierung Fehlgeschlagen, pw oder username nicht gefunden:
+                $errorArray[] = 'nameNot';
+                echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+            }
+
+        }
+        echo $this->render("pages/admin/adminlogin");
+        echo $this->render("seitenkomponenten/footer");
+
+    }
+
+    //Gibt es den admin in der db->dann gib Model zurück sonst false.
+	public function authenticateAdmin()
+    {
+        return AdminMdl::authenticateAdmin($_POST['name'],$_POST['nachname'],md5($_POST['password']));
+    }
 
   /*Login-Formular Auswertung*/
     public function adminLoginForm()
@@ -59,68 +247,6 @@ class AdminCtrl
         }
       }
   
-  
-  /*handelt es sich bei dem eingeloggten Admin um den Super Admin? */
-  public function isSuperAdmin()
-  {
-    if(isset($_SESSION['super'])=="super") 
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-
-   /*Ist der Admin eingeloggt? */
-   //Sessions verwalten:
-  public function isAdmin()
-  {
-    if(isset($_SESSION['admin']) == "loggedIn")
-    {
-
-      return true;
-    }
-    else
-    {
-
-      return false;
-    }
-  }
-  public function returnAdminStatus()
-  {
-    if(self::isSuperAdmin())
-    {
-      return "superAdminDashboard";
-    }
-    elseif (self::isAdmin())
-    {
-      return "adminDashboard";
-    }
-    else
-    {
-      return false;
-    }
-  }
-
-
-
-  public function loginAdmin()
-   {
-     /* wenn isPost aus app/App.php, also Post-request gestellt dann login Vorgang starten*/
-    if(isset($_POST['a_login']))
-    {
-     $name     = $_POST['name'];
-     $nachname = $_POST['nachname'];
-     $password = $_POST['password'];
-    
-     $_SESSION['admin'] = "loggedIn";
-      
-      echo "<script> window.location.href = \"admin-home\"</script>";
-   
-    }
-   }
 
 
 
@@ -139,53 +265,20 @@ class AdminCtrl
   }
 
 
-
-
-
-
-
-    /*
-  * Formularfehler abfangen
-  *-Alle Felder muessen ausgefuellt werden
-  *-Passwoerter bestimme laenge
-  *-PAsswoerter stimmen ueberein
-  *-
-  */
-    public function addAdminForm()
-    {
-      return true;
-    }
-        /*
-  * Formularfehler abfangen
-  *-Alle Felder muessen ausgefuellt werden
-  *-Passwoerter bestimme laenge
-  *-PAsswoerter stimmen ueberein
-  *-
-  */
     public function addAdmin()
     {
-    $admin = App::getModel('AdminMdl');
+    $admin = new \Model\AdminMdl();
     $admin->setANname($_POST['nachname']);
     $admin->setAVorname($_POST['vorname']);
     $admin->setAPw(md5($_POST['password1']));
     //In Datenbank schreiben
-    $resource = App::getResourceModel('AdminMdl');
+    $resource = new AdminMdl();
     $resource->insertAdmin($admin); 
     }
-  /*
-  *Alle Administratoren abrufen 
-  * - mit Ausnahme von Superadmin
-  *
-  */
-  public function showAllSubAdmins()
-  {
-      // resource model instanzieren  
-        $model = App::getResourceModel('AdminMdl');
-        //Daten abrufen
-        $adminArray = $model->getAllAdmins();
-        // adminArray fuer Anzeige in Array bereitstellen
-        return array('adminArray'=> $adminArray);
-  }
+
+
+
+
 }
 
  

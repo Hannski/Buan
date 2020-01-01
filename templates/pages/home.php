@@ -11,7 +11,7 @@
 	foreach ($produkteArray as $key)
 	 {
 
-	 	 	$id = $key->getId();
+	 	 	$id =       $key->getId();
 	 	 	$pDname = $key->getNameDe();
 			$pEname = $key->getNameEn();
 			$desD = $key->getBeschreibungDe();

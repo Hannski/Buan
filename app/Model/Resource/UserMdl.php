@@ -1,44 +1,150 @@
 <?php
 namespace Model\Resource;
+use Model\UserAdressenMdl;
 use Model\UserMdl as UserModel;
 class UserMdl extends Base
 {
-    /*User authetifizierung */
-	public function authenticateUser($username,$password)
+
+    public function getUserById($id)
     {
-        $sql = "SELECT id,username,pwmd5,gesperrt FROM user WHERE username = ? AND pwmd5 = ? AND gesperrt = 0";
-        $pwmd5 = md5($password);
+        $sql = "SELECT * FROM user WHERE id = :id";
         $base = new Base();
         $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $userArray = array();
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
+            $user = new \Model\UserMdl();
+            $user->setUsername($row['username']);
 
+            if ($user->setStatus($row['gesperrt'])  )
+            {
+                $user->setStatus('aktiv');
+            }else
+            {
+                $user->setStatus('gesperrt');
+            }
+                         $userArray[] = $user;
+            return $userArray;
+        }
+        return false;
+
+    }
+
+    public function insertUserAdress($strasse,$nummer,$plz,$ort,$land)
+
+    {
+        $base = new Base();
+        $sql = "INSERT INTO useradressen
+                (strasse,nummer,plz,ort,land,u_id) 
+                VALUES (:strasse,:nummer,:plz,:ort,:land,:uid)";
+        $connection = $base->connect();
+        $stmt=$connection->prepare($sql);
+        $stmt->bindValue('strasse',$strasse);
+        $stmt->bindValue('nummer',$nummer);
+        $stmt->bindValue('plz',$plz);
+        $stmt->bindValue('ort',$ort);
+        $stmt->bindValue('land',$land);
+        $stmt->bindValue('uid',$_SESSION['userId']);
+        $stmt->execute();
+    }
+
+    //gibt es eine Adresse zu diesem User?
+    public function isUserAdress($userId):bool
+    {
+        $sql = "SELECT strasse,nummer,plz,ort,land FROM useradressen WHERE u_id = :uid";
+        $base = new Base();
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue(':uid', $userId);
+        $stmt->execute();
+        $adressArray = array();
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC))
+        {
+            return true;
+        }
+        return false;
+    }
+    //User Adresse holen
+    public function getUserAdress($userId):array
+    {
+        $sql = "SELECT strasse,nummer,plz,ort,land FROM useradressen WHERE u_id = :uid";
+        $base = new Base();
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue(':uid', $userId);
+        $stmt->execute();
+        $adressArray = array();
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC))
+        {
+            $adress = new UserAdressenMdl();
+            $adress->setStrasse($row['strasse']);
+            $adress->setNummer($row['nummer']);
+            $adress->setOrt($row['ort']);
+            $adress->setPlz($row['plz']);
+            $adress->setLand($row['land']);
+            $adressArray[]= $adress;
+        }
+        return $adressArray;
+    }
+
+    //ist der username bereits vergeben??
+    public function getUsername($username):bool
+    {
+        $sql = "SELECT username FROM user WHERE username = :username";
+        $base = new Base();
+        $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
         $stmt->bindValue('username', $username);
-        $stmt->bindValue('pwmd5', $pwmd5);
-        $dbresult = $connection->query($sql);
+        $stmt->execute();
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
+            return true;
+        }
+        return false;
+    }
 
-        while ($row =$dbresult->fetch(\PDO::FETCH_ASSOC))
-        {
+    /*User authetifizierung */
+	public function authenticateUser($username,$password)
+    {
+        /*Nutzer darf angemeldet werden wenn:
+        *   -von Admin authorisiert wurde
+        *  - nicht gesperrt ist(wird in Controller abgefragt)
+        *  - Ein passender Eintrag in Db ist.
+        */
+        $sql = "SELECT id,username,pwmd5,gesperrt FROM user
+                WHERE username = :username AND pwmd5 = :pwmd5
+                AND confirm_datum > 0000-00-00";
+        $base = new Base();
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue('username', $username);
+        $stmt->bindValue('pwmd5', $password);
+        $stmt->execute();
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)) {
             //Instanzierung der Klasse UserMdl in Model/UserMdl.php (setters und Getters)
             $user = new UserModel();
-            $user->setId($row['id']);
             $user->setUsername($row['username']);
             $user->setPwmd5($row['pwmd5']);
-            echo $row['id'];
+            $user->setId($row['id']);
+            $user->setStatus($row['gesperrt']);
             //Objekt
             return $user;
-
         }
-
+        //kein Nutzer gefunden
         return false;
-
     }
     /*neuen User (noch nicht authorisiert) in die Datenbank schreiben: diesen Nutzenden zeichent aus, dass er oder sie gesperrt sind und kein konfirmations-datum festgelet wird*/
     public function insertUser($user)
     {
         $base= new Base();
-        $sql = "INSERT INTO user(username,pwmd5,gesperrt,msg) 
-        VALUES(:username,:pwmd5,:gesperrt,:msg)";
+        $sql = "INSERT INTO user(username,pwmd5,confirm_datum,gesperrt,msg)
+        VALUES(:username,:pwmd5,:confirm_datum,:gesperrt,:msg)";
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
@@ -46,6 +152,7 @@ class UserMdl extends Base
         $stmt->bindValue('pwmd5',    $user->getPwmd5());
         $stmt->bindValue('gesperrt', $user->getStatus());
         $stmt->bindValue(':msg',     $user->getAppMsg());
+        $stmt->bindValue(':confirm_datum', '0000-00-00');
         $stmt->execute();
     }
 
@@ -72,14 +179,14 @@ class UserMdl extends Base
     /*
     wenn Admin User anerkannt hat: in Datenbank spersstatus aufheben:"gesperrt = 0, confirmationsdatum eintragen = Nutzer ist authorisiert
     */
-    public function authUser($user)
+    public function authUser($id,$status)
     {
     $base  = new Base();
     $sql  = "UPDATE  user SET confirm_datum = CURRENT_DATE(), gesperrt=:gesperrt WHERE id=:id";
     $connection = $base->connect();
     $stmt= $connection->prepare($sql);
-    $stmt->bindValue(':gesperrt', $user->getStatus());
-    $stmt->bindValue(':id', $user->getId());
+    $stmt->bindValue(':id',$id);
+    $stmt->bindValue(':gesperrt',$status);
     $stmt->execute();
     }
      /*
@@ -108,6 +215,8 @@ class UserMdl extends Base
         }
         return $userArray;
     }
+
+
 
 
 

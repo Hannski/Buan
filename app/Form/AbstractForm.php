@@ -5,9 +5,8 @@
  * Date: 21.12.2019
  * Time: 14:01
  */
-
 namespace Form;
-
+require_once './language/lang.php';
 class AbstractForm
 {
     protected $inputList = [];
@@ -22,37 +21,29 @@ class AbstractForm
         *
         */
 
-        foreach ($this->inputList as $inputName => $validatorList)
-        {
+        foreach ($this->inputList as $inputName => $validatorList) {
             //Fehler abfangen, falls refresh und Post[input]=false
-            if (!empty($_POST[$inputName]))
-        {
-            foreach($validatorList as $validator)
-            {
-                $isvalid = true;
-                //Validator auswerten, wenn false , validieren Function gibt fehler zurueck
-                if($validator->validieren($_POST[$inputName])== false)
-                {
-                    $isvalid = false;
+            if (!empty($_POST[$inputName])) {
+                foreach ($validatorList as $validator) {
+                    $isvalid = true;
+                    //Validator auswerten, wenn false , validieren Function gibt fehler zurueck
+                    if ($validator->validieren($_POST[$inputName]) == false) {
+                        $isvalid = false;
 
-                    /* Fehlerwert ins Fehlerarray */
-                    $this->errorList[] = $validator->error($inputName);
+                        /* Fehlerwert ins Fehlerarray */
+                        $this->errorList[] = $validator->error($inputName);
 
-                    // debugging:
-                    //var_dump($this->errorList[] = $validator->error());
+                        // debugging:
+                        //var_dump($this->errorList[] = $validator->error());
+
+                    }
 
                 }
-
-            }
-        }else
-            {
+            } else {
                 //Fehler zurueckgeben -> schluessel fuer LanguageArray ins Fehlerarray
-               $this->errorList[] = 'empty'.ucfirst($inputName);
+                $this->errorList[] = 'empty' . ucfirst($inputName);
             }
-
         }
-        return count($this->errorList)===0;
-
     }
 
     //Fehlerarray zurueckgeben

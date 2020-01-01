@@ -2,7 +2,7 @@
 	 include BASEPATH.'/language/lang.php';
 
 		/*	
-		Spachwahl ueber POST-Buttons in Navigationsleiste /templates/pages/home.html pruefen
+		Spachwahl ueber POST-Buttons in Navigationsleiste /alerts/pages/home.html pruefen
 		*/
 
 
