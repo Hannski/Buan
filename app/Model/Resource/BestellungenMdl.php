@@ -19,8 +19,8 @@ class BestellungenMdl extends Base
     {
         $base = new Base();
         $sql = "INSERT INTO bestellungen
-                (order_id,u_id,monat,jahr,bestelldatum,item_id,menge)
-                SELECT :order_id,user_id,MONTH(CURRENT_DATE()),YEAR(CURRENT_DATE()),CURRENT_DATE(),item_id,menge FROM cart WHERE user_id=:id;
+                (order_id,u_id,item_id,menge)
+                SELECT :order_id,user_id,item_id,menge FROM cart WHERE user_id=:id;
                 DELETE FROM cart WHERE user_id=:id";
         $connection=$base->connect();
         $stmt = $connection->prepare($sql);
@@ -51,7 +51,7 @@ public function isOrders():bool
 public function getUserOrderDates():array
 {
     $base = new Base();
-    $sql = "SELECT DISTINCT jahr,monat FROM bestellungen WHERE u_id = :id";
+    $sql = "SELECT DISTINCT MONTH(datum) AS monat,YEAR(datum) AS jahr FROM bestellverwaltung WHERE user_id = :id";
     $connection=$base->connect();
     $stmt = $connection->prepare($sql);
     $stmt->bindValue('id',$_SESSION['userId']);
@@ -93,8 +93,7 @@ public function getOrderIds($monat,$jahr)
     public function getBestellungen($monat,$jahr)
     {
         $base = new Base();
-        $sql = "SELECT order_id,GROUP_CONCAT('item:',item_id,'-','menge:',menge)AS json_item FROM bestellungen
-                  WHERE u_id = :uid AND monat=:monat AND jahr=:jahr GROUP BY order_id";
+        $sql = "SELECT i.*,b.*, bv.datum FROM bestellungen AS b JOIN bestellverwaltung AS bv ON b.order_id = bv.order_id JOIN items AS i ON i.id =b.item_id WHERE YEAR(bv.datum) = :jahr AND MONTH(bv.datum) = :monat AND bv.user_id=:uid";
         $connection=$base->connect();
         $stmt = $connection->prepare($sql);
         $stmt->bindValue('uid',$_SESSION['userId']);
@@ -104,11 +103,18 @@ public function getOrderIds($monat,$jahr)
         $orderArray = array();
         while($row = $stmt->fetch(\PDO::FETCH_ASSOC))
         {
-               $order_id=($row['order_id']);
-               $json_item=($row['json_item']);
-               $orderArray[]=$order_id;
-               $orderArray[]=$json_item;
-
+            $orderId = $row['order_id'];
+            //neues array, um Bestellungen unter einen id zusammenfassen zu koennen
+            if (!array_key_exists($orderId, $orderArray))
+            {
+                $orderArray[$orderId] = [];
+            }
+              $order= new BestellungenModel();
+              $order->setDatum($row['datum']);
+              $order->setItemId($row['item_id']);
+              $order->setMenge($row['menge']);
+              $order->setPNameD($row['name_de']);
+              $orderArray[$orderId][] = $order;
         }
         return $orderArray;
     }

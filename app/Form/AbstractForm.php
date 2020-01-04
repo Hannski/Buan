@@ -28,7 +28,7 @@ class AbstractForm
                     //var_dump($validatorList);
                     $isvalid = true;
                     //Validator auswerten, wenn false , validieren Function gibt fehler zurueck
-                    if ($validator->validieren($_POST[$inputName]) == false) {
+                    if(array_key_exists($inputName,$_POST) && $validator->validieren($_POST[$inputName]) == false) {
                         $isvalid = false;
 
                         /* Fehlerwert ins Fehlerarray */

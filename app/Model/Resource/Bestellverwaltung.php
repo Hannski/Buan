@@ -17,7 +17,7 @@ class Bestellverwaltung extends Base
     {
         $base=new Base();
         $base = new Base();
-        $sql = "INSERT INTO bestellverwaltung (user_id) VALUES (:user_id) ";
+        $sql = "INSERT INTO bestellverwaltung (user_id,datum) VALUES (:user_id,CURRENT_DATE()) ";
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         $stmt->bindValue('user_id', $userId);

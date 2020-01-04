@@ -513,23 +513,19 @@ class UserCtrl extends AbstractController
                 // formatieren:
                 //debugging:  echo $_POST['jahrMonat'];
                 $datum = explode('-', $_POST['jahrMonat']);
-                $jahr = $datum[0];
-                $monat = $datum[1];
+                 $jahr = $datum[0];
+                 $monat = $datum[1];
 
-                $array = $resource->getBestellungen($monat, $jahr);
-                //var_dump($array);
-                foreach ($array as $value) {
-                    $arrayNEw = explode('-', $value);
-                    var_dump($arrayNEw);
-                }
-                echo $this->render('pages/bestellungen/user-bestellungen-anzeigen', array('orderArray' => $array));
+                $orderArray = $resource->getBestellungen($monat, $jahr);
+
+                echo $this->render('pages/bestellungen/user-bestellungen-anzeigen', array('orderArray' => $orderArray));
 
 
             }
         } else {
             $errorArray = array();
             $errorArray[] = 'noOrders';
-            echo $this->render('pages/seitenkompnenten/errors', array('errorArray' => $errorArray));
+            echo $this->render('seitenkomponenten/errors', array('errorArray' => $errorArray));
         }
     }
 

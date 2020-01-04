@@ -13,19 +13,26 @@
 
         <div class="card mt-2 mb-2">
             <form action="" method="post" >
-                hii
             <?php
 
-            foreach ($orderArray as $item ){
+            foreach ($orderArray as $orderId=>$order)
+            {
+                ?>
+                <div class="card-header">
+                    <h3><?php echo $order[0]->getDatum(); ?></h3>
+                </div>
+                <?php
+                foreach ($order as $item)
+                {
 
 
-               echo $item->getOrderId();
+
 
             ?>
 
 
             <ul class="list-group list-group-flush text-lg-left text-md-left text-sm-center text-xl-left">
-                <li class="list-group-item">Bstellnummer:&nbsp;</li>
+                <li class="list-group-item"> <?php echo $item->getPNameD(); ?>:&nbsp;</li>
                 <li class="list-group-item">Artikel anzahl:&nbsp;<?php ?></li>
                 <li class="list-group-item">Summe:&nbsp;<?php ?></li>
             </ul>
@@ -33,12 +40,14 @@
 
 
                 <?php //ende foreach
-                } ?>
-                <div class="card-body">
+                }  ?>
+             <div class="card-body">
 
                         <button type="submit" class="btn btn-success  btn-sm"> Rechnung ansehen/drucken</button>
 
-            </div>
+                    </div>
+            <?php }?>
+
             </form>  <!--Card Formular -->
         </div><!-- Card Ende-->
 

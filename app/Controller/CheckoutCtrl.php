@@ -75,7 +75,6 @@ class CheckoutCtrl extends AbstractController
             $orderId= $order->insertOrder($_SESSION['userId']);
             //BestellModel
             $resource = new BestellungenMdl();
-            echo $orderId;
           //Bestellung in Db
            $resource->placeOrder($orderId);
             //Anzeige

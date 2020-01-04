@@ -221,6 +221,8 @@ $langArray[0]['captchaNope']		= "Der eingegebene Captcha stimmt nicht &uuml;bere
 $langArray[1]['captchaNope']		= "The Captcha you entered does not match";
 $langArray[0]['usernameNope']		= "Ein passender Username konnte nicht gefunden werden";
 $langArray[1]['usernameNope']		= "The username you entered does not exist";
+$langArray[0]['noOrders']		    = "noch keine Bestellungen";
+$langArray[1]['noOrders']		    = "no orders yet";
 
 
 
