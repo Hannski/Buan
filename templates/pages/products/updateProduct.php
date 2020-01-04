@@ -21,7 +21,6 @@
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="h-25 m-1 input-group d-flex align-items-center">
         <div class="col-4"></div>
-        <input type="hidden" name="id" value="<?php echo $id ?>">
         <input type="hidden" name="dateiAlt" value="<?php echo $file ?>">
         <input type="file" name="dateiname">
          <button type="submit" name="datei" class="btn btn-sm btn-submit border" value="name_de">
@@ -40,7 +39,6 @@
     <div class="border-bottom mb-4 p-4">
         <div class="mb-3">Name Deutsch:&nbsp;<b><?php echo $pDname ?></b></div>
         <form action="" method="POST">
-         <input type="hidden" name="id" value="<?php echo $id ?>">
          <input type="text" name="name_de">
             
             <button type="submit" name="aendern" class="btn btn-sm btn-submit border" value="name_de">
@@ -53,7 +51,6 @@
    <div class="border-bottom mb-4 p-4">
         <div class="mb-3">Name Englisch:&nbsp;<b><?php echo $pEname ?></div>
         <form action="" method="POST">
-         <input type="hidden" name="id" value="<?php echo $id ?>">
          <input type="text" name="name_en">
             
             <button type="submit" name="aendern" class="btn btn-sm btn-submit border" value="name_en">
@@ -67,7 +64,6 @@
    <div class="border-bottom mb-4 p-4">
         <div class="mb-3">Beschreibung Deutsch:&nbsp;<b><?php echo $desD ?></b></div>
         <form action="" method="POST">
-         <input type="hidden" name="id" value="<?php echo $id ?>">
          <input type="text" name="desc_de">
             
             <button type="submit" name="aendern" class="btn btn-sm btn-submit border" value="beschreibung_de">
@@ -80,9 +76,7 @@
    <div class="border-bottom mb-4 p-4">
         <div class="mb-3">Beschreibung Englisch:&nbsp;  <b><?php echo $desE ?></b></div>
         <form action="" method="POST">
-         <input type="hidden" name="id" value="<?php echo $id ?>">
          <input type="text" name="desc_en">
-            
             <button type="submit" name="aendern" class="btn btn-sm btn-submit border" value="beschreibung_en">
             <?php echo $langArray[$opt]["aendern"] ?>
             </button>
@@ -93,7 +87,6 @@
    <div class="border-bottom mb-4 p-4">
         <div class="mb-3">Preis: &nbsp; <b><?php echo $preis ?>€</b></div>
         <form action="" method="POST">
-         <input type="hidden" name="id" value="<?php echo $id ?>">
          <input type="number" name="preis">
             
             <button type="submit" name="aendern" class="btn btn-sm btn-submit border" value="preis">
@@ -106,7 +99,6 @@
    <div class="border-bottom mb-4 p-4">
         <div class="mb-3">Lagerbestand:&nbsp;<b><?php echo $lager ?></b></div>
         <form action="" method="POST">
-         <input type="hidden" name="id" value="<?php echo $id ?>">
          <input type="number" name="bestand">
             
             <button type="submit" name="aendern" class="btn btn-sm btn-submit border" value="bestand">
@@ -119,8 +111,6 @@
    <div class="border-bottom mb-4 p-4">
         <div class="mb-3">Status:&nbsp;<b><?php echo $status ?></b></div>
         <form action="" method="POST">
-         <input type="hidden" name="id" value="<?php echo $id ?>">
-       
         sichtbar: <input type="radio" name="gesperrt" value="0">
          sperren: <input type="radio" name="gesperrt" value="1">
             <button type="submit" name="aendern" class="btn btn-sm btn-submit border" value="gesperrt">

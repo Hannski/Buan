@@ -35,7 +35,7 @@ class ProduktMdl extends Base
         $stmt->bindValue(':preis', 			$produkt->getPreis()); 
         $stmt->bindValue(':dateiname',		$produkt->getDateiname());
         $stmt->bindValue(':bestand',         $produkt->getMenge());
-        $stmt->execute();
+        return $stmt->execute();
         
 
  }

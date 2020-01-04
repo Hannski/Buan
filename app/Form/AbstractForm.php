@@ -23,8 +23,9 @@ class AbstractForm
 
         foreach ($this->inputList as $inputName => $validatorList) {
             //Fehler abfangen, falls refresh und Post[input]=false
-            if (!empty($_POST[$inputName])) {
+
                 foreach ($validatorList as $validator) {
+                    //var_dump($validatorList);
                     $isvalid = true;
                     //Validator auswerten, wenn false , validieren Function gibt fehler zurueck
                     if ($validator->validieren($_POST[$inputName]) == false) {
@@ -37,14 +38,10 @@ class AbstractForm
                         //var_dump($this->errorList[] = $validator->error());
 
                     }
-
                 }
-            } else {
-                //Fehler zurueckgeben -> schluessel fuer LanguageArray ins Fehlerarray
-                $this->errorList[] = 'empty' . ucfirst($inputName);
             }
         }
-    }
+
 
     //Fehlerarray zurueckgeben
     public function getErrorList()

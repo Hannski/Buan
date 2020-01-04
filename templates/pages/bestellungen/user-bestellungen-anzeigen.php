@@ -13,25 +13,21 @@
 
         <div class="card mt-2 mb-2">
             <form action="" method="post" >
+                hii
             <?php
 
-            foreach ($orderArray as $item)
-            {
-            //Datum formatieren und Preis berrechnen;
-            $date= $item->getDatum();
-            $date = date("d.m.Y", strtotime($date));
-            //gesamtpreis
-            $preis = $item->getMenge()*$item->getPreis();
-            $name_de = $item->getPNameD();
+            foreach ($orderArray as $item ){
 
+
+               echo $item->getOrderId();
 
             ?>
-                <?php echo $date; echo $name_de;?>
+
 
             <ul class="list-group list-group-flush text-lg-left text-md-left text-sm-center text-xl-left">
                 <li class="list-group-item">Bstellnummer:&nbsp;</li>
-                <li class="list-group-item">Artikel anzahl:&nbsp;<?php echo $item->getMenge(); ?></li>
-                <li class="list-group-item">Summe:&nbsp;<?php echo $item->getOrderId(); ?></li>
+                <li class="list-group-item">Artikel anzahl:&nbsp;<?php ?></li>
+                <li class="list-group-item">Summe:&nbsp;<?php ?></li>
             </ul>
             <!--Card Formular -->
 

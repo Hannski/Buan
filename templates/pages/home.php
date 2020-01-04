@@ -11,7 +11,7 @@
 	foreach ($produkteArray as $key)
 	 {
 
-	 	 	$id =       $key->getId();
+	 	 	$id = $key->getId();
 	 	 	$pDname = $key->getNameDe();
 			$pEname = $key->getNameEn();
 			$desD = $key->getBeschreibungDe();
@@ -31,7 +31,7 @@
         	<label for="quan">Menge:</label><br>
         	<input type="number" name="quan">
         	<input type="hidden"  name="id" value ="<?php echo $id ?>">
-        	<button type="submit" class="btn btn-danger" name = "to_cart">in den Warenkorb</button>
+        	<button type="submit" class="btn btn-danger" name = "toCart">in den Warenkorb</button>
            </form>
     	</p>	
       </div>

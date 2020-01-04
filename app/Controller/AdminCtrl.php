@@ -93,7 +93,7 @@ public function verwaltenAction()
 
 
 
-    //Admins verwalten´liste
+    //Admins verwalten: Liste aller Administratoren
 public function verwaltungAction()
 {
 echo $this->getNav();
@@ -102,6 +102,22 @@ $adminArray = $adminArray->getAllAdmins();
 
 
 echo $this->render('pages/admin/listAdmins',array('adminArray'=>$adminArray));
+}
+
+//Admin-Logout
+public function logoutAction()
+{
+    //weiterleitung nach 5 Sekunden auf Startseite:
+    header( "refresh:5;./" );
+    $this->getNav();
+    //nachricht an User:
+    echo $this->render('pages/alerts/logout');
+    if(isset($_SESSION['admin'])){
+        $_SESSION['admin']='';
+    $_SESSION['adminName']="";}
+    else{$_SESSION['super']='';
+    $_SESSION['superName']="";}
+
 }
 
 
@@ -151,22 +167,28 @@ echo $this->render('pages/admin/listAdmins',array('adminArray'=>$adminArray));
     //Login
     public function loginAction()
     {
-        $this->getNav();
         if($this->isPost("a_login"))
-        {   $form = new AdminLoginForm();
+        {
+            $form = new AdminLoginForm();
             $errorArray = $form->getErrorList();
             if(!empty($errorArray)){
                 //Formularfehler
+                $this->getNav();
                 echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+                echo $this->render("pages/admin/adminlogin");
             }
-            //keine Fehler-> in der DB User authentifizieren
+            //keine Fehler-> in der DB  authentifizieren
             elseIf($this->authenticateAdmin()){
+                //gibt AdminInstanz zurueck
                 $admin = $this->authenticateAdmin();
                 //User authentifiziert aber gesperrt?
                 if($admin->getStatus())
                 {
+                    ///Anzeige Fehler
                     $errorArray[] = 'gesperrt';
+                    $this->getNav();
                     echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+                    echo $this->render("pages/admin/adminlogin");
                 }else
                 {
                     $admin = $this->authenticateAdmin();
@@ -174,30 +196,40 @@ echo $this->render('pages/admin/listAdmins',array('adminArray'=>$adminArray));
                     if ($adminStatus == 1)
                     {
                         $_SESSION['super'] ="loggedIn";
-                        header('Location: Admin-home');
+                        $_SESSION['superName'] =$admin->getAVorname()."&nbsp;".$admin->getANname();
+                        //header-Ausgabe
+                        header('Location: admin-home');
                     }else
                     {
                         $_SESSION['admin'] ="loggedIn";
-                        header('Location: Admin-home');
+                        $_SESSION['adminName'] =$admin->getAVorname()."&nbsp;".$admin->getANname();
+                        //header ausgabe
+                        header('Location: admin-home');
                     }
                 }
             }
             else{
                 //Authetifizierung Fehlgeschlagen, pw oder username nicht gefunden:
                 $errorArray[] = 'nameNot';
+                $this->getNav();
                 echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
+                echo $this->render("pages/admin/adminlogin");
             }
 
+        }else{
+            $this->getNav();
+            echo $this->render("pages/admin/adminlogin");
         }
-        echo $this->render("pages/admin/adminlogin");
-        echo $this->render("seitenkomponenten/footer");
+
+
 
     }
 
     //Gibt es den admin in der db->dann gib Model zurück sonst false.
 	public function authenticateAdmin()
     {
-        return AdminMdl::authenticateAdmin($_POST['name'],$_POST['nachname'],md5($_POST['password']));
+        $model=new AdminMdl();
+        return $model->authenticateAdmin($_POST['name'],$_POST['nachname'],md5($_POST['password']));
     }
 
   /*Login-Formular Auswertung*/

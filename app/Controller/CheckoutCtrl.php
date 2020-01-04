@@ -1,164 +1,131 @@
 <?php
+
 namespace Controller;
+
+use Model\Resource\AdressMdl;
 use Model\Resource\BestellungenMdl;
+use Model\Resource\Bestellverwaltung;
 use \Model\Resource\CheckoutMdl;
 use \Model\Resource\ProduktMdl;
 use \Form\UserAdressForm;
 use Model\Resource\UserMdl;
 
+//Controller regelt ablaeufe in Zusammenhang mit Warenkorb
+
 class CheckoutCtrl extends AbstractController
-{	
-	public function addToCart()
+{
+
+    //Produkte in den Warenkorb hinzufuegen oder aktualisieren
+    public function addToCart()
     {
-    $p_resource = new ProduktMdl();
-    $c_resource = new CheckoutMdl();
-       if (!empty($_POST["quan"]) && $_POST['quan'] > 0) {
-           $menge = $_POST['quan'];
-        $item_id = $_POST['id'];
-        //Produkt nach Id aus Datenbank:
-
-        $p = $p_resource->getProduktById($item_id);
-
-        foreach ($p as $key) {
-            $vorrat = $key->getMenge();
-        }
-
-        //Wenn Menge groeßer Vorrat: Fehler
-        if ($menge > $vorrat) {
-            echo 'error zu viele Artikel';
-        } else {
-
-            //true = schon in db
-            if ($c_resource->itemInCart($item_id))
-            {
-
-                $c_resource->updateCart($menge,$item_id);
-            }
-            else{
-               //ab in die db
-               $this->insertCart();
-            }
-            //neuen bestand berrechnen + update in Db
-            $updateVorrat = $vorrat - $_POST['quan'];
-            $p_resource->updateProdukt($item_id, 'bestand', $updateVorrat);
-        }
-
-    }
-
-    }
-    //Eingabe Adresse
-    public function adressdatenAction()
-    {
-        if ($this->isPost('adress'))
+        //ProduktModel
+        $p_resource = new ProduktMdl();
+        //WarenkorbModel
+        $c_resource = new CheckoutMdl();
+        //keine Nutzereingabe oder Eingabe negativ/ = 0
+        if (!empty($_POST['quan']) && $_POST['quan'] > 0)
         {
-
-            $form = new UserAdressForm();
-            $errorArray = $form->getErrorList();
-            if (!empty($errorArray)) {
-                echo $this->render('seitenkomponenten/errors', array('errorArray' => $errorArray));
-            } else {
-                $resource = new UserMdl();
-                $resource->insertUserAdress($_POST['strasse'], $_POST['nummer'], $_POST['plz'], $_POST['ort'], $_POST['land']);
-                header("refresh:0");
-            }
-        }
-        $this->getNav();
-        $resource = new UserMdl();
-       if($resource->isUserAdress($_SESSION['userId']))
-       {
-           $adressArray = $resource->getUserAdress($_SESSION['userId']);
-           echo $this->render('pages/user/adressForm',array('adressArray' => $adressArray));
-       }
-       else{
-
-           echo $this->render('pages/user/adressForm');
-       }
-
-    }
-
-
-
-
-
-
-
-    public function bestellungAction()
-    {
-        if ($this->isPost('submitOrder'))
-        {
-            $resource = new BestellungenMdl();
-            $resource->placeOrder();
-
-        }
-        $this->getNav();
-        echo $this->render('pages/bestellungen/b_erfolg',array());
-    }
-
-	public function insertCart()
-    {
-        $resource = new CheckoutMdl();
-        $resource->getCart();
-        $id = $_POST['id'];
-        $quan = $_POST['quan'];
-
-        if (!empty($_POST["quan"]) && $_POST['quan'] > 0) {
             $menge = $_POST['quan'];
-            $id = $_POST['id'];
-            //Produkt nach Id aus Datenbank:
-            $resource = new ProduktMdl();
-            $p = $resource->getProduktById($id);
-
+            $item_id = $_POST['id'];
+            //Produktbestand aus DB.
+            $p = $p_resource->getProduktById($item_id);
             foreach ($p as $key) {
                 $vorrat = $key->getMenge();
             }
 
-            //Wenn Menge groeßer Vorrat: Fehler
-            if ($_POST['quan'] > $vorrat) {
+            //Wenn Menge groesser Vorrat: Fehler
+            if ($menge > $vorrat) {
+                //fehler
                 echo 'error zu viele Artikel';
-            } else {
-                //neuen bestand berrechnen + update in Db
-                $updateVorrat = $vorrat - $_POST['quan'];
-                $resource = new ProduktMdl();
-                $resource->updateProdukt($_POST['id'], 'bestand', $updateVorrat);
             }
-            //Produkt in den Warenkorb
-            $cartItem = new \Model\CheckoutMdl();
-            $cartItem->setProduktId($id);
-            $cartItem->setMenge($menge);
-            $Cart = new CheckoutMdl();
-            $Cart->insertCart($cartItem);
+            //ist der artikel schon im Warenkorb?
+           if($c_resource->itemInCart($item_id))
+            {
+                //aktualisieren der Menge des Produktes im Warenkorb
+                 $c_resource->updateCart($menge, $item_id);
+            } else {
+                    //den Artikel neu hinzufuegen
+               //Produkt in den Warenkorb
+
+                    $c_resource->insertCart($menge,$item_id);
+                }
+
+                //neuen Bestand berrechnen + update ArtikelVorrat in Produktetabelle
+                $updateVorrat = $vorrat - $menge;
+                //Aktualisiere  bestand  set bestand = vorratWertNeu bei $item_id,
+                $p_resource->updateProdukt($item_id, 'bestand', $updateVorrat);
         }
     }
 
 
-public function warenkorbAction()
-{
-    $this->getNav();
-    $user = new UserMdl();
-    $cart = new CheckoutMdl();
-    if ($cart->isCart($_SESSION['userId']))
+
+
+/*
+ * Bestellung abschicken wenn:
+ *
+ * */
+    public function bestellungAction()
     {
-        $cartArray = $cart->getCart();
-        if($user->isUserAdress($_SESSION['userId']))
-        {
-            //user hat bereits iene Adress eingegeben: Warenkorb mit Adressvorschau
-            $adressArray = $user->getUserAdress($_SESSION['userId']);
-            echo $this->render('pages/cart/warenkorb',array('cartArray'=>$cartArray),array('adressArray'=>$adressArray));
+/**/
+        //POst verarbeiten
+        if ($this->isPost('placeOrder')) {
+            //OrderIdentityModel
+            $order = new Bestellverwaltung();
+            //Last insert ID
+            $orderId= $order->insertOrder($_SESSION['userId']);
+            //BestellModel
+            $resource = new BestellungenMdl();
+            echo $orderId;
+          //Bestellung in Db
+           $resource->placeOrder($orderId);
+            //Anzeige
+            $this->getNav();
+            //nachricht:
+            $errorArray[] = 'orderYes';
+            echo $this->render('seitenkomponenten/errors', array('errorArray'=>$errorArray));
         }
         else{
-            //USer hat noch keine Adresse eingegeben: warenkorb mit Adresseingabe
-            echo $this->render('pages/cart/warenkorb',array('cartArray'=>$cartArray));
+            //TODO::pfad definieren wo man landet wenn man hier nichts zu suchen hat
+            header('Location: ./');
+
         }
-    }else
-        {
-        echo "noch keine Artikel im Warenkorb";
+
+
     }
 
 
+    //Anzeige Warenkorb
+    public function warenkorbAction()
+    {
+        $this->getNav();
+        $user = new UserMdl();
+        $cart = new CheckoutMdl();
+        $adress = new AdressMdl();
+        //gibt es zu diesem user schon einen Warenkorb?
+        if ($cart->isCart($_SESSION['userId'])) {
+            //ja? bitte holen
+            $cartArray = $cart->getCart();
+            /*adresslogik wird in Template verarbeitet: wenn adressArray leer:meldung sonst Anzeige und aendern option = direkt moeglichkeit
+            eine Betslelung zu tateigen
+            */
+            if ($adress->isAddress($_SESSION['userId'])) {
+                //user hat bereits eine Adress eingegeben: Warenkorb mit Adressvorschau
+                $adressArray = $user->getUserAdress($_SESSION['userId']);
+                echo $this->render('pages/cart/warenkorb', array('cartArray' => $cartArray), array('adressArray' => $adressArray));
+            }
+            else{
+                //Noch keine Adresse:
+                $adressArray=array();
+                echo $this->render('pages/cart/warenkorb', array('cartArray' => $cartArray), array('adressArray' => $adressArray));
+            }
+        } else{
+            //USer hat noch nichts im Warenkorb: Meldung
+            $errorArray[]="emptyCart";
+            echo $this->render('seitenkomponenten/errors',array('errorArray'=>$errorArray));
+        }
 
 
-}
+    }
 
 
-	
 }

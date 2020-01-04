@@ -21,6 +21,24 @@ private $month;
 private $pNameD;
 private $pNameE;
 private $preis;
+private $json;
+
+    /**
+     * @return mixed
+     */
+    public function getJson()
+    {
+        return $this->json;
+    }
+
+    /**
+     * @param mixed $json
+     */
+    public function setJson($json): void
+    {
+        $this->json = $json;
+    }
+
 
     /**
      * @return mixed

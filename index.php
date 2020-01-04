@@ -3,7 +3,9 @@ class Start
 {
 	function __construct()
 	{  //Session starten
-		session_start();
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 		//Basis defienieren
 		define ("BASEPATH",dirname(__FILE__));
 		define("BASE", __DIR__);

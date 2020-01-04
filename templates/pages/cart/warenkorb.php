@@ -14,26 +14,10 @@
     <div class="row">
             <div class="card text-center col-xs-12 col-sm-12 col-md-12 col-lg-8 mr-lg-2 p-0 ">
 
-                    <div class="card card-body card-header border-0">
-                        <ul class="nav nav-tabs card-header-tabs">
-
-                            <li class="nav-item">
-                                <a class="nav-link active card" href="./checkout-warenkorb"><?php echo $langArray[$opt]['cart'] ?></a>
-                            </li>
-
-                            <?php
-                            if (empty($adressArray))
-                            {
-                                ?>
-                                <li class="nav-item">
-                                    <a class="nav-link active card" href="./checkout-adressdaten"><?php echo $langArray[$opt]['adressHead'] ?></a>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                        </ul>
+                    <div class="card-header border-0">
+                                <h5><?php echo $langArray[$opt]['cart']?></h5>
                     </div>
-    <div class="bg-white card-body border-0">
+    <div class="card-body border-0">
 
         <?php
         $lang = $_SESSION['language'];
@@ -103,20 +87,24 @@
 
 
         </div>
-                <!--Ende card-body-->
+                <!--Ende card-->
             </div>
 
 
 
-        <div class=" card col-xs-12 col-sm-12 col-md-12 col-lg-3 border  p-5">
-            <div class="row text-md-center text-lg-center">
 
-
+        <div class=" card col-xs-12 col-sm-12 col-md-12 col-lg-3 p-0 ">
+            <div class="card-header">
+                <h5><?php echo $langArray[$opt]['deliverInfo'] ?></h5>
+            </div>
+            <div class="row text-md-center text-lg-center p-5">
                 <div class="col-12 p-1 text-center">
-                    <span><?php echo $langArray[$opt]['deliverInfo'] ?></span>
-                    <hr>
+
+
+
                     <ul class="list-group list-group-flush ">
                         <?php
+                        //Adresse bereits eingegeben
                         if(!empty($adressArray))
                         {
                         foreach ($adressArray as $item)
@@ -129,14 +117,24 @@
                         echo "<li class=\"data list-group-item \">".$langArray[$opt]['land'].": ".$laender[$opt][$item->getLand()]."</li>";
 
 
-                        }}else{echo " Noch keine Adresse";}
+                        }}else{
+                            //noch keine adresse hinterlegt?>
+                       <li class="data list-group-item">Adresse Hinzufuegen</li>
+                        <?php
+                        }
                         ?>
 
 
                     </ul>
-                    <hr>
 
                     <div class="col-12 p-1">
+                        <button class="btn btn-secondary btn-sm ">
+                            <a href="./user-adresse" class="text-white" role="button"><?php echo $langArray[$opt]['adressChange'] ?></a>
+                        </button>
+                    </div>
+
+
+                    <div class="col-12 mt-4">
                         <?php echo $langArray[$opt]['subTotal'].$subTotal." €" ?>
                     </div>
 
@@ -145,21 +143,20 @@
 
 
 
-                <div class="col-12 p-1">
-                    <button class="btn btn-secondary btn-sm ">
-                        <a href="./checkout-adressdaten" class="text-white" role="button"><?php echo $langArray[$opt]['adressChange'] ?></a>
-                    </button>
-                </div>
-                <hr>
+
                 <div class="col-12 m-1 mt-5">
-                   <?php if (empty($adressArray))
+                   <?php if(!empty($adressArray))
                     {
 
                         echo "<p><b>".$langArray[$opt]['allOk']."</b></p>";
-
-                   echo "<button class=\"btn btn-success\">".$langArray[$opt]['placeOrder']."</button>";
-
-                            }
+                        ?>
+                        <form action="checkout-bestellung" method="POST">
+                  <button class="btn btn-success" name="placeOrder">
+                      <?php echo $langArray[$opt]['placeOrder']?>
+                  </button>
+                        </form>
+                            <?php
+                    }//ende if.
                             ?>
                 </div>
 

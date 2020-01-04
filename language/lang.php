@@ -7,8 +7,13 @@ Buttons
 $langArray[0]["language"] 			= "de";
 $langArray[1]["language"] 			= "en";
 //as admin Anmelden : Button beschriftung
-$langArray[0]["loginButton"] 		="als Admin anmelden";
-$langArray[1]["loginButton"] 		="login as admin";
+$langArray[0]["loginAdmin"] 		="als Admin anmelden";
+$langArray[1]["loginAdmin"] 		="login as admin";
+//als user anmelden
+$langArray[0]["loginUser"] 		    ="Anmelden";
+$langArray[1]["loginUSer"] 		    ="Login";
+$langArray[0]["pwForgot"] 		    ="Passwort vergessen";
+$langArray[1]["pwForgot"] 		    ="Forgot Password";
 //Styleauswahl Navigationsleiste
 $langArray[0]["styleDark"]			= "Nachtmodus";
 $langArray[1]["styleDark"] 			= "dark mode ";
@@ -21,6 +26,8 @@ $langArray[1]['redirectAdminLogin'] = "login as admin";
 // Abmelden Button
 $langArray[0]['logout']				= "Abmelden";
 $langArray[1]['logout']				= "Logout";
+$langArray[0]['captcha']			= "Captcha";
+$langArray[1]['captcha']			= "Captcha";
 $langArray[0]['cart']				= "Einkaufswagen";
 $langArray[1]['cart']				= "Cart";
 $langArray[0]['myOrders']           = "Meine Bestellungen";
@@ -33,6 +40,13 @@ $langArray[0]['myAdressData']       = "Meine Adressdaten";
 $langArray[1]['myAdressData']       = "My adress information";
 $langArray[0]['myPayData']          = "Meine Rechnungen";
 $langArray[1]['myPayData']          = "My receipts";
+$langArray[0]['submitUserdata']     = "Anmeldedaten aktualisieren";
+$langArray[1]['submitUserdata']     = "Update Login Information";
+$langArray[0]['submitUserAdress']   = "Adresse aktualisieren";
+$langArray[1]['submitUserAdress']    = "Update Address Information";
+$langArray[0]['myPasswordData']     = "Passwort &auml;ndern";
+$langArray[1]['myPasswordData']     = "update password";
+
 
 //Buttons Warenkorb
 $langArray[0]['adressChange']     	= "Informationen &auml;ndern";
@@ -93,14 +107,14 @@ $langArray[1]["adminSignin"] 		= "Welcome back";
 $langArray[0]['monatJahr']          = 'Jahr und Monat ausw&aauml;hlen';
 $langArray[1]['monatJahr']          = 'Choose year and month';
 //Anmeldevorgang
-$langArray[0]["PlatzhalterPw"] 		= "Passwort";
-$langArray[1]["PlatzhalterPw"] 		= "password";
-$langArray[0]["PlatzhalterPwRepeat"]= "Passwort wiederholen";
-$langArray[1]["PlatzhalterPwRepeat"]= "repeat password";
-$langArray[0]["PlatzhalterVorname"] = "Vorname";
-$langArray[1]["PlatzhalterVorname"] = "first&nbsp;name";
-$langArray[0]["PlatzhalterNname"] 	= "Nachname";
-$langArray[1]["PlatzhalterNname"] 	= "last&nbsp;name";
+$langArray[0]["Pw"] 		        = "Passwort";
+$langArray[1]["Pw"] 		        = "password";
+$langArray[0]["PwRepeat"]           = "Passwort wiederholen";
+$langArray[1]["PwRepeat"]           = "repeat password";
+$langArray[0]["vorname"]            = "Vorname";
+$langArray[1]["vorname"]            = "first&nbsp;name";
+$langArray[0]["nachname"] 	        = "Nachname";
+$langArray[1]["nachname"] 	        = "last&nbsp;name";
 //Produkte hinzufuegen
 $langArray[0]['p_add_label']		= "Produkte hinzuf&uuml;gen";
 $langArray[1]['p_add_label']		= "Add Products";
@@ -121,12 +135,22 @@ $langArray[0]['nope'] 		= "Upps!. Hier ist leider etwas schief gelaufen";
 $langArray[1]['nope'] 		= "Oops! Something went terribly wrong!";
 //Anmeldefehler info an den user
 //nicht alle Felder augefuellt:
+
+
+$langArray[0]['notPw']              = "Passw&ouml;rter stimmen nicht &uuml;berein";
+$langArray[1]['notPw']              = "the passwords you entered do ot match";
+$langArray[0]['emptyInput']         = "%s muss gegeben sein.";
+$langArray[1]['emptyInput']         = "%s must be given.";
+$langArray[0]['notCaptcha']         = "Der eingegebene Captcha stimmt nicht ueberein";
+$langArray[1]['notCaptcha']         = "Captcha does not match";
+$langArray[0]['noRegisterReq']      = "zurzeit keine Registrierunsanfragen";
+$langArray[1]['noRegisterReq']      = "No register requests at this time";
 $langArray[0]['emptyFields'] 		= "Alle Felder m&uuml;ssen ausgef&uuml;llt werden!";
 $langArray[1]['emptyFields'] 		= "Fields cannot be empty!";
-$langArray[0]['emptyPassword1']     = "Passwort 1 muss ausgef&uuml;llt werden!";
-$langArray[1]['emptyPassword1']      = "Password 1 cannot be empty!";
-$langArray[0]['emptyPassword2']     = "Passwort 2 muss ausgef&uuml;llt werden!";
-$langArray[1]['emptyPassword2']     = "Password 2 cannot be empty!";
+$langArray[0]['emptyPasswortNeu']   = "Neues Passwort muss ausgef&uuml;llt werden!";
+$langArray[1]['emptyPasswortNeu']   = "new password cannot be empty!";
+$langArray[0]['emptyPasswortMatch'] = "Passwort wiederholen muss ausgef&uuml;llt werden!";
+$langArray[1]['emptyPasswortMatch'] = "Password repeat cannot be empty!";
 $langArray[0]['emptyMsg']           = "Bitte geben Sie eine Beitrittsbegr&uuml;ndung an!";
 $langArray[1]['emptyMsg']           = "Please leave the reason for your application. ";
 $langArray[0]['noMatch']            = "Passw&ouml;rter stimmen nicht &uuml;berein";
@@ -135,6 +159,10 @@ $langArray[0]['notCaptcha']         = "Der eingegebene Captcha stimmt nicht uebe
 $langArray[1]['notCaptcha']         = "Der eingegebene Captcha stimmt nicht ueberein";
 $langArray[0]['emptyPassword']      = "Passwort muss ausgef&uuml;llt werden!";
 $langArray[1]['emptyPassword']      = "Password cannot be empty!";
+$langArray[0]['emptyVorname']       = "Vorname musss  ausgef&uuml;llt werden!";
+$langArray[1]['emptyVorname']       = "First Name cannot be empty!";
+$langArray[0]['emptyNachname']      = "Nachname musss  ausgef&uuml;llt werden!";
+$langArray[1]['emptyNachname']      = "Last Name cannot be empty!";
 $langArray[0]['emptyUsername']      = "Username muss ausgef&uuml;llt werden!";
 $langArray[1]['emptyUsername']      = "Username cannot be empty!";
 $langArray[0]['emptyCaptcha']       = "Captcha muss ausgef&uuml;llt werden!";
@@ -148,7 +176,53 @@ $langArray[1]['emptyNummer']        = "Number cannot be empty!";
 $langArray[0]['emptyPlz']           = "Postleitzahl muss ausgef&uuml;llt werden";
 $langArray[1]['emptyPlz']           = "Postal code cannot be empty!";
 $langArray[0]['emptyLand']          = "Bitte geben Sie das Land mit an";
-$langArray[1]['emptyLand']           = "Please choose a country";
+$langArray[1]['emptyLand']          = "Please choose a country";
+$langArray[0]['emptyPasswortAlt']   = "Bitte best&auml;tigen Sie ihr altes Password";
+$langArray[1]['emptyPasswortAlt']   = "Please confirm your old password";
+$langArray[0]['pwLength']           = "Passwort muss zwischen 5 und 15 Zeichen enthalten";
+$langArray[1]['pwLength']           = "Password must contain between 5 and 15 Characters";
+$langArray[0]['nameTaken']          = "Username bereits vergeben";
+$langArray[1]['nameTaken']          = "Username has already been taken";
+$langArray[0]['pwNope']             = "eingegebenes Passwort stimmt nicht";
+$langArray[1]['pwNope']             = "submitted password is wrong";
+$langArray[0]['changeSuccess']      = "&Auml;nderungen wurden erfolgreich durchgef&uuml;hrt";
+$langArray[1]['changeSuccess']      = "Changes made successfully";
+$langArray[0]['changeNope']         = "Es gab einen unerwateten Fehler";
+$langArray[1]['changeNope']         = "Sorry there was an error while processing your request";
+$langArray[0]['noAddress']          = "Noch keine Adresse hinterlegt";
+$langArray[1]['noAddress']          = "No Adress information on file";
+$langArray[0]['emptyCart']          = "Noch keine Artikel im Warenkorb";
+$langArray[1]['emptyCart']          = "No Items added to cart yet";
+$langArray[0]['orderYes']           = "Ihre Bestellung wurde erfolgreich &uuml;bermittelt";
+$langArray[1]['orderYes']           = "Your order has been placed";
+$langArray[0]['productYes']         = "Das Produkt wurde erfolgreich &uuml;bermittelt";
+$langArray[1]['productYes']         = "Product submitted successfully";
+$langArray[0]['dbProblem']          = "Upps. Es gab wohl ein Problem mit der Datenbank.";
+$langArray[1]['dbProblem']          = "OOPs. There seems to have been a problem with the databbase";
+$langArray[0]['orderNope']          = "Ihre Bestellung wurde";
+$langArray[1]['orderNope']          = "Your order";
+$langArray[0]['tooNegative']        = "Werte f&uuml;r Mengenangaben d&uuml;rfen nicht negativ sein";
+$langArray[1]['tooNegative']        = "Values for quantity inputs must not be negative";
+$langArray[0]['emptyPd_name']       = "Bitte geben Sie einen deutschen Namen ein";
+$langArray[1]['emptyPd_name']       = "Please enter a German title";
+$langArray[0]['emptyPe_name']       = "Bitte geben Sie einen englischen Namen ein";
+$langArray[1]['emptyPe_name']       = "Please enter an English title";
+$langArray[0]['emptyP_preis']       = "Bitte machen Sie eine Preisangabe";
+$langArray[1]['emptyP_preis']       = "Please enter a Price";
+$langArray[0]['emptyMenge']         = "Fehlt: Angabe zum Lagerbestand";
+$langArray[1]['emptyMenge']         = "Please enter Stock";
+$langArray[0]['noDatei']            = "Bitte w&auml;hlen Sie eine Datei aus";
+$langArray[1]['noDatei']            = "Please choose a File";
+$langArray[0]['emptyPd_beschreibung']= "Bitte geben Sie eine deutsche Beschreibung ein";
+$langArray[1]['emptyPd_beschreibung']= "Please enter a German description";
+$langArray[0]['emptyPe_beschreibung']= "Bitte geben Sie eine englische Beschreibung ein";
+$langArray[1]['emptyPe_beschreibung']= "Please enter an English description";
+$langArray[0]['captchaNope']		= "Der eingegebene Captcha stimmt nicht &uuml;berein";
+$langArray[1]['captchaNope']		= "The Captcha you entered does not match";
+$langArray[0]['usernameNope']		= "Ein passender Username konnte nicht gefunden werden";
+$langArray[1]['usernameNope']		= "The username you entered does not exist";
+
+
 
 // Username Falsch oder Passwort falsch
 $langArray[0]['nameNot'] 			="Passwort oder Username falsch";
@@ -202,3 +276,14 @@ $langArray[1]['pickLand']     		= "Choose Country";
 
 
 
+//Formulare
+$langArray[0]['username']     		= "Username";
+$langArray[1]['username']     		= "Username";
+$langArray[0]['password']     		= "Passwort";
+$langArray[1]['password']     		= "Password";
+$langArray[0]['pwOld']     		    = "Mit altem Passwort best&auml;tigen";
+$langArray[1]['pwOld']     		    = "Confirm with old Password";
+$langArray[0]['pwNew']     		    = "neues Passwort";
+$langArray[1]['pwNew']     		    = "New Password";
+$langArray[0]['pwRepeatNew']        = "neues Passwort wiederholen";
+$langArray[1]['pwRepeatNew']        = "reenter new Password";

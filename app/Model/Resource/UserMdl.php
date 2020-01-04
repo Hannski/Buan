@@ -5,7 +5,7 @@ use Model\UserMdl as UserModel;
 class UserMdl extends Base
 {
 
-    public function getUserById($id)
+    public function getUserById($id):array
     {
         $sql = "SELECT * FROM user WHERE id = :id";
         $base = new Base();
@@ -29,12 +29,12 @@ class UserMdl extends Base
                          $userArray[] = $user;
             return $userArray;
         }
-        return false;
+        return $userArray;
 
     }
 
+    //Useradresse in die Datenbank
     public function insertUserAdress($strasse,$nummer,$plz,$ort,$land)
-
     {
         $base = new Base();
         $sql = "INSERT INTO useradressen
@@ -51,23 +51,48 @@ class UserMdl extends Base
         $stmt->execute();
     }
 
-    //gibt es eine Adresse zu diesem User?
-    public function isUserAdress($userId):bool
+    //gibt es diesen Usernamen?
+    public function isUsername($username):bool
     {
-        $sql = "SELECT strasse,nummer,plz,ort,land FROM useradressen WHERE u_id = :uid";
+        $sql = "SELECT username FROM user WHERE username = :username ";
         $base = new Base();
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
-        $stmt->bindValue(':uid', $userId);
+        $stmt->bindValue('username', $username);
         $stmt->execute();
-        $adressArray = array();
-        while($row =$stmt->fetch(\PDO::FETCH_ASSOC))
-        {
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
             return true;
         }
         return false;
     }
+
+    //temporaeres Passwort, wenn user passswort vergessen vorgang gewahlt hat
+    public function insertTempPw($tempPass,$username):void
+    {
+        $base= new Base();
+        $sql = "UPDATE user set temp_pw = :tempPw WHERE username = :username";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //md5 verschluesselung des temporaeren Passwortes.
+        $stmt->bindValue('tempPw',md5($tempPass));
+        $stmt->bindValue('username',$username);
+
+        $stmt->execute();
+    }
+
+    //User mit bestimmten usernamen sperren
+    public function lockUsername($username):void
+    {
+        $sql = "UPDATE user SET gesperrt = 1 WHERE username = :username ";
+        $base = new Base();
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue('username', $username);
+        $stmt->execute();
+    }
+
     //User Adresse holen
     public function getUserAdress($userId):array
     {
@@ -92,20 +117,68 @@ class UserMdl extends Base
         return $adressArray;
     }
 
-    //ist der username bereits vergeben??
-    public function getUsername($username):bool
+    //ist der username bereits vergeben und nicht der aktuelle Username??
+    public function isNewUsername($username,$id):bool
     {
-        $sql = "SELECT username FROM user WHERE username = :username";
+        $sql = "SELECT username FROM user WHERE username = :username AND id != :id";
         $base = new Base();
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
         $stmt->bindValue('username', $username);
+        $stmt->bindValue('id', $id);
         $stmt->execute();
         while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
             return true;
         }
         return false;
+    }
+    //stimmt das eingegebne passwort?
+    public function isPassword($password,$id):bool
+    {
+        $sql = "SELECT pwmd5 FROM user WHERE pwmd5 = :password AND id=:id";
+        $base = new Base();
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen + passwort hashen
+        $stmt->bindValue('password', md5($password));
+        $stmt->bindValue('id', $id);
+        $stmt->execute();
+        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
+            return true;
+            echo "exists";
+        }
+        return false;
+    }
+
+    //Login Daten anpassen
+    public function updateLoginData($pw,$username,$id)
+    {
+        $base= new Base();
+        $sql ="UPDATE user SET pwmd5 = ?,username =? WHERE id = ?";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(array(md5($pw),$username,$id));
+
+    }
+
+    //Passwort aktualisieren
+    public function updatePasswort($pwNeu,$id)
+    {
+        $base= new Base();
+        $sql ="UPDATE user SET pwmd5 = ? WHERE id = ?";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(array(md5($pwNeu),$id));
+    }
+    //Username aktualisieren
+    public function updateUsername($username,$id)
+    {
+        $base= new Base();
+        $sql ="UPDATE user SET username = ? WHERE id = ?";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(array($username,$id));
     }
 
     /*User authetifizierung */
@@ -139,7 +212,8 @@ class UserMdl extends Base
         //kein Nutzer gefunden
         return false;
     }
-    /*neuen User (noch nicht authorisiert) in die Datenbank schreiben: diesen Nutzenden zeichent aus, dass er oder sie gesperrt sind und kein konfirmations-datum festgelet wird*/
+    /*neuen User (noch nicht authorisiert) in die Datenbank schreiben: diesen Nutzenden zeichent aus,
+    dass er oder sie gesperrt sind und kein konfirmations-datum festgelet wird*/
     public function insertUser($user)
     {
         $base= new Base();
@@ -157,7 +231,7 @@ class UserMdl extends Base
     }
 
    /*unauthoriserte Nutzer fuer die Ansicht im Admindashboard: noch kein Confirm_Datum*/
-    public function getUnauthUsers()
+    public function getUnauthUsers():array
     {
         $base= new Base();
         $sql = "SELECT id,username,gesperrt,msg FROM user WHERE confirm_datum =0";

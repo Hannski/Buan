@@ -11,12 +11,48 @@ namespace Model;
 
 class UserAdressenMdl
 {
-private $strasse;
-private $nummer;
-private $plz;
-private $ort;
-private $land;
-private $u_id;
+    private $vorname;
+    private $nachname;
+    private $strasse;
+    private $nummer;
+    private $plz;
+    private $ort;
+    private $land;
+    private $u_id;
+
+    /**
+     * @return mixed
+     */
+    public function getVorname()
+    {
+        return $this->vorname;
+    }
+
+    /**
+     * @param mixed $vorname
+     */
+    public function setVorname($vorname): void
+    {
+        $this->vorname = $vorname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNachname()
+    {
+        return $this->nachname;
+    }
+
+    /**
+     * @param mixed $nachname
+     */
+    public function setNachname($nachname): void
+    {
+        $this->nachname = $nachname;
+    }
+
+
 
     /**
      * @return mixed

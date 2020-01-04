@@ -11,9 +11,9 @@ namespace Form\Validatoren;
 
 class PasswordMatchValidator
 {
-    public function validieren():bool
+    public function validieren($pw1):bool
     {
-            if ($_POST['password1'] == $_POST['password2'])
+            if ($pw1 == $_POST['passwortMatch'])
             {
                 return true;
             }else{

@@ -1,7 +1,8 @@
 <?php
 namespace Controller;
 use \Model\Resource\ProduktMdl ;
-use App;
+use Form\ProduktEinstellenForm;
+
 class ProduktCtrl extends AbstractController
 {
 
@@ -61,14 +62,65 @@ class ProduktCtrl extends AbstractController
     //Produkt-erstellen Action
     public function erstellenAction()
     {
+        //Fehler abfangen
+        if($this->isPost('add_p'))
+        {
+            //Fehler abfangen:
+            $form= new ProduktEinstellenForm();
+            $errorArray = $form->getErrorList();
+            if(!empty($errorArray))
+            {
+                $this->getNav();
+                echo $this->render('seitenkomponenten/errors',array('errorArray'=>$errorArray));
+                echo $this->render('pages/products/add_p');
+            }
+            else
+            {
+                //ProduktResourceModel
+                $produkt=new ProduktMdl();
+                //Model
+                $p_info = new \Model\ProduktMdl();
+                $p_info->setNameDe($_POST['pd_name']);
+                $p_info->setNameEn($_POST['pe_name']);
+                $p_info->setBeschreibungDe($_POST['pd_beschreibung']);
+                $p_info->setBeschreibungEn($_POST['pe_beschreibung']);
+                $p_info->setPreis($_POST['p_preis']);
+                $p_info->setMenge($_POST['menge']);
+                //hat  alles geklapp?
+                if($this->addProduct())
+                {
+                    $this->getNav();
+                    //gute nachrichten
+                    $errorArray [] = 'productYes';
+                    echo $this->render('seitenkomponenten/errors',array('errorArray'=>$errorArray));
+                    echo $this->render('pages/products/add_p');
+                }else
+                {
+                    $this->getNav();
+                    //schlechte nachrichten
+                    $errorArray [] = 'dbProblem';
+                    echo $this->render('seitenkomponenten/errors',array('errorArray'=>$errorArray));
+                }
+            }
+        }
         $this->getNav();
         echo $this->render('pages/products/add_p');
-        echo $this->render('seitenkomponenten/footer');
+
     }
 
     //Produkt bearbeiten Action
     public function bearbeitenAction()
     {
+        if (isset($_POST['aendern']))
+        {
+            $this->updateProduct();
+        }elseif(isset($_POST['datei']))
+        {
+            $this->updateFile();
+        }
+
+
+
         $this->getNav();
         $resource = new ProduktMdl();
         $produkteArray = $resource->getProduktById($_GET['id']);
@@ -86,11 +138,11 @@ class ProduktCtrl extends AbstractController
 	    $preis = $_POST['p_preis'];
 	    $dateiname = $_FILES['dateiname']['name'];
 	    $dateityp = $_FILES['dateiname']['type'];
-	    $menge = $_POST['Menge'];
+	    $menge = $_POST['menge'];
 	  
 	 
 	    //Zuweisung werte
-		$produkt = App::getModel('ProduktMdl');
+		$produkt = new \Model\ProduktMdl();
 		$produkt->setNameDe($name_de);
 		$produkt->setNameEn($name_en);
 		$produkt->setBeschreibungDe($beschreibung_de);
@@ -99,8 +151,8 @@ class ProduktCtrl extends AbstractController
 		$produkt->setDateiname($dateiname);
 		$produkt->setMenge($menge);
 		//In Datenbank schreiben
-		$resource = App::getResourceModel('ProduktMdl');
-		$resource->insertProdukt($produkt); 
+		$resource = new ProduktMdl();
+		return $resource->insertProdukt($produkt);
 		
 	 
     }
@@ -120,12 +172,11 @@ class ProduktCtrl extends AbstractController
     //Bearbeiten: 
     public function updateProduct()
     {
-    	/* der Einfachheithalber wird an dieser Stelle nicht mit gettern und settern gearbeitet, sondern Werte direkt an das resource-model uebermittelt*/
-    	//Wert des Formular-Buttons Beispiel: "Dateiname" 
+    	//Wert des Formular-Buttons Beispiel: "Dateiname"
     	$edit = $_POST['aendern'];
     	//Produkt-Id
-    	$id = $_POST ['id'];
-    	$resource = App::getResourceModel('ProduktMdl');
+    	$id = $_GET['id'];
+    	$resource = new ProduktMdl();
     	//Name-Deutsch aendern
     	if ($edit=="name_de")
     	{$value=$_POST['name_de'];}
@@ -139,14 +190,15 @@ class ProduktCtrl extends AbstractController
 		elseif($edit == "gesperrt"){$value= $_POST['gesperrt'];}
 		$resource->UpdateProdukt($id,$edit,$value);
     }
+
  	// bearbeiten: Bilddatei in unterordner ggf. ersetzen : "Projektordner/Assets/"
  	public function updateFile()
  	{
  		if (isset($_POST['datei']))
  		{
  			//Deteinamen in Datenbank Aendern:
- 			$id = $_POST ['id'];
-    		$resource = App::getResourceModel('ProduktMdl');
+ 			$id = $_GET ['id'];
+    		$resource =new ProduktMdl();
     		$edit= "dateiname";
     		$value = $_FILES['dateiname']['name'];
     		$resource->UpdateProdukt($id,$edit,$value);

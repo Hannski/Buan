@@ -9,19 +9,13 @@
 namespace Form\Validatoren;
 
 
-class PasswordLengthValidator
+class EmptyValidator
 {
-    public function validieren($pw):bool
+    public function validieren($input):bool
     {
 
-        $passwordLength = strlen($pw);
-        if ($passwordLength < 5 OR $passwordLength > 15)
-        {
-           return false;
-        }else
-            {
-                return true;
-            }
+       return !empty($input);
+
     }
 
     /*
@@ -34,7 +28,7 @@ class PasswordLengthValidator
          * Fehler Feldspezifisch ausgeben, Beispiel: >>Passwort<< darf nicht leer sein. Dazu:
          * Korrespondierenden arraykey in /language/lang.php "langArray" zurueckgeben:
         */
-        return 'pwLength';
+        return 'empty'.ucfirst($value);
 
     }
 }

@@ -13,7 +13,13 @@ class CaptchaValidator
 {
     public function error()
     {
-        return 'notCaptcha';
+        //language option und Spracharray
+        include './language/lang.php';
+        include './app/includes/languageCheck.php';
+        //Fehler zurueckgeben -> schluessel fuer LanguageArray ins Fehlerarray
+
+
+        return 'captchaNope';
 
     }
     public function validieren(string $value)

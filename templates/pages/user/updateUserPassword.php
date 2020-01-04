@@ -33,21 +33,30 @@
                     </div>
                     <form action="#" method="post">
 
-                        <div class="bg-white card-body">
-                            <div class="form-group d-flex flex-column align-items-center">
-                                <!--Username aendern -->
+                        <div class="bg-white card-body d-flex flex-column align-items-center">
+
+                                <!--Passwort neu -->
                                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
-                                    <label for="name_de"><?php echo $langArray[$opt]['username']?></label>
-                                    <input type="text" id="name_de" class="form-control" name="username">
+                                    <label for="pw1"><?php echo $langArray[$opt]['pwNew']?></label>
+                                    <input type="password" class="form-control" id="pw1" name="passwortNeu">
+                                </div>
+                                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
+                                    <!--Passwort wiederholte Eingabe -->
+                                    <label for="pw2"><?php echo $langArray[$opt]['pwRepeatNew']?></label>
+                                    <input type="password" class="form-control" id="pw2" name="passwortMatch">
+                                </div>
+                                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
+                                    <!--altes Passwort zum bestaetigen -->
+                                    <label for="alt"><?php echo $langArray[$opt]['pwOld']?></label>
+                                    <input type="password" class="form-control" id="alt" name="passwortAlt">
                                 </div>
 
-
                             </div>
-                        </div>
+
 
                         <!-- Formular Bestaetigen-->
                         <div class="mt-2 input-group input-group-lg mr-sm-2 d-flex flex-column align-items-center">
-                            <button class="btn btn-outline-secondary btn-enter" name="userName" type="submit">
+                            <button class="btn btn-outline-secondary btn-enter" name="password" type="submit">
                                 <?php echo $langArray[$opt]['submitUserdata']; ?>
                             </button>
                         </div>

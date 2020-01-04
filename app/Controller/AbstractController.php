@@ -26,7 +26,8 @@ public function render(string $template,array $data = [],array $data2=[]):string
     public function isPost($post):bool
     {
 
-        if (count($_POST) > 0) {
+        if (isset($_POST[$post]))
+        {
             return true;
         }
 
@@ -40,20 +41,21 @@ public function render(string $template,array $data = [],array $data2=[]):string
         echo $this->render("seitenkomponenten/header");
         //Superadmin eingeloggt??->superadmin Navbar
         if($this->isSuperAdmin()){
-            echo $this->render("pages/admin/SuperadminNav");
+            echo $this->render("pages/user/UserNav");
         }
         //regulaerer Admin eingeloggt?-> admin-navbar
         elseif($this->isAdmin())
         {
-            echo $this->render("pages/admin/adminNav");
+            echo $this->render("pages/user/UserNav");
 
         }elseif($this->isUser())
         {
-            echo $this->render("pages/user/userNav");
+            echo $this->render("pages/user/UserNav");
         }
         //kein admin eingeloggt, besucher haben hier nichts zu suchen->go home
-        else{echo $this->render("pages/user/userNav");}
+        else{echo $this->render("pages/user/UserNav");}
     }
+
 
     /*handelt es sich bei dem eingeloggten Admin um den Super Admin? */
     public function isSuperAdmin():bool

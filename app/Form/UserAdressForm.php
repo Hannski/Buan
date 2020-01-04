@@ -9,19 +9,23 @@
 namespace Form;
 
 
+use Form\Validatoren\EmptyValidator;
+
 class UserAdressForm extends AbstractForm
 {
     //Zweidimensionales Array, uebergibt Post-Werte an Abstract-Form.
     public function __construct()
     {
 
-        $this->inputList =
-            [
-                'strasse' =>[],
-                'nummer' =>[],
-                'ort'  =>[],
-                'plz'  =>[],
-                'land'  =>[],
+        $this->inputList =[
+
+                'vorname'=>[new EmptyValidator(),],
+                'nachname'=>[new EmptyValidator(),],
+                'strasse' =>[new EmptyValidator(),],
+                'nummer' =>[new EmptyValidator(),],
+                'ort'  =>[new EmptyValidator(),],
+                'plz'  =>[new EmptyValidator(),],
+                'land'  =>[new EmptyValidator(),],
 
             ];
 

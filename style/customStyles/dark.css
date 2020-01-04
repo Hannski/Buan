@@ -3,7 +3,7 @@
 stattdessen die weniger empfohlene "bad-practice" !important zum ueberschrieben der styles gewaehlt da der Fokus des Projektes weniger auf dem Front- als auf dem 
 Backend liegt */
 /* HIntergrund */
-html, body, #wrapper
+html, body
 {
     height: 100%!important;
     background-color:#05041B;
@@ -18,19 +18,38 @@ html,body,td,table,tr
     color: #fff!important;
     font-size:17px!important;
 }
+#wrap,#main
+{
+    padding: 0!important;
+    margin: 0!important;
+    height: 90vh!important;
+}
+.footer{
+    padding: 0!important;
+    margin: 0!important;
+    height: 9vh;
+}
+
+/*HIntergurndfarben*/
 hr,.hr
 {
     background-color: #fff!important;
 }
-/*Hintergrund fuer Karten und Textausgaben in Listenform*/
-.card,.data
+.card-header
 {
-    background-color: #332e2e!important;
+    background-color: #3A394A!important;
+}
+.card,.data,.form-group,.card-body
+{
+    background-color: #555d6b!important;
 }
 
-.list-group-item
+list-goup-flush .list-group-item
 {
-    border-bottom: 1px solid #ffffff!important;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid #000!important;
     border-top:1px solid #ffffff!important;
 
 }
@@ -56,6 +75,13 @@ background-color: grey;
 .border
 {
 	border-color: #fff!important;
+}
+
+/*Buttons*/
+.btn-enter
+{
+    background-color: #3A394A!important;
+    color: #fff!important;
 }
 
 

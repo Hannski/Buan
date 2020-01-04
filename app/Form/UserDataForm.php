@@ -2,17 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: Hannah
- * Date: 26.12.2019
- * Time: 15:14
+ * Date: 02.01.2020
+ * Time: 14:18
  */
 
 namespace Form;
-
-
-
 use Form\Validatoren\EmptyValidator;
 
-class AdminLoginForm extends AbstractForm
+
+
+class UserDataForm extends AbstractForm
 {
     //Zweidimensionales Array, uebergibt Post-Werte an Abstract-Form.
     public function __construct()
@@ -20,9 +19,8 @@ class AdminLoginForm extends AbstractForm
 
         $this->inputList =
             [
-                'vorname'    =>[new EmptyValidator(),],
-                'nachname'  =>[new EmptyValidator(),],
-                'password'  =>[new EmptyValidator(),],
+                'username' =>[new EmptyValidator()],
+
             ];
 
         $this->validateForm();

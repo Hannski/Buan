@@ -1,5 +1,8 @@
 <?php
-session_start();
+//falls keine Session gestartet wurde:
+if(session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 	/*diese datei wird als quelle fuer ein <img> in der Datei: root/alerts/pages/user-login aufgerufen*/
 
 //Zugelassene Zeichen: Der Einfachheit halber: nur grosse Buchstaben!

@@ -33,6 +33,7 @@ class Router
         //Controllerklasse laden aus Namespace: Controller/$varCtrl;
         $controllerClass = sprintf('Controller\\%sCtrl', ucfirst($controllerName));
 
+
         //Fehler abfangen:
         if (class_exists($controllerClass)) {
             //Klasse instanzieren
@@ -40,10 +41,10 @@ class Router
 
             //nach welcher Methode innerhlab der Controllerklasse wird gesucht?
             $methodName = sprintf('%sAction', $actionName);
-
             //Fehler abfangen: gibt es die Methode in der Controllerklasse?, wenn ja: aufrufen
             if (method_exists($controller, $methodName)) {
                 $controller->$methodName();
+
             } else {
                 //Problem: Kontroller gefunden, Methode nicht.
                 echo Controller\AbstractController::render('seitenkomponenten/header');

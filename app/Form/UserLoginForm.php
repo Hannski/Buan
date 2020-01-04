@@ -8,6 +8,7 @@
 
 namespace Form;
 use Form\Validatoren\CaptchaValidator;
+use Form\Validatoren\EmptyValidator;
 
 class UserLoginForm extends AbstractForm
 {
@@ -17,8 +18,8 @@ class UserLoginForm extends AbstractForm
 
         $this->inputList =
         [
-            'username' =>[],
-            'password' =>[],
+            'username' =>[new EmptyValidator()],
+            'password' =>[new EmptyValidator()],
             'captcha'  =>[new CaptchaValidator(),],
         ];
 

@@ -76,6 +76,8 @@ class AdminMdl extends Base
             $admin  = new AdminModel();
             $admin->setStatus($row['gesperrt']);
             $admin->setSuper($row['superAdmin']);
+            $admin->setAVorname($row['a_vorname']);
+            $admin->setANname($row['a_nname']);
             //Objekt
             return $admin;
         }
