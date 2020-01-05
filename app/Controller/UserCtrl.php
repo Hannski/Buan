@@ -33,39 +33,52 @@ class UserCtrl extends AbstractController
      *      -username bereits vorhanden
 	*
 	*/
+    /*
+   *
+   *Nutzer sendet Registrierungsanfrage + keine Formularfehler(Abfrage in Router.php)
+    *  Formularfehler abfangen (leeres feld, pw zu kurz/lang, Nutzername bereits Vorhanden)
+   *	-gewunschtes pw(verschluesselt) und Username in die DB
+   *	-Nutzer vorerst gesperrt(Status=1)
+   *	-kein Konfirmationsdatum
+   *	-AppMsg = Text, gründe warum Mitglied beitreten will.
+   */
+
 
     public function registerAction()
     {
-        $this->getNav();
-        if ($this->isPost("u_register")) {
+        //Model
+        $user = new UserMdl();
+        if ($this->isPost("u_register")){
             $form = new UserRegisterForm();
             $errorArray = $form->getErrorList();
             if (!empty($errorArray)) {
                 //Formularfehler
                 echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
-            } //Username noch nicht Vorhanden:
-            elseif ($this->canUserRegister()) {
-                $this->registerUser();
-            } //Username bereits Vorhanden
-            elseif (!$this->canUserRegister()) {
+            }
+            //Username bereits Vorhanden?
+            //nein:
+           elseif (!$user->isUsername($_POST['username']))
+            {
+                $userData = new \Model\UserMdl();
+                $userData->setUsername($_POST['username']);
+                $userData->setPwmd5(md5($_POST['password1']));
+                $userData->setStatus(1);
+                $userData->setAppMsg($_POST['msg']);
+                $user->insertUser($userData);
+            }
+           //Username bereits Vorhanden
+           //ja:
+            else{
                 $errorArray[] = "nameTaken";
                 echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
             }
-
         }
+        $this->getNav();
         echo $this->render('pages/user/userRegistration');
         echo $this->render('seitenkomponenten/footer');
     }
 
-    //gibt es den USernamen schon
-    public function canUserRegister()
-    {
-        if (UserMdl::isUsername($_POST['username'])) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+
 
     //einzelnen USer bearbeiten
     public function bearbeitenAction()
@@ -166,11 +179,15 @@ class UserCtrl extends AbstractController
                 //$mail = ?
                 //$this->sendRecovery($mail,$recPass,$_POST['username']);
                 //Link fuer temp. Passwort (oeffnet in neuem Tab)
-                $this->getNav();
-                $recoveryArray['username']=$_POST['username'];
-                $recoveryArray['pass']=$recPass;
 
+                 $recoveryArray['username']=$_POST['username'];
+                 $recPass;
+                //pdf generation:
+                $this->generateRecoveryPdf($recPass,$_POST['username']);
+                $this->getNav();
+                echo $this->render('pages/user/pw_recovery', array("recoveryArray" => $recoveryArray));
                 echo $this->render('pages/user/recoveryPage', array("recoveryArray" => $recoveryArray));
+
             }else
             {
                 $errorArray[] = 'usernameNope';
@@ -184,6 +201,28 @@ class UserCtrl extends AbstractController
             $this->getNav();
             echo $this->render('pages/user/pw_recovery');
         }
+    }
+    //Pdf generieren fuer vorruebergehnde Passwortdaten
+    public function generateRecoveryPdf($pass,$username)
+    {
+        require_once './fpdf/fpdf.php';
+        $pdf = new \FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(40,10,'Hallo,'.$username);
+        $pdf->Cell(10,20,'');
+        $pdf->Cell(40,30,'dein passwort:    '.$pass);
+        $pdf->Output('F',md5($username),true);
+
+    }
+
+    //pdf datei anzeigen
+    public function recoverydataAction()
+    {
+        $hash = $_GET['hash'];
+        header("content-type: application/pdf");
+        echo file_get_contents($hash);
+
     }
 
     //randomisiertes Apsswort erzeugen fuer den PAsswort vergessen-Vorgang
@@ -275,11 +314,11 @@ class UserCtrl extends AbstractController
     public function authorisierungAction()
     {
         $resource = new UserMdl();
-        if ($this->isPost('auth') && isset($_POST['status'])) {
+        if ($this->isPost('auth') && isset($_POST['status']))
+        {
             $resource->authUser($_POST['id'], $_POST['status']);
         }
         $this->getNav();
-        $resource = new UserMdl();
         $userArray = $resource->getUnauthUsers();
         if (empty($userArray)) {
             $errorArray = array();
@@ -437,34 +476,9 @@ class UserCtrl extends AbstractController
     }
 
 
-    //uebersicht ueber Zahlungen und Boni+ PDF ausdruck Moeglichkeit
-    public function gehaltAction()
-    {
-        $this->getNav();
-        echo $this->render('pages/user/rechnungen');
 
-    }
 
-    /*
-     *
-     *Nutzer sendet Registrierungsanfrage + keine Formularfehler(Abfrage in Router.php)
-      *  Formularfehler abfangen (leeres feld, pw zu kurz/lang, Nutzername bereits Vorhanden)
-     *	-gewunschtes pw(verschluesselt) und Username in die DB
-     *	-Nutzer vorerst gesperrt(Status=1)
-     *	-kein Konfirmationsdatum
-     *	-AppMsg = Text, gründe warum Mitglied beitreten will.
-     */
-    public function registerUser()
-    {
-        $user = new \Model\UserMdl();
-        $user->setUsername($_POST['username']);
-        $user->setPwmd5(md5($_POST['password1']));
-        $user->setStatus(1);
-        $user->setAppMsg($_POST['msg']);
-        //In Datenbank schreiben
-        $resource = new UserMdl();
-        $resource->insertUser($user);
-    }
+
 
     /*Anzeige  Unauthoriesierte Nutzer aus DB :
     * - Merkmal: noch kein authorisierungsdatum gespeichert

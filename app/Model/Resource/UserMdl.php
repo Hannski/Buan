@@ -5,7 +5,7 @@ use Model\UserMdl as UserModel;
 class UserMdl extends Base
 {
 
-    public function getUserById($id):array
+    public function getUserById($id):UserModel
     {
         $sql = "SELECT * FROM user WHERE id = :id";
         $base = new Base();
@@ -14,11 +14,12 @@ class UserMdl extends Base
         //Werte zuweisen
         $stmt->bindValue(':id', $id);
         $stmt->execute();
-        $userArray = array();
-        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
-            $user = new \Model\UserMdl();
+            $row =$stmt->fetch(\PDO::FETCH_ASSOC);
+            $user = new UserModel();
             $user->setUsername($row['username']);
-
+            $user->setAcceptiondate($row['confirm_datum']);
+            $user->setAppMsg($row['msg']);
+            $user->setTemppw($row['temp_pw']);
             if ($user->setStatus($row['gesperrt'])  )
             {
                 $user->setStatus('aktiv');
@@ -26,10 +27,7 @@ class UserMdl extends Base
             {
                 $user->setStatus('gesperrt');
             }
-                         $userArray[] = $user;
-            return $userArray;
-        }
-        return $userArray;
+            return $user;
 
     }
 
@@ -146,7 +144,6 @@ class UserMdl extends Base
         $stmt->execute();
         while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
             return true;
-            echo "exists";
         }
         return false;
     }
@@ -222,12 +219,14 @@ class UserMdl extends Base
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
+
         $stmt->bindValue('username', $user->getUsername());
         $stmt->bindValue('pwmd5',    $user->getPwmd5());
         $stmt->bindValue('gesperrt', $user->getStatus());
         $stmt->bindValue(':msg',     $user->getAppMsg());
         $stmt->bindValue(':confirm_datum', '0000-00-00');
         $stmt->execute();
+
     }
 
    /*unauthoriserte Nutzer fuer die Ansicht im Admindashboard: noch kein Confirm_Datum*/
@@ -263,6 +262,9 @@ class UserMdl extends Base
     $stmt->bindValue(':gesperrt',$status);
     $stmt->execute();
     }
+
+
+
      /*
     *Alle Authorisierten Nutzer aus der Datenbank:
     *-confirm_datum>0000-00-00

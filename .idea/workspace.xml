@@ -2,7 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d4d1ded-8f56-4313-a16d-8c38d0041420" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Controller/WagesCtrl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/12b877fa-e236-4524-9602-e0a5bbece2a6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/12b877fa-e236-4524-9602-e0a5bbece2a6.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controller/AdminCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/AdminCtrl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/DefaultController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controller/ProduktCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/ProduktCtrl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controller/UserCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/UserCtrl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Form/UserRegisterForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Form/UserRegisterForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Model/BestellungenMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/BestellungenMdl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Model/Resource/BestellungenMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Resource/BestellungenMdl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Model/Resource/UserMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Resource/UserMdl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pages/admin/listUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/admin/listUsers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pages/bestellungen/user-bestellungen-anzeigen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/bestellungen/user-bestellungen-anzeigen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pages/user/UserNav.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/UserNav.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pages/user/pw_recovery.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/pw_recovery.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pages/user/rechnungen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/rechnungen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pages/user/recoveryPage.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/recoveryPage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pages/user/userRegistration.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/userRegistration.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,18 +114,22 @@
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
+  <component name="ProjectId" id="1VwjQ93cMj1JQuRLaZ8Fb4bXmr5" />
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mariadb" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -164,6 +187,7 @@
       <workItem from="1578050378835" duration="21761000" />
       <workItem from="1578078600504" duration="2819000" />
       <workItem from="1578134764815" duration="18266000" />
+      <workItem from="1578171038423" duration="11536000" />
     </task>
     <task id="LOCAL-00001" summary="-besstellungen nach datum sortiert,groupiert ausgeben">
       <created>1578165154933</created>
@@ -172,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578165154933</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="-besstellungen nach datum sortiert,groupiert ausgeben">
+      <created>1578165550348</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1578165550348</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -193,17 +224,6 @@
         <entry key="MAIN">
           <value>
             <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>

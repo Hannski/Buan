@@ -99,7 +99,7 @@ public function getOrderIds($monat,$jahr)
         $stmt->bindValue('uid',$_SESSION['userId']);
         $stmt->bindValue('monat',$monat);
         $stmt->bindValue('jahr',$jahr);
-        $stmt->execute();
+       $stmt->execute();
         $orderArray = array();
         while($row = $stmt->fetch(\PDO::FETCH_ASSOC))
         {
@@ -114,6 +114,7 @@ public function getOrderIds($monat,$jahr)
               $order->setItemId($row['item_id']);
               $order->setMenge($row['menge']);
               $order->setPNameD($row['name_de']);
+              $order->setPreis($row['preis']);
               $orderArray[$orderId][] = $order;
         }
         return $orderArray;

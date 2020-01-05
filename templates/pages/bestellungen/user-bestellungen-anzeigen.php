@@ -24,10 +24,6 @@
                 <?php
                 foreach ($order as $item)
                 {
-
-
-
-
             ?>
 
 

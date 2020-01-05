@@ -229,7 +229,7 @@ public function logoutAction()
 	public function authenticateAdmin()
     {
         $model=new AdminMdl();
-        return $model->authenticateAdmin($_POST['name'],$_POST['nachname'],md5($_POST['password']));
+        return $model->authenticateAdmin($_POST['vorname'],$_POST['nachname'],md5($_POST['password']));
     }
 
   /*Login-Formular Auswertung*/
@@ -310,7 +310,10 @@ public function logoutAction()
 
 
 
-
+    public function phpinfoAction(): void
+    {
+        phpinfo();
+    }
 }
 
  

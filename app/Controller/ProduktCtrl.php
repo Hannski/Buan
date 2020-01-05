@@ -86,6 +86,7 @@ class ProduktCtrl extends AbstractController
                 $p_info->setBeschreibungEn($_POST['pe_beschreibung']);
                 $p_info->setPreis($_POST['p_preis']);
                 $p_info->setMenge($_POST['menge']);
+                $this->addFile();
                 //hat  alles geklapp?
                 if($this->addProduct())
                 {

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="https://localhost/phpmyadmin/eckhardt">
-  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.14">
+  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.16">
     <root id="1">
       <ServerVersion>10.1.36</ServerVersion>
-      <Dbms>MARIADB</Dbms>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultCasing>lower/lower</DefaultCasing>
     </root>
@@ -21,7 +20,6 @@
     </schema>
     <schema id="6" parent="1" name="eckhardt">
       <Current>1</Current>
-      <Visible>1</Visible>
       <Collation>utf8_unicode_ci</Collation>
     </schema>
     <schema id="7" parent="1" name="game">

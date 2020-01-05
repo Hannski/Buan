@@ -19,18 +19,15 @@
                 <select name="jahrMonat" id="" class="m-1 form-control">
                     <?php
 
-                    foreach ($orderArray as $item) {
-                        $year = $item->getYear();
-                        $month = $item->getMonth();
+                    foreach ($wageMonths as $date) {
                         ?>
-                        <optgroup label="<?php echo $year ?>">
-                            <option value="<?php echo $year.'-'.$month ?>"><?php echo $year.'-'.$month?></option>
-                        </optgroup>
+                            <option value="<?php echo $date->format("Y-m"); ?>"><?php echo $date->format("Y-m");?></option>
+
                     <?php } ?>
 
                 </select>
 
-                <button type="submit" name="seeOrders" class="btn btn-success">suchen</button>
+                <button type="submit" name="seeWages" class="btn btn-success">suchen</button>
 
             </form>
         </div> <!--    Ende Col-12-->

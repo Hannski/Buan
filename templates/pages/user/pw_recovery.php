@@ -13,7 +13,7 @@
                         <!--   Infobox-->
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                             <p class="p-3">
-                                geben Sie hier iHren usernamen ien, wir informaieren sie per email.
+                                geben Sie hier iHren usernamen ein, wir informaieren sie per email.
                                 !achtung ihr altes passwort ist damit nihctmehr gueltig!
                             </p>
                         </div>

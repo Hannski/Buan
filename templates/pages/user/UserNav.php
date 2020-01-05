@@ -47,7 +47,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']=='loggedIn')
     //user abmelden
     echo "<a class=\"nav-link\" href=\"user-logout\">als ".$_SESSION['username']." ".$langArray[$opt]['logout']."</a></li>";
     //user: uebersicht ueber bestellungen
-    echo "  <li class=\"nav-item\"><a class=\"nav-link\" href=\"user-bestellungen\">".$langArray[$opt]['myOrders']."</a></li>";
+    echo "  <li class=\"nav-item\"><a class=\"nav-link\" href=\"./user-bestellungen\">".$langArray[$opt]['myOrders']."</a></li>";
     //user: Nutzerdaten 'passwort,'username','adresse' -aendern
     ?>
     <!-- Dropdown: Userdaten -->
@@ -70,7 +70,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']=='loggedIn')
     </li>
         <?php //user Gehaltuebersicht ?>
     <li class="nav-item">
-        <a class="nav-link" href="user-gehalt"><?php echo $langArray[$opt]['myPayData']?></a>
+        <a class="nav-link" href="./wages-overview"><?php echo $langArray[$opt]['myPayData']?></a>
     </li>
 <!--        Ende nav-links-->
 
