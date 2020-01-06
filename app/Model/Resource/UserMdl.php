@@ -5,7 +5,19 @@ use Model\UserMdl as UserModel;
 class UserMdl extends Base
 {
 
-    public function getUserById($id):array
+    //update user
+    /*admin  aktualisiert user-infos*/
+    public function updateUser($id,$edit,$value)
+    {
+        $base= new Base();
+        $sql ="UPDATE user SET $edit = ? WHERE id = ?";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$edit=$value,$id]);
+    }
+
+    //userModel zurueckgeben mit allen Daten zum user.
+    public function getUserById($id):UserModel
     {
         $sql = "SELECT * FROM user WHERE id = :id";
         $base = new Base();
@@ -14,42 +26,22 @@ class UserMdl extends Base
         //Werte zuweisen
         $stmt->bindValue(':id', $id);
         $stmt->execute();
-        $userArray = array();
-        while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
-            $user = new \Model\UserMdl();
+            $row =$stmt->fetch(\PDO::FETCH_ASSOC);
+            $user = new UserModel();
             $user->setUsername($row['username']);
-
-            if ($user->setStatus($row['gesperrt'])  )
+            $user->setAcceptiondate($row['confirm_datum']);
+            $user->setAppMsg($row['msg']);
+            $user->setTemppw($row['temp_pw']);
+            if ($row['gesperrt']==0)
             {
                 $user->setStatus('aktiv');
             }else
             {
                 $user->setStatus('gesperrt');
             }
-                         $userArray[] = $user;
-            return $userArray;
-        }
-        return $userArray;
-
+            return $user;
     }
 
-    //Useradresse in die Datenbank
-    public function insertUserAdress($strasse,$nummer,$plz,$ort,$land)
-    {
-        $base = new Base();
-        $sql = "INSERT INTO useradressen
-                (strasse,nummer,plz,ort,land,u_id) 
-                VALUES (:strasse,:nummer,:plz,:ort,:land,:uid)";
-        $connection = $base->connect();
-        $stmt=$connection->prepare($sql);
-        $stmt->bindValue('strasse',$strasse);
-        $stmt->bindValue('nummer',$nummer);
-        $stmt->bindValue('plz',$plz);
-        $stmt->bindValue('ort',$ort);
-        $stmt->bindValue('land',$land);
-        $stmt->bindValue('uid',$_SESSION['userId']);
-        $stmt->execute();
-    }
 
     //gibt es diesen Usernamen?
     public function isUsername($username):bool
@@ -77,14 +69,27 @@ class UserMdl extends Base
         //md5 verschluesselung des temporaeren Passwortes.
         $stmt->bindValue('tempPw',md5($tempPass));
         $stmt->bindValue('username',$username);
-
         $stmt->execute();
+    }
+
+    //befindet sich dieser user in einem Password-recovery Vorgang?
+    // -hat kein temp_passwort
+    // -hat kein pw
+    public function isUserRecovery($id):bool
+    {
+        $base = new Base();
+        $sql = "SELECT COUNT(id) AS counter FROM user WHERE pwmd5 IS NULL AND temp_pw IS NULL AND id=?";
+        $stmt = $base->connect()->prepare($sql);
+        $stmt->execute([$id]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row['counter'] == 1;
+
     }
 
     //User mit bestimmten usernamen sperren
     public function lockUsername($username):void
     {
-        $sql = "UPDATE user SET gesperrt = 1 WHERE username = :username ";
+        $sql = "UPDATE user SET gesperrt = 1, pwmd5 = NULL WHERE username = :username ";
         $base = new Base();
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
@@ -117,6 +122,7 @@ class UserMdl extends Base
         return $adressArray;
     }
 
+
     //ist der username bereits vergeben und nicht der aktuelle Username??
     public function isNewUsername($username,$id):bool
     {
@@ -133,6 +139,7 @@ class UserMdl extends Base
         }
         return false;
     }
+
     //stimmt das eingegebne passwort?
     public function isPassword($password,$id):bool
     {
@@ -146,21 +153,11 @@ class UserMdl extends Base
         $stmt->execute();
         while($row =$stmt->fetch(\PDO::FETCH_ASSOC)){
             return true;
-            echo "exists";
         }
         return false;
     }
 
-    //Login Daten anpassen
-    public function updateLoginData($pw,$username,$id)
-    {
-        $base= new Base();
-        $sql ="UPDATE user SET pwmd5 = ?,username =? WHERE id = ?";
-        $connection = $base->connect();
-        $stmt = $connection->prepare($sql);
-        $stmt->execute(array(md5($pw),$username,$id));
 
-    }
 
     //Passwort aktualisieren
     public function updatePasswort($pwNeu,$id)
@@ -188,9 +185,10 @@ class UserMdl extends Base
         *   -von Admin authorisiert wurde
         *  - nicht gesperrt ist(wird in Controller abgefragt)
         *  - Ein passender Eintrag in Db ist.
+         * -gesperrt ist aber ein gueltiges recovery Passwort eingegeben hat
         */
         $sql = "SELECT id,username,pwmd5,gesperrt FROM user
-                WHERE username = :username AND pwmd5 = :pwmd5
+                WHERE username = :username AND ((pwmd5 = :pwmd5 AND gesperrt=0) OR (temp_pw =:pwmd5 AND gesperrt=1))
                 AND confirm_datum > 0000-00-00";
         $base = new Base();
         $connection = $base->connect();
@@ -222,12 +220,14 @@ class UserMdl extends Base
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
+
         $stmt->bindValue('username', $user->getUsername());
         $stmt->bindValue('pwmd5',    $user->getPwmd5());
         $stmt->bindValue('gesperrt', $user->getStatus());
         $stmt->bindValue(':msg',     $user->getAppMsg());
         $stmt->bindValue(':confirm_datum', '0000-00-00');
         $stmt->execute();
+
     }
 
    /*unauthoriserte Nutzer fuer die Ansicht im Admindashboard: noch kein Confirm_Datum*/
@@ -250,6 +250,7 @@ class UserMdl extends Base
         }
         return $userArray;
     }
+
     /*
     wenn Admin User anerkannt hat: in Datenbank spersstatus aufheben:"gesperrt = 0, confirmationsdatum eintragen = Nutzer ist authorisiert
     */
@@ -263,6 +264,9 @@ class UserMdl extends Base
     $stmt->bindValue(':gesperrt',$status);
     $stmt->execute();
     }
+
+
+
      /*
     *Alle Authorisierten Nutzer aus der Datenbank:
     *-confirm_datum>0000-00-00
@@ -290,10 +294,12 @@ class UserMdl extends Base
         return $userArray;
     }
 
-
-
-
-
-
-
+        //gesperrten user mit temporarerem Passwort weder freischalten und temporaeres Passwort loeschen
+    public function unlockUser($id)
+    {
+        $base  = new Base();
+        $sql = "UPDATE user SET gesperrt = 0, temp_pw = NULL WHERE id=?";
+        $stmt  = $base->connect()->prepare($sql);
+        $stmt->execute([$id]);
+    }
 }

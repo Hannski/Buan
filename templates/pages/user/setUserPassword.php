@@ -47,11 +47,6 @@
                                     <label for="pw2"><?php echo $langArray[$opt]['pwRepeatNew']?></label>
                                     <input type="password" class="form-control" id="pw2" name="passwortMatch">
                                 </div>
-                                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
-                                    <!--altes Passwort zum bestaetigen -->
-                                    <label for="alt"><?php echo $langArray[$opt]['pwOld']?></label>
-                                    <input type="password" class="form-control" id="alt" name="passwortAlt">
-                                </div>
 
                             </div>
 

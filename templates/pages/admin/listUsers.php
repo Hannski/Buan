@@ -19,7 +19,7 @@
 			<td>authorisieren? </td>
 			<td>
 				<form method="POST">
-				<input type="checkbox" name="status" value="unlock">
+				<input type="checkbox" name="status" value="0">
 				<input type="hidden" name = "id" value="<?php echo $id ?>">
 				<button name="auth" class="btn btn-sm my-1 my-sm-0 btn-outline-secondary">check</button>
 				</form>

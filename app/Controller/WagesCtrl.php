@@ -21,43 +21,9 @@ class WagesCtrl extends AbstractController
     //monatliches Grundgehalt
     const MIN_WAGE = 3000;
 
-    public function getBonus($userId)
-    {
-
-
-    }
-
-
     //uebersicht ueber Zahlungen und Boni+ PDF ausdruck Moeglichkeit
     public function overviewAction()
     {
-        if ($this->isPost('seeWages')) {
-            $dateCHunks = explode('-', $_POST['jahrMonat']);
-            $jahr = $dateCHunks[0];
-            $monat = $dateCHunks[1];
-            $bestellDaten = new BestellungenMdl();
-            //alle bestellungen in dem ausgewaehlten Zeitraum nach userID aus Session
-            $orders = $bestellDaten->getBestellungen($monat, $jahr);
-            //Userausgaben
-            $ausgaben = 0;
-            foreach ($orders as $order) {
-
-                foreach ($order as $orderItems) {
-
-                    $menge = $orderItems->getMenge();
-                    $preis = $orderItems->getPreis();
-                    //gesamtpreis Menge mal Produktpreis
-                    $summeProdukt = $menge * $preis;
-                    //auf gesamtzahlungen addieren
-                    $ausgaben = $ausgaben + $summeProdukt;
-                }
-            }
-
-            //Bonus fuer diesen Monat anhand der gesamtausgaben des Nutzers
-        $bonus = $this->calcBonus($ausgaben);
-            echo $bonus;
-
-        }
         $user = new UserMdl();
         //erster Monat des EInstellungsverhaeltnisses
         $user = $user->getUserById($_SESSION['userId']);
@@ -67,7 +33,6 @@ class WagesCtrl extends AbstractController
         $date->format("Y-m");
         //Datum und Zeit JETZT!
         $now = new \DateTimeImmutable();
-
         //Gehaltsmonate seit Einstellungsmonat berrechnen
         $wageMonths = array();
         while ($date <= $now) {
@@ -79,25 +44,124 @@ class WagesCtrl extends AbstractController
         }
         //neueste Eintraege zuerst
         $wageMonths = array_reverse($wageMonths);
-        $this->getNav();
-        echo $this->render('pages/user/rechnungen', array('wageMonths' => $wageMonths));
+
+        if ($this->isPost('seeWages')) {
+            $dateCHunks = explode('-', $_POST['jahrMonat']);
+            $jahr = $dateCHunks[0];
+            $monat = $dateCHunks[1];
+
+        $ausgaben = $this->calcGehalt($jahr,$monat);
+            //Bonus fuer diesen Monat anhand der gesamtausgaben des Nutzers
+        $bonus = $this->calcBonus($ausgaben);
+
+
+            $this->getNav();
+            echo $this->render('pages/user/rechnungen', array('wageMonths' => $wageMonths));
+
+            //diagrammAction erstellt diagramm.
+            $params=array();
+            $params['jahr'] = $jahr;
+            $params['monat'] = $monat;
+            $params['bonus'] = $bonus;
+            echo $this->render('pages/user/diagrams',$params);
+        }
+        else{
+
+            $this->getNav();
+            echo $this->render('pages/user/rechnungen', array('wageMonths' => $wageMonths));
+        }
 
     }
 
-    //Bonus ausrechnen
-    public function calcBonus($ausgaben)
+    public function diagrammAction(): void
     {
-        if ($ausgaben >3000) {
+        $jahr = $_GET['jahr'];
+        $monat = $_GET['monat'];
+        $diagrammBreite = 500;
+        $diagrammHoehe = 50;
+
+        $image = imagecreatetruecolor($diagrammBreite, $diagrammHoehe);
+
+        $white = imagecolorallocate($image, 255, 255, 255);
+        $red = imagecolorallocate($image, 255, 0, 0);
+        $green = imagecolorallocate($image, 0, 255, 0);
+
+        imagefill($image, 0, 0, $white);
+
+        $wage = $this->calcGehalt($jahr, $monat);
+        if($wage) {
+            $bonus = $this->calcBonus($wage);
+
+        }else{
+            $wage=3000;
+            $bonus=0;
+        }
+        //gesmatbreite diagramm: 300 px : anteile der Farben berrechnen:
+        $gesamtAuszahlung = $wage + $bonus;
+
+        $breiteGehalt = $diagrammBreite / $gesamtAuszahlung * $wage;
+        $breiteBonus = $diagrammBreite / $gesamtAuszahlung * $bonus;
+
+        imagefilledrectangle($image, 0, 0, $breiteGehalt, $diagrammHoehe, $red);
+        imagefilledrectangle($image, $breiteGehalt + 1, 0, $breiteGehalt + $breiteBonus, $diagrammHoehe, $green);
+
+        imagettftext($image, 14, 0, 20, 20, $white, 'app/includes/font24.ttf', 'Basisgehalt: '.$wage);
+        imagettftext($image, 14, 0, $breiteGehalt + 20, 20, $white, 'app/includes/font24.ttf', 'Bonus: '.$bonus);
+
+        header('Content-type: image/png');
+
+        imagepng($image);
+        imagedestroy($image);
+
+    }
+
+
+    public function gehaltsabrechnungAction()
+    {
+        $ausgaben = $this->calcGehalt($_GET['jahr'],$_GET['monat']);
+        $bonus = $this->calcBonus($ausgaben);
+        require_once('./fpdf/fpdf.php');
+        $pdf = new \FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(40,10,'Hello World!'.$_GET['monat'].$_GET['jahr']);
+        $pdf->Output();
+
+    }
+    //Bonus ausrechnen
+    protected function calcBonus($umsatz)
+    {
+        if ($umsatz >3000) {
             return 1500;
-        } elseif ($ausgaben >1000) {
+        } elseif ($umsatz >1000) {
             return 1000;
-        } elseif ($ausgaben > 0) {
+        } elseif ($umsatz > 0) {
             return 500;
         }
             return 0;
-
-
     }
 
+    protected function calcGehalt(int $jahr, int $monat): int
+    {
+        $bestellDaten = new BestellungenMdl();
+        //alle bestellungen in dem ausgewaehlten Zeitraum nach userID aus Session
+        $orders = $bestellDaten->getBestellungen($monat, $jahr);
+        //Userausgaben
+        $gehalt = 0;
 
+        foreach ($orders as $order) {
+            foreach ($order as $orderItems) {
+                $menge = $orderItems->getMenge();
+                $preis = $orderItems->getPreis();
+
+                //gesamtpreis Menge mal Produktpreis
+                $summeProdukt = $menge * $preis;
+
+                //auf gesamtzahlungen addieren
+                $gehalt = $gehalt + $summeProdukt;
+            }
+        }
+
+        return $gehalt;
+    }
 }

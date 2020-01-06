@@ -8,6 +8,7 @@
  */
 
 namespace Form;
+use Form\Validatoren\EmptyValidator;
 use Form\Validatoren\NotEmptyValidator;
 use Form\Validatoren\PasswordMatchValidator;
 
@@ -17,10 +18,10 @@ class UserRegisterForm extends AbstractForm
     {
         $this->inputList =
             [
-                'username'  =>[],
+                'username'  =>[new EmptyValidator()],
                 'password1' =>[new PasswordMatchValidator()],
-                'password2' =>[],
-                'msg'       =>[],
+                'passwordMatch' =>[ new EmptyValidator()],
+                'msg'       =>[new EmptyValidator()],
             ];
 
         $this->validateForm();

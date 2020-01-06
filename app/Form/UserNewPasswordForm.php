@@ -8,8 +8,8 @@
 
 namespace Form;
 use Form\Validatoren\EmptyValidator;
-use Form\Validatoren\passwordLengthValidator;
-use Form\Validatoren\passwordMatchValidator;
+use Form\Validatoren\PasswordLengthValidator;
+use Form\Validatoren\PasswordMatchValidator;
 
 
 class UserNewPasswordForm extends AbstractForm
@@ -22,7 +22,7 @@ class UserNewPasswordForm extends AbstractForm
         // passwort hat nicht die richtige laenge
         $this->inputList =
             [
-                'passwortNeu' =>[new EmptyValidator(),new passwordLengthValidator('passwortNeu','passwortMatch'),
+                'passwortNeu' =>[new EmptyValidator(),new PasswordLengthValidator(),
                                   new PasswordMatchValidator(),
                                  ],
                 'passwortMatch' =>[new EmptyValidator()],

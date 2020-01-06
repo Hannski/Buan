@@ -27,12 +27,21 @@ class Router
         $url = $_GET['url'];
         $url = str_replace('/', '', $url);
 
+
+        $urlChunks = explode('-', $url);
+        //ist an stelle 1 ueberhaupt etwas?
+        if(count($urlChunks)!=2)
+        {
+            echo  Controller\AbstractController::render('seitenkomponenten/header');
+            echo  Controller\AbstractController::render('seitenkomponenten/nav');
+            echo Controller\AbstractController::render('pages/alerts/404');
+            return;
+        }
         //nach welchem Controller wird gesucht?
-        list($controllerName, $actionName) = explode('-', $url);
+        list($controllerName,$actionName)=$urlChunks;
 
         //Controllerklasse laden aus Namespace: Controller/$varCtrl;
         $controllerClass = sprintf('Controller\\%sCtrl', ucfirst($controllerName));
-
 
         //Fehler abfangen:
         if (class_exists($controllerClass)) {

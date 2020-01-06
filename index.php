@@ -9,6 +9,8 @@ class Start
 		//Basis defienieren
 		define ("BASEPATH",dirname(__FILE__));
 		define("BASE", __DIR__);
+		//webroot: muss angepasst werden.
+		define ('WEB_ROOT', 'http://localhost/Buan/');
 		 
 		 /*
 		  TODO:: besteht noch ein cart->Cookie? Wenn nicht-> Warenkorb in DB löschen

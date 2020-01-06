@@ -10,6 +10,7 @@ namespace Form;
 
 
 use Form\Validatoren\AdminCredentialValidator;
+use Form\Validatoren\EmptyValidator;
 use Form\Validatoren\PasswordMatchValidator;
 use Form\Validatoren\PasswordLengthValidator;
 
@@ -22,16 +23,16 @@ class AddAdminForm extends AbstractForm
         $this->inputList =
             [
                 'vorname'   =>[
-                    new AdminCredentialValidator('vorname'),
+                    new EmptyValidator(),
                 ],
                 'nachname'  =>[
-                    new AdminCredentialValidator('nachname')
+                    new EmptyValidator()
                 ],
                 'password1' =>[
                     new PasswordMatchValidator(),
                     new PasswordLengthValidator(),
                     ],
-                'password2' =>[],
+                'passwortMatch' =>[],
 
             ];
 

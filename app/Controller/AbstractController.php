@@ -7,27 +7,36 @@
  *
  */
 
-declare(strict_types = 1);//typisierung strickt beibehalten.
+declare(strict_types=1);//typisierung strickt beibehalten.
 namespace Controller;
 
 
 abstract class AbstractController
 {
-//Template rendern:
-public function render(string $template,array $data = [],array $data2=[]):string
-{
-    //Die Klasse Template regeöt das extrahieren der Daten aus dem array und gibt inhalte zurueck
-    $view = new \View\Template($template);
-    return $view->renderTemplate($data,$data2);
-}
+    //Template rendern:
+    public function render(string $template, array $data = [], array $data2 = []): string
+    {
+        //Die Klasse Template regeöt das extrahieren der Daten aus dem array und gibt inhalte zurueck
+        $view = new \View\Template($template);
+        return $view->renderTemplate($data, $data2);
+    }
 
 
-//ueberpruefen ob globales Post-array werte enthaelt.
-    public function isPost($post):bool
+    //Fehler rendern wenn Fehler in einem FehlerArray vorhanden
+    public function renderErrors($errorArray)
+    {
+        if (empty($errorArray)) {
+            return false;
+        } else {
+            echo $this->render('seitenkomponenten/errors', array('errorArray' => $errorArray));
+        }
+    }
+
+    //ueberpruefen ob globales Post-array werte enthaelt.
+    public function isPost($post): bool
     {
 
-        if (isset($_POST[$post]))
-        {
+        if (isset($_POST[$post])) {
             return true;
         }
 
@@ -40,27 +49,25 @@ public function render(string $template,array $data = [],array $data2=[]):string
         //html-header ausgeben
         echo $this->render("seitenkomponenten/header");
         //Superadmin eingeloggt??->superadmin Navbar
-        if($this->isSuperAdmin()){
+        if ($this->isSuperAdmin()) {
             echo $this->render("pages/user/UserNav");
-        }
-        //regulaerer Admin eingeloggt?-> admin-navbar
-        elseif($this->isAdmin())
-        {
+        } //regulaerer Admin eingeloggt?-> admin-navbar
+        elseif ($this->isAdmin()) {
             echo $this->render("pages/user/UserNav");
 
-        }elseif($this->isUser())
-        {
+        } elseif ($this->isUser()) {
+            echo $this->render("pages/user/UserNav");
+        } //kein admin eingeloggt, besucher haben hier nichts zu suchen->go home
+        else {
             echo $this->render("pages/user/UserNav");
         }
-        //kein admin eingeloggt, besucher haben hier nichts zu suchen->go home
-        else{echo $this->render("pages/user/UserNav");}
     }
 
 
     /*handelt es sich bei dem eingeloggten Admin um den Super Admin? */
-    public function isSuperAdmin():bool
+    public function isSuperAdmin(): bool
     {
-        return array_key_exists('super',$_SESSION)&&$_SESSION['super']=="loggedIn";
+        return array_key_exists('super', $_SESSION) && $_SESSION['super'] == "loggedIn";
 
     }
 
@@ -68,11 +75,11 @@ public function render(string $template,array $data = [],array $data2=[]):string
     //Sessions verwalten:
     public function isAdmin()
     {
-        return array_key_exists('admin',$_SESSION)&&$_SESSION['admin']=="loggedIn";
+        return array_key_exists('admin', $_SESSION) && $_SESSION['admin'] == "loggedIn";
     }
 
     public function isUser()
     {
-        return array_key_exists('user',$_SESSION)&&$_SESSION['user']=="loggedIn";
+        return array_key_exists('user', $_SESSION) && $_SESSION['user'] == "loggedIn";
     }
 }

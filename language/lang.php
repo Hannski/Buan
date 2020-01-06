@@ -127,8 +127,12 @@ $langArray[1]['Platzh_P_Name'] 		= "name";
 //Amdinbereich: Amdinistratoren bearbeiten
 $langArray[0]['aktiv'] 		= "aktiv";
 $langArray[1]['aktiv'] 		= "active";
+$langArray[0]['active'] 		= "aktiv";
+$langArray[1]['active'] 		= "active";
 $langArray[0]['gesperrt'] 		= "gesperrt";
 $langArray[1]['gesperrt'] 		= "locked";
+$langArray[0]['locked'] 		= "gesperrt";
+$langArray[1]['locked'] 		= "locked";
 //Fehlerausgaben
 //Etwas funktioniert absolut nicht
 $langArray[0]['nope'] 		= "Upps!. Hier ist leider etwas schief gelaufen";
@@ -199,8 +203,8 @@ $langArray[0]['productYes']         = "Das Produkt wurde erfolgreich &uuml;bermi
 $langArray[1]['productYes']         = "Product submitted successfully";
 $langArray[0]['dbProblem']          = "Upps. Es gab wohl ein Problem mit der Datenbank.";
 $langArray[1]['dbProblem']          = "OOPs. There seems to have been a problem with the databbase";
-$langArray[0]['orderNope']          = "Ihre Bestellung wurde";
-$langArray[1]['orderNope']          = "Your order";
+$langArray[0]['orderNope']          = "Ihre Bestellung konnte nicht best&auml;tigt werden";
+$langArray[1]['orderNope']          = "Your order could not be transmitted";
 $langArray[0]['tooNegative']        = "Werte f&uuml;r Mengenangaben d&uuml;rfen nicht negativ sein";
 $langArray[1]['tooNegative']        = "Values for quantity inputs must not be negative";
 $langArray[0]['emptyPd_name']       = "Bitte geben Sie einen deutschen Namen ein";
@@ -221,6 +225,18 @@ $langArray[0]['captchaNope']		= "Der eingegebene Captcha stimmt nicht &uuml;bere
 $langArray[1]['captchaNope']		= "The Captcha you entered does not match";
 $langArray[0]['usernameNope']		= "Ein passender Username konnte nicht gefunden werden";
 $langArray[1]['usernameNope']		= "The username you entered does not exist";
+$langArray[0]['noOrders']		    = "noch keine Bestellungen";
+$langArray[1]['noOrders']		    = "no orders yet";
+$langArray[0]['emptyField']		    = "Feld muss ausgef&uuml;llt werden";
+$langArray[1]['emptyField']		    = "Field cannot be empty";
+$langArray[0]['tooMuch']		    = "Bestand Limit erreicht";
+$langArray[1]['tooMuch']		    = "Stick limit reached";
+$langArray[0]['tooLittle']		    = "Bitte geben Sie eine g&uuml;ltige Bestellmenge ein";
+$langArray[1]['tooLittle']		    = "Please enter a valig quantity";
+$langArray[0]['status']		        = "Aktueller Modus";
+$langArray[1]['status']		        = "Current mode";
+$langArray[0]['emptyStatus']		= "Modus muss ausgef&uuml;llt werden";
+$langArray[1]['emptyStatus']		= "Mode must be given";
 
 
 
@@ -283,7 +299,7 @@ $langArray[0]['password']     		= "Passwort";
 $langArray[1]['password']     		= "Password";
 $langArray[0]['pwOld']     		    = "Mit altem Passwort best&auml;tigen";
 $langArray[1]['pwOld']     		    = "Confirm with old Password";
-$langArray[0]['pwNew']     		    = "neues Passwort";
+$langArray[0]['pwNew']     		    = "Neues Passwort";
 $langArray[1]['pwNew']     		    = "New Password";
 $langArray[0]['pwRepeatNew']        = "neues Passwort wiederholen";
 $langArray[1]['pwRepeatNew']        = "reenter new Password";

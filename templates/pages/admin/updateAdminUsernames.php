@@ -11,18 +11,16 @@
 <div class="container mt-3 h-100">
     <div class="row">
         <?php
-        if (!empty($userArray)){
-
-        foreach ($userArray as $key){
-
-        $username = $key->getUsername();
-        $pw = $key ->getPwmd5();
+        $vorname = $admin->getAVorname();
+        $nachname = $admin->getANname();
+        $pw = $admin ->getAPw();
         ?>
 
             <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 col-xs-12 card p-0 mr-lg-1 mr-md-1 mr-xl-1 mr-sm-0 mr-xs-0">
                 <div class="card-header"><?php echo $langArray[$opt]['myLoginData']?></div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item font-reverse"><?php echo $langArray[$opt]['username'].": ".$key->getUsername();?></li>
+                    <li class="list-group-item font-reverse"><?php echo $langArray[$opt]['vorname'].": ".$vorname;?></li>
+                    <li class="list-group-item font-reverse"><?php echo $langArray[$opt]['nachname'].": ".$nachname;?></li>
                 </ul>
             </div>
 
@@ -35,42 +33,31 @@
                     </div>
                     <form action="#" method="post">
 
-                        <div class="bg-white card-body d-flex flex-column align-items-center">
-
-                                <!--Passwort neu -->
+                        <div class="bg-white card-body">
+                            <div class="form-group d-flex flex-column align-items-center">
+                                <!--Vornamen aendern -->
                                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
-                                    <label for="pw1"><?php echo $langArray[$opt]['pwNew']?></label>
-                                    <input type="password" class="form-control" id="pw1" name="passwortNeu">
+                                    <label for="vorname"><?php echo $langArray[$opt]['username']?></label>
+                                    <input type="text" id="vorname" class="form-control" name="vorname">
                                 </div>
+                                <!--Nachnamen aendern -->
                                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
-                                    <!--Passwort wiederholte Eingabe -->
-                                    <label for="pw2"><?php echo $langArray[$opt]['pwRepeatNew']?></label>
-                                    <input type="password" class="form-control" id="pw2" name="passwortMatch">
+                                    <label for="nachname"><?php echo $langArray[$opt]['username']?></label>
+                                    <input type="text" id="nachname" class="form-control" name="nachname">
                                 </div>
-                                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
-                                    <!--altes Passwort zum bestaetigen -->
-                                    <label for="alt"><?php echo $langArray[$opt]['pwOld']?></label>
-                                    <input type="password" class="form-control" id="alt" name="passwortAlt">
-                                </div>
-
                             </div>
-
+                        </div>
 
                         <!-- Formular Bestaetigen-->
                         <div class="mt-2 input-group input-group-lg mr-sm-2 d-flex flex-column align-items-center">
-                            <button class="btn btn-outline-secondary btn-enter" name="password" type="submit">
+                            <button class="btn btn-outline-secondary btn-enter" name="updateCredentials" type="submit">
                                 <?php echo $langArray[$opt]['submitUserdata']; ?>
                             </button>
                         </div>
                     </form>
                 </div>
 <!--  Ende CardBody-->
-    <?php
-    }
-        }
 
-        //Ende foreach, ende if
-    ?>
     <!-- Ende Row -->
 </div>
 <!-- Ende Container -->

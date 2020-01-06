@@ -5,30 +5,30 @@
 <form  method="POST" class="col-md-6 col-sm-12 col-lg-6 mt-4 mb-4" enctype="multipart/form-data">
 	
 	<div class=" h-25 m-1 input-group d-flex align-items-center">
-		<h5 class="col-md-12 col-xs-12 col-lg-12"> <?php echo $langArray[$opt]['PlatzhalterVorname']?>: &nbsp; </h5>
+		<h5 class="col-md-12 col-xs-12 col-lg-12"> <?php echo $langArray[$opt]['vorname']?>: &nbsp; </h5>
 		<?php
 		echo "<input class=\"col-md-12 col-xs-12 col-lg-12 form-control\" type=\"text\"  name=\"vorname\" >";
 		?>
 	</div>
 	
 	<div class=" h-25 m-1 input-group d-flex align-items-center">
-		<h5 class="col-md-12 col-xs-12 col-lg-12"><?php echo $langArray[$opt]['PlatzhalterNname'];?>: &nbsp; </h5>
+		<h5 class="col-md-12 col-xs-12 col-lg-12"><?php echo $langArray[$opt]['nachname'];?>: &nbsp; </h5>
 		<?php
 		echo "<input class=\"form-control col-md-12 col-xs-12 col-lg-12\" type=\"text\"  name=\"nachname\" >";
 		?>
 	</div>
 	
 	<div class=" mt-2 input-group input-group-lg mr-sm-2">
-		<h5 class="col-md-12 col-xs-12 col-lg-12"> <?php echo $langArray[$opt]['PlatzhalterPw']?>: &nbsp; </h5>
+		<h5 class="col-md-12 col-xs-12 col-lg-12"> <?php echo $langArray[$opt]['Pw']?>: &nbsp; </h5>
 		<?php
-		echo "<input class=\"form-control\" type=\"password\"  name=\"password1\" placeholder=".$langArray[$opt]['PlatzhalterPw'].">";
+		echo "<input class=\"form-control\" type=\"password\"  name=\"password1\" placeholder=".$langArray[$opt]['Pw'].">";
 		?>
 	</div>
 
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
-		<h5 class="col-md-12 col-xs-12 col-lg-12"> <?php echo $langArray[$opt]['PlatzhalterPwRepeat']?>: &nbsp; </h5>
+		<h5 class="col-md-12 col-xs-12 col-lg-12"> <?php echo $langArray[$opt]['PwRepeat']?>: &nbsp; </h5>
       	 <?php
-		echo "<input class=\"form-control\" type=\"password\"  name=\"password2\" placeholder=".$langArray[$opt]['PlatzhalterPw'].">";
+		echo "<input class=\"form-control\" type=\"password\"  name=\"passwortMatch\" placeholder=".$langArray[$opt]['PwRepeat'].">";
 		?>
 		
 	</div>

@@ -31,7 +31,6 @@ class AdminMdl extends Base
 	public function authorizeAdmin($vname,$nname,$pw)
     {
           $base= new Base();
-
         $sql = "SELECT a_id,a_nname,a_vorname,gesperrt,superAdmin FROM admin WHERE a_vorname = :vorname AND a_nname = :nachname AND a_pwmd5 = :pw";
         
         $stmt = $base->connect()->prepare($sql);
@@ -78,12 +77,39 @@ class AdminMdl extends Base
             $admin->setSuper($row['superAdmin']);
             $admin->setAVorname($row['a_vorname']);
             $admin->setANname($row['a_nname']);
+            $admin->setAId($row['a_id']);
             //Objekt
             return $admin;
         }
         //kein Admin gefunden
         return false;
         }
+
+        //update passwort, wenn passwort geaedndert wurde
+        public function updatePasswort($pwNeu,$adminId):void
+    {
+        $base= new Base();
+        $sql ="UPDATE user SET pwmd5 = ? WHERE id = ?";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(array(md5($pwNeu),$adminId));
+    }
+
+
+        //stimmt das eingegebne PAsswort? -> wir euebrprueft bei aendernd es eigenen Pw.
+    public function isPassword($pw,$id)
+    {
+        $sql = "SELECT a_pwmd5 FROM admin WHERE a_pwmd5 = :pw AND a_id = :id";
+        $base = new Base();
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        //Werte zuweisen
+        $stmt->bindValue('pw', md5($pw));
+        $stmt->bindValue('id', $id);
+        $stmt->execute();
+        return $row =$stmt->fetch(\PDO::FETCH_ASSOC);
+
+    }
 
 
 
@@ -114,13 +140,13 @@ class AdminMdl extends Base
             {
                 $admin->setStatus("locked");
             }
-           
 
             //Ins array schreiben
             $adminArray[] = $admin;
         }
         return $adminArray;
     }
+
     
     /*
     *Einen neuen Administratoren in die Db eintragen
@@ -128,7 +154,7 @@ class AdminMdl extends Base
     *   -Nachname
     *   -Passwort (md5-verschluesselt)
     */
-    public function insertAdmin($admin)
+    public function insertAdmin($nachname,$vorname,$pw)
     {
         $base= new Base();
         $sql = "INSERT INTO admin(a_nname,a_vorname,a_pwmd5) 
@@ -136,29 +162,29 @@ class AdminMdl extends Base
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         //Werte zuweisen
-        $stmt->bindValue(':vorname', $admin->getAVorname());
-        $stmt->bindValue(':nachname',$admin->getANname());
-        $stmt->bindValue(':pwmd5',   $admin->getAPw());
+        $stmt->bindValue(':vorname', $vorname);
+        $stmt->bindValue(':nachname',$nachname);
+        $stmt->bindValue(':pwmd5',   md5($pw));
         $stmt->execute();
 
     }
 
-    public function getAdminById($id)
+    public function getAdminById($id):AdminModel
     {
-
         $base= new Base();
-        $sql = "SELECT a_vorname, a_nname,gesperrt From admin WHERE a_id = :id";
+        $sql = "SELECT a_vorname, a_nname,gesperrt,superAdmin,a_pwmd5 From admin WHERE a_id = :id";
         $stmt = $base->connect()->prepare($sql);
         //Werte zuweisen
         $stmt->bindValue(':id',$id);
         $stmt->execute();
-        $adminArray = array();
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC))
         {
             //Daten an Model/Admin.php (setters und Getters) uebergeben
             $admin = new AdminModel();
+            $admin->setSuper($row['superAdmin']);
             $admin->setANname($row['a_nname']);
             $admin->setAVorname($row['a_vorname']);
+            $admin->setAPw($row['a_pwmd5']);
             if ($row['gesperrt']==0)
             {
                 $admin->setStatus("aktiv");
@@ -168,13 +194,9 @@ class AdminMdl extends Base
                 $admin->setStatus("locked");
             }
 
-            //Ins array schreiben
-            $adminArray[] = $admin;
-
+           return $admin;
         }
-        return $adminArray;
-        vardump($adminArray);
-
+      return false;
     }
 
     //Gibt es diesen Administrator schon?
@@ -220,8 +242,7 @@ class AdminMdl extends Base
         $sql ="UPDATE admin SET $row = ? WHERE a_id = ?";
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
-        $stmt->execute(array($edit,$id));
-
+        $stmt->execute(array($row=$edit,$id));
     }
 
 }

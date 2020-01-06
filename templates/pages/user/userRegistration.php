@@ -8,21 +8,21 @@
 	<span><h1><?php echo $langArray[$opt]["register"]?></h1></span>
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
 
-	<input class="form-control" type="text" name="username" placeholder="vorname">
+	<input class="form-control" type="text" name="username" placeholder="<?php echo $langArray[$opt]['vorname']?>">
 
 	</div>
 
 
 	<div class=" mt-2 input-group input-group-lg mr-sm-2">
 		<?php
-		echo "<input class=\"form-control\" type=\"password\"  name=\"password1\" placeholder=".$langArray[$opt]['PlatzhalterPw'].">";
+		echo "<input class=\"form-control\" type=\"password\"  name=\"password1\" placeholder=".$langArray[$opt]['Pw'].">";
 		?>
 	</div>
 
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
 		
       	 <?php
-		echo "<input class=\"form-control\" type=\"password\"  name=\"password2\" placeholder=".$langArray[$opt]['PlatzhalterPw'].">";
+		echo "<input class=\"form-control\" type=\"password\"  name=\"passwortMatch\" placeholder=".$langArray[$opt]['Pw'].">";
 		?>
 		
 	</div>

@@ -35,7 +35,7 @@ class ProduktCtrl extends AbstractController
 	{
 		// resource model instanzieren
       
-        $model = App::getResourceModel('ProduktMdl');
+        $model = new ProduktMdl();
 
         // Produkte abrufen
         $produkteArray = $model->getAllAdminProducts();
@@ -48,7 +48,7 @@ class ProduktCtrl extends AbstractController
     public function showProductById($id)
     {
     	// resource model instanzieren
-        $model = App::getResourceModel('ProduktMdl');
+        $model = new ProduktMdl();
 
         // bilder abrufen
         $produkteArray = $model-> getProduktById($id);
@@ -86,6 +86,7 @@ class ProduktCtrl extends AbstractController
                 $p_info->setBeschreibungEn($_POST['pe_beschreibung']);
                 $p_info->setPreis($_POST['p_preis']);
                 $p_info->setMenge($_POST['menge']);
+                $this->addFile();
                 //hat  alles geklapp?
                 if($this->addProduct())
                 {
@@ -137,7 +138,6 @@ class ProduktCtrl extends AbstractController
 	    $beschreibung_en = $_POST['pe_beschreibung'];
 	    $preis = $_POST['p_preis'];
 	    $dateiname = $_FILES['dateiname']['name'];
-	    $dateityp = $_FILES['dateiname']['type'];
 	    $menge = $_POST['menge'];
 	  
 	 
