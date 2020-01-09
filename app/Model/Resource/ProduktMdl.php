@@ -44,11 +44,12 @@ class ProduktMdl extends Base
 *   -Lagerbestände positiv sind 
 *   -nicht gesperrt
 */
- public function getAllProducts()
+ public function getAllProducts():array
  {
         $base= new Base();
         //Nur Produkte, die auf Lager sind anzeigen. 
-        $sql = "SELECT id,name_de,name_en,beschreibung_de,beschreibung_en,preis,dateiname  FROM items WHERE bestand > 0 AND gesperrt = 0";
+        $sql = "SELECT id,name_de,name_en,beschreibung_de,beschreibung_en,preis,dateiname
+                FROM items WHERE bestand > 0 AND gesperrt = 0 ORDER BY preis ASC";
         $dbResult = $base->connect()->query($sql);
         $productArray = array();
         while ($row = $dbResult->fetch(\PDO::FETCH_ASSOC))
@@ -106,14 +107,12 @@ class ProduktMdl extends Base
 
  /* Bestimmtes Produkt nach ID aus der DB
  */
- public function getProduktById($id)
+ public function getProduktById($id):ProduktModel
  {
             $base = new Base();
             $sql = ("SELECT * FROM items WHERE id=$id");
             $dbResult = $base->connect()->query($sql);
-            while ($row = $dbResult->fetch(\PDO::FETCH_ASSOC))
-        {
-            $produktArray = array();
+          $row = $dbResult->fetch(\PDO::FETCH_ASSOC);
             $product = new ProduktModel();
             $product->setId($row['id']);
             $product->setNameDe($row['name_de']);
@@ -129,10 +128,10 @@ class ProduktMdl extends Base
             $product->setStatus("gesperrt");
             }
            
-            //Ins array schreiben
-            $produktArray[] = $product;
-        }
-            return $produktArray;
+          return $product;
+
+
+
  }
 
  /*Produktinformationen aktualisieren*/

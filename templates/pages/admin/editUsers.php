@@ -14,20 +14,14 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
 	<div class="card bg-light mb-4" >	
     <div class="card-body text-left">
-        <p>Name Deutsch:&nbsp;				<b><?php echo $id ?></b></p>
-        <p>Name Englisch:&nbsp; 			<b><?php echo $username ?></b></p>
-        <p>Beschreibung Englisch:&nbsp; 	<b><?php echo $status ?></b></p>
+        <p><?php echo $langArray[$opt]['username']?>  <b><?php echo $username ?></b></p>
+        <p><?php echo $langArray[$opt]['status']?>
+            <b>  <?php echo $status == 0 ? $langArray[$opt]['active']: $langArray[$opt]['blocked']?></b>
+        </p>
 
-        <?php
-        $date = new DateTime($datum);
-		echo $date->format('d.m.Y');
- 		 ?>
-
-        <p>Beschreibung Deutsch:&nbsp; 		<b><?php  ?></b></p>
-        <p> 
     <p class="p-4"> <form action="user-bearbeiten/" class="text-center" method="GET">
     <input type="hidden"  name="id" value ="<?php echo $id ?>">
-    <button type="submit" class="btn btn-danger">Bearbeiten</button>
+    <button type="submit" class="btn btn-danger"><?php echo $langArray[$opt]['edit']?></button>
     </form>
     </p>	
     </div>

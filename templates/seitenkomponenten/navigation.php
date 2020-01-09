@@ -45,8 +45,8 @@ if(isset($_SESSION['user']) && $_SESSION['user']=='loggedIn')
 {
     echo "<ul class=\"navbar-nav mr-auto\">";
     //user abmelden
-    echo "<a class=\"nav-link\" href=\"".WEB_ROOT."user-logout\">als ".$_SESSION['username']." ".$langArray[$opt]['logout']."</a></li>";
-    echo "<a class=\"nav-link\" href=\"".WEB_ROOT."user-home\">EInkaufen</a></li>";
+    echo "<a class=\"nav-link\" href=\"".WEB_ROOT."user-logout\">".$langArray[$opt]['outA']." ".$_SESSION['username']." ".$langArray[$opt]['outB']."</a></li>";
+    echo "<a class=\"nav-link\" href=\"".WEB_ROOT."user-home\">".$langArray[$opt]['shop']."</a></li>";
     //user: uebersicht ueber bestellungen
     echo "  <li class=\"nav-item\"><a class=\"nav-link\" href=\"".WEB_ROOT."user-bestellungen\">".$langArray[$opt]['myOrders']."</a></li>";
     //user: Nutzerdaten 'passwort,'username','adresse' -aendern
@@ -60,13 +60,13 @@ if(isset($_SESSION['user']) && $_SESSION['user']=='loggedIn')
 
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
             <!-- Username bearbeiten -->
-            <?php echo"<a class=\"dropdown-item\" href=\"".WEB_ROOT."/user-daten\">".$langArray[$opt]['myLoginData']."</a>";?>
+            <?php echo"<a class=\"dropdown-item\" href=\"".WEB_ROOT."user-daten\">".$langArray[$opt]['myLoginData']."</a>";?>
             <!-- Passwort bearbeiten -->
             <div class="dropdown-divider"></div>
             <?php echo"<a class=\"dropdown-item\" href=\"".WEB_ROOT."user-passwort\">".$langArray[$opt]['myPasswordData']."</a>";?>
             <div class="dropdown-divider"></div>
             <!-- AAdressdaten bearbeiten -->
-            <a class="dropdown-item" href="./user-adresse"> <?php echo $langArray[$opt]['myAdressData']?></a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-adresse"> <?php echo $langArray[$opt]['myAdressData']?></a>
         </div>
     </li>
         <?php //user Gehaltuebersicht ?>
@@ -80,25 +80,32 @@ if(isset($_SESSION['user']) && $_SESSION['user']=='loggedIn')
 
       <ul class="navbar-nav mr-1">
           <li class="nav-item ">
-              <button class="btn btn-outline-secondary"><a class="nav-link" href="checkout-warenkorb"><?php echo $langArray[$opt]['cart']?></a></button>
+              <button class="btn btn-outline-secondary">
+                  <a class="nav-link" href="<?php echo WEB_ROOT ?>checkout-warenkorb">
+                      <?php echo $langArray[$opt]['cart']?>
+                  </a>
+              </button>
           </li>
       </ul>
 <!--      Ende nav-rechts-->
         <?php
 }//ende USerRolle= User
 
+
+
+
 //userRolle= admin
 elseif(isset($_SESSION['admin']) && $_SESSION['admin']=='loggedIn')
 {   echo "<ul class=\"navbar-nav mr-auto\">";
-    echo "<li class=\"nav-item \"><a class=\"nav-link\" href=\"".WEB_ROOT."admin-logout\">als ".$_SESSION['adminName']." ".$langArray[$opt]['logout']."</a></li>";
+    echo "<li class=\"nav-item \"><a class=\"nav-link\" href=\"".WEB_ROOT."admin-logout\">".$langArray[$opt]['outA'].$_SESSION['admin']." ".$langArray[$opt]['outB']."</a></li>";
     ?>
-
+    <li class="nav-item"><a class="nav-link" href="<?php echo WEB_ROOT ?>admin-monthlyorders"><?php echo $langArray[$opt]['monthlyOrders']?></a></li>
     <!--      Produkte verwaltung-->
     <!-- Dropdown: Produkteoptionen -->
     <li class="nav-item dropdown">
         <!-- ueberschrift -->
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Produkte
+           <?php echo $langArray[$opt]['produkte'];?>
         </a>
 
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
@@ -106,7 +113,7 @@ elseif(isset($_SESSION['admin']) && $_SESSION['admin']=='loggedIn')
             <?php echo"<a class=\"dropdown-item\" href=\"".WEB_ROOT."produkt-erstellen\">".$langArray[$opt]['p_einstellen']."</a>";?>
             <div class="dropdown-divider"></div>
             <!-- Alle produkte Verwalten -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>produkt-verwalten">produkte-verwalten</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>produkt-verwalten"><?php echo $langArray[$opt]['manageP']; ?></a>
 
         </div>
     </li>
@@ -114,14 +121,14 @@ elseif(isset($_SESSION['admin']) && $_SESSION['admin']=='loggedIn')
     <!-- Dropdown Nutzeroptionen-->
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Nutzer
+          <?php echo $langArray[$opt]['Users']?>
         </a>
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
             <!-- Nutzer authorisieren -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-authorisierung">user-authorisieren</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-authorisierung"><?php echo $langArray[$opt]['authU']; ?></a>
             <div class="dropdown-divider"></div>
             <!-- Alle produkte Verwalten -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-verwalten">user-Verwalten</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-verwalten"><?php echo $langArray[$opt]['manageU']; ?></a>
 
         </div>
     </li>
@@ -135,30 +142,34 @@ elseif(isset($_SESSION['admin']) && $_SESSION['admin']=='loggedIn')
         </a>
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
             <!-- Username aendern -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-credentials">Username anpassen</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-credentials"><?php echo $langArray[$opt]['adminCreds']; ?></a>
             <div class="dropdown-divider"></div>
             <!-- PAsswort aendern -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-password">passwort aendern</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-password"><?php echo $langArray[$opt]['adminPW']; ?></a>
 
         </div>
     </li>
 
 
-    <?php echo " </ul>";
+
+
+
+    <?php echo "</ul>";
 }
 //user= superadmin abmelden
 elseif(isset($_SESSION['super']) && $_SESSION['super']=='loggedIn')
 {
     echo "<ul class=\"navbar-nav mr-auto\">";
-    echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"".WEB_ROOT."admin-logout\">als ".$_SESSION['superName']." ".$langArray[$opt]['logout']."</a></li>";
+    echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"".WEB_ROOT."admin-logout\">".$langArray[$opt]['outA'].$_SESSION['superName']." ".$langArray[$opt]['outB']."</a></li>";
 
     ?>
+    <li class="nav-item"><a class="nav-link" href="<?php echo WEB_ROOT ?>admin-monthlyorders"><?php echo $langArray[$opt]['monthlyOrders']?></a></li>
 <!--      Produkte verwaltung-->
     <!-- Dropdown: Produkteoptionen -->
     <li class="nav-item dropdown">
         <!-- ueberschrift -->
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Produkte
+            <?php echo $langArray[$opt]['produkte'];?>
         </a>
 
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
@@ -166,7 +177,7 @@ elseif(isset($_SESSION['super']) && $_SESSION['super']=='loggedIn')
             <?php echo"<a class=\"dropdown-item\" href=\"".WEB_ROOT."produkt-erstellen\">".$langArray[$opt]['p_einstellen']."</a>";?>
             <div class="dropdown-divider"></div>
             <!-- Alle produkte Verwalten -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>produkt-verwalten">produkte-verwalten</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>produkt-verwalten"><?php echo $langArray[$opt]['manageP']; ?></a>
 
         </div>
     </li>
@@ -178,10 +189,10 @@ elseif(isset($_SESSION['super']) && $_SESSION['super']=='loggedIn')
         </a>
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
             <!-- Nutzer authorisieren -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-authorisierung">user-authorisieren</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-authorisierung"><?php echo $langArray[$opt]['authU']; ?></a>
             <div class="dropdown-divider"></div>
             <!-- Alle produkte Verwalten -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-verwalten">user-Verwalten</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>user-verwalten"><?php echo $langArray[$opt]['manageU']; ?></a>
 
         </div>
     </li>
@@ -196,10 +207,10 @@ elseif(isset($_SESSION['super']) && $_SESSION['super']=='loggedIn')
 
         <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
             <!-- Admins einstellen -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-erstellen">Admin erstellen</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-erstellen"><?php echo $langArray[$opt]['createA']; ?></a>
             <div class="dropdown-divider"></div>
             <!-- Admins Verwalten -->
-            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-verwaltung">Admins bearbeiten</a>
+            <a class="dropdown-item" href="<?php echo WEB_ROOT ?>admin-verwaltung"><?php echo $langArray[$opt]['manageA']; ?></a>
 
         </div>
     </li>

@@ -1,33 +1,46 @@
 <?php
 require_once './countries/countries.php';
-/*
-Buttons
-*/
-//Navigationselemente:
+
 $langArray[0]["language"] 			= "de";
 $langArray[1]["language"] 			= "en";
-//as admin Anmelden : Button beschriftung
+$langArray[0]["outA"] 			    = "Als";
+$langArray[1]["outA"] 			    = "";
+$langArray[0]["nameDe"] 			= "Name deutsch:";
+$langArray[1]["nameDe"] 		    = "Name German";
+$langArray[0]["nameEn"] 			= "Name Englisch";
+$langArray[1]["nameEn"] 		    = "Name English";
+$langArray[0]["edit"] 			    = "Bearbeiten";
+$langArray[1]["edit"] 		        = "Edit";
+$langArray[0]["changeDataForUser"]  = "Informationen zu dem Nutzer";
+$langArray[1]["changeDataForUser"] 	= "Change Information For User";
+$langArray[0]["outB"] 			    = "abmelden";
+$langArray[1]["outB"] 			    = "Logout";
+$langArray[0]["adminCreds"] 		= "Anmeldedaten &auml;ndern";
+$langArray[1]["adminCreds"] 		= "Update Login Information";
+$langArray[0]["adminPw"] 		    = "Passwort &auml;ndern";
+$langArray[1]["adminPw"] 		    = "Update password";
 $langArray[0]["loginAdmin"] 		="als Admin anmelden";
 $langArray[1]["loginAdmin"] 		="login as admin";
-//als user anmelden
 $langArray[0]["loginUser"] 		    ="Anmelden";
 $langArray[1]["loginUSer"] 		    ="Login";
 $langArray[0]["pwForgot"] 		    ="Passwort vergessen";
 $langArray[1]["pwForgot"] 		    ="Forgot Password";
-//Styleauswahl Navigationsleiste
 $langArray[0]["styleDark"]			= "Nachtmodus";
 $langArray[1]["styleDark"] 			= "dark mode ";
 $langArray[0]["styleLight"] 		= "Tagmodus";
 $langArray[1]["styleLight"] 		= "light mode";
-// Button zur weiterleitung im Footer in den Anmeldebereich des Administtrators
-//siehe /alerts/seitenkomponenten/footer.php
 $langArray[0]['redirectAdminLogin'] = "als Admin anmelden";
 $langArray[1]['redirectAdminLogin'] = "login as admin";
-// Abmelden Button
 $langArray[0]['logout']				= "Abmelden";
 $langArray[1]['logout']				= "Logout";
+$langArray[0]['requestNew']			= "beantragen";
+$langArray[1]['requestNew']			= "request";
+$langArray[0]['recData']			= "Wiederherstellungsdaten";
+$langArray[1]['recData']			= "RecoveryData";
 $langArray[0]['captcha']			= "Captcha";
 $langArray[1]['captcha']			= "Captcha";
+$langArray[0]['pdf']			    = "PDf";
+$langArray[1]['pdf']			    = "Pdf";
 $langArray[0]['cart']				= "Einkaufswagen";
 $langArray[1]['cart']				= "Cart";
 $langArray[0]['myOrders']           = "Meine Bestellungen";
@@ -46,15 +59,9 @@ $langArray[0]['submitUserAdress']   = "Adresse aktualisieren";
 $langArray[1]['submitUserAdress']    = "Update Address Information";
 $langArray[0]['myPasswordData']     = "Passwort &auml;ndern";
 $langArray[1]['myPasswordData']     = "update password";
-
-
-//Buttons Warenkorb
 $langArray[0]['adressChange']     	= "Informationen &auml;ndern";
 $langArray[1]['adressChange']     	= "Edit Information";
 $langArray[0]['placeOrder']     	= "Bestellen";
-$langArray[1]['placeOrder']     	= "Place Order";
-
-//Buttons Adminseite
 $langArray[0]['p_add']				= "Produkte Hinzuf&uuml;gen";
 $langArray[1]['p_add']				= "add products";
 $langArray[0]['p_edit']				= "produkteverwaltung";
@@ -69,44 +76,44 @@ $langArray[0]['pd_des']				= "Beschreibung Deutsch";
 $langArray[1]['pd_des']				= "Description German";
 $langArray[0]['pe_des']				= "Beschreibung Englisch";
 $langArray[1]['pe_des']				= "Description English";
-$langArray[0]['produkt']			= "Produkt ";
-$langArray[1]['produkt']			= "product ";
+$langArray[0]['produkt']			= "Produkt";
+$langArray[1]['produkt']			= "Product";
+$langArray[0]['produkte']			= "Produkte";
+$langArray[1]['produkte']			= "Products";
+$langArray[0]['manageP']			= "Produkte verwalten";
+$langArray[1]['manageP']			= "Manage Products";
+$langArray[0]['authU']			    = "User authorisieren";
+$langArray[1]['authU']			    = "Authorize users";
+$langArray[0]['manageA']			= "Admins verwalten";
+$langArray[1]['manageA']			= "Manage Admins";
+$langArray[0]['createA']			= "Admin erstellen";
+$langArray[1]['createA']			= "Create Admin";
+$langArray[0]['manageU']			= "User verwalten";
+$langArray[1]['manageU']			= "ManageUsers";
+$langArray[0]['updateAInformation']	= "Admin Informationen aktualisieren";
+$langArray[1]['updateAInformation']	= "Update Admin Information";
 $langArray[0]['datei'] 				= "Datei ausw&auml;hlen";
 $langArray[1]['datei'] 				= "choose file";
 $langArray[0]['btn_p_add']			= "Produkt einstellen";
 $langArray[1]['btn_p_add']			= "Submit Product";
 $langArray[0]['preis']			    = "Preis";
 $langArray[1]['preis']			    = "Price";
-//Produktinformationen Aktualisieren
 $langArray[0]['aendern']			= "aktualisieren";
 $langArray[1]['aendern']			= "update";
-//Nutzerregistrierung
 $langArray[0]["submitRegister"]		= "Antrag absenden";
 $langArray[1]["submitRegister"]		= "submit Application";
-//Administrator hinzufuegen
 $langArray[0]["addAdmin"]			= "Admin bestaetigen";
 $langArray[1]["addAdmin"]			= "confirm admin";
-//Ende Buttons
-//Links
-//Produkte Einstellen
 $langArray[0]['p_einstellen'] 		= "neues-produkt";
 $langArray[1]['p_einstellen'] 		= "new-product";
 $langArray[0]['submitAdress'] 		= "Adresse best&auml;tigen";
 $langArray[1]['submitAdress'] 		= "Submit Adress";
-
-
-//texte
-//Registrierungsformular für neue Nutzer:
 $langArray[0]["register"] 			= "Mitgliedskonto beantragen";
 $langArray[1]["register"] 			= "Apply for Membership";
-/*Admin Login Formular*/
 $langArray[0]["adminSignin"] 		= "wilkommen zur&uuml;ck";
 $langArray[1]["adminSignin"] 		= "Welcome back";
-//Formular PLatzhalter
-//Bestellungen
 $langArray[0]['monatJahr']          = 'Jahr und Monat ausw&aauml;hlen';
 $langArray[1]['monatJahr']          = 'Choose year and month';
-//Anmeldevorgang
 $langArray[0]["Pw"] 		        = "Passwort";
 $langArray[1]["Pw"] 		        = "password";
 $langArray[0]["PwRepeat"]           = "Passwort wiederholen";
@@ -115,7 +122,6 @@ $langArray[0]["vorname"]            = "Vorname";
 $langArray[1]["vorname"]            = "first&nbsp;name";
 $langArray[0]["nachname"] 	        = "Nachname";
 $langArray[1]["nachname"] 	        = "last&nbsp;name";
-//Produkte hinzufuegen
 $langArray[0]['p_add_label']		= "Produkte hinzuf&uuml;gen";
 $langArray[1]['p_add_label']		= "Add Products";
 $langArray[0]['Platzh_P_preis'] 	= "Preis";
@@ -124,23 +130,22 @@ $langArray[0]['Platzh_P_beschr'] 	= "beschreibung";
 $langArray[1]['Platzh_P_beschr'] 	= "description";
 $langArray[0]['Platzh_P_Name'] 		= "name";
 $langArray[1]['Platzh_P_Name'] 		= "name";
-//Amdinbereich: Amdinistratoren bearbeiten
-$langArray[0]['aktiv'] 		= "aktiv";
-$langArray[1]['aktiv'] 		= "active";
-$langArray[0]['active'] 		= "aktiv";
-$langArray[1]['active'] 		= "active";
-$langArray[0]['gesperrt'] 		= "gesperrt";
-$langArray[1]['gesperrt'] 		= "locked";
-$langArray[0]['locked'] 		= "gesperrt";
-$langArray[1]['locked'] 		= "locked";
-//Fehlerausgaben
-//Etwas funktioniert absolut nicht
-$langArray[0]['nope'] 		= "Upps!. Hier ist leider etwas schief gelaufen";
-$langArray[1]['nope'] 		= "Oops! Something went terribly wrong!";
-//Anmeldefehler info an den user
-//nicht alle Felder augefuellt:
-
-
+$langArray[0]['pwNeu'] 		        = "Neues Passwort";
+$langArray[1]['pwNeu']       		= "New Password";
+$langArray[0]['aktiv'] 		        = "aktiv";
+$langArray[1]['aktiv'] 		        = "active";
+$langArray[0]['active'] 		    = "aktiv";
+$langArray[1]['active'] 		    = "active";
+$langArray[0]['reasonToJoin'] 		    = "Geben Sie eine Nachricht ein. Sagen Sie uns,w er Sie sind und weshalb sie beitreten wollen";
+$langArray[1]['reasonToJoin'] 		    = "Enter a short message. tell us who you are and why you want to register with us.";
+$langArray[0]['gesperrt'] 		    = "gesperrt";
+$langArray[1]['gesperrt'] 		    = "locked";
+$langArray[0]['blocked'] 		    = "gesperrt";
+$langArray[1]['blocked'] 		    = "locked";
+$langArray[0]['Users'] 		        = "Nutzer";
+$langArray[1]['USers'] 		        = "Users";
+$langArray[0]['nope'] 		        = "Upps!. Hier ist leider etwas schief gelaufen";
+$langArray[1]['nope'] 		        = "Oops! Something went terribly wrong!";
 $langArray[0]['notPw']              = "Passw&ouml;rter stimmen nicht &uuml;berein";
 $langArray[1]['notPw']              = "the passwords you entered do ot match";
 $langArray[0]['emptyInput']         = "%s muss gegeben sein.";
@@ -237,42 +242,44 @@ $langArray[0]['status']		        = "Aktueller Modus";
 $langArray[1]['status']		        = "Current mode";
 $langArray[0]['emptyStatus']		= "Modus muss ausgef&uuml;llt werden";
 $langArray[1]['emptyStatus']		= "Mode must be given";
-
-
-
-// Username Falsch oder Passwort falsch
+$langArray[0]['monthlyOrders']		= "Bestell&uuml;bersicht";
+$langArray[1]['monthlyOrders']		= "Orders overview";
+$langArray[0]['monthlyTotal']		= "Bestellwert f&uuml; diesen Monat";
+$langArray[1]['monthlyTotal']		= "Total in Orders this month";
+$langArray[0]['datumOrder']		    = "Bestelldatum";
+$langArray[1]['datumOrder']		    = "Orderdate";
+$langArray[0]['singlePrice']		= "Einzelpreis";
+$langArray[1]['singlePrice']		= "Price per Unit";
+$langArray[0]['productName']		= "Produktname";
+$langArray[1]['productName']		= "Product Name";
+$langArray[0]['anzahl']		        = "Anzahl";
+$langArray[1]['anzahl']		        = "Quantity";
+$langArray[0]['retrieveOrder']		= "Bestellung entsperren";
+$langArray[1]['retrieveOrder']		= "unlock Order";
+$langArray[0]['dropOrder']		    = "Bestellung Sperren";
+$langArray[1]['dropOrder']		    = "Lock Order";
+$langArray[0]['itemID']		        = "Artikel ID";
+$langArray[1]['itemID']		        = "Item ID";
 $langArray[0]['nameNot'] 			="Passwort oder Username falsch";
 $langArray[1]['nameNot'] 			="Password or Username wrong";
-//Dopplung in der Fehlerausagbe um Hinweise auf Sachverhalte in der
-//Datenbank zu vermeiden "Passwort Falsch" == Hinweis, dass Username existiert und andersherum
 $langArray[0]['pwNot'] 				="Passwort oder Username falsch";
 $langArray[1]['pwNot'] 				="Password or username wrong";
-//Produkteinstellungsformular
-//Produktnamen
 $langArray[0]['emptyPname']  		= "Produktnamen m&uuml;ssen ausgef&uuml;llt werden";
 $langArray[1]['emptyPname']  		= "Productnames cannot be empty";
-//Produktbeschreibungen
 $langArray[0]['emptyDes']  			= "Produktbeschreibungen d&uuml;rfen nicht leer sein";
 $langArray[1]['emptyDes']  			= "Product descriptios cannot be empty";
-//Produktpreis 0 oder -Wert
 $langArray[0]['preiszuklein']  		= "Preis darf nicht Null oder weniger sein";
 $langArray[1]['preiszuklein']  		= "Price cannot be zero or less";
-//Dateityp nicht erlaub
 $langArray[0]['dateityp']     		= "erlaubte Dateitypen : .jpg, .png";
 $langArray[1]['dateityp']     		= "permittet filetypes : .jpg, .png";
-//Adminlogin
 $langArray[0]['locked']     		= "Ihr Konto wurde eventuell  gesperrt, bitte wenden Sie sich an der Seitenadministrator.";
 $langArray[1]['locked']     		= "Your account may have been locked, please contact the site administrator.";
-//Warenkorb
-
-//text
 $langArray[0]['deliverInfo']     	= "Lieferdetails: ";
 $langArray[1]['deliverInfo']     	= "Delivery Information: ";
 $langArray[0]['subTotal']     	    = "Gesamtbetrag: ";
 $langArray[1]['subTotal']     	    = "Subtotal: ";
 $langArray[0]['allOk']              = 'Alles richtig?';
 $langArray[1]['allOk']              = 'Everything correct?';
-//Adressfelder
 $langArray[0]['adressHead']     	= "Adressdaten";
 $langArray[1]['adressHead']     	= "Adress Information";
 $langArray[0]['street']     		= "Stra&szlig;e";
@@ -285,14 +292,8 @@ $langArray[0]['ort']     		    = "Ort";
 $langArray[1]['ort']     		    = "City";
 $langArray[0]['land']     		    = "Land";
 $langArray[1]['land']     		    = "Country";
-//PLatzhalter
 $langArray[0]['pickLand']     		= "Land w&auml;hlen";
 $langArray[1]['pickLand']     		= "Choose Country";
-
-
-
-
-//Formulare
 $langArray[0]['username']     		= "Username";
 $langArray[1]['username']     		= "Username";
 $langArray[0]['password']     		= "Passwort";
@@ -301,5 +302,35 @@ $langArray[0]['pwOld']     		    = "Mit altem Passwort best&auml;tigen";
 $langArray[1]['pwOld']     		    = "Confirm with old Password";
 $langArray[0]['pwNew']     		    = "Neues Passwort";
 $langArray[1]['pwNew']     		    = "New Password";
+$langArray[0]['Login']     		    = "Anmelden";
+$langArray[1]['Login']     		    = "Login";
+$langArray[0]['shop']     		    = "Einkaufen";
+$langArray[1]['shop']     		    = "Shop";
+$langArray[0]['search']     		= "Suchen";
+$langArray[1]['search']     		= "Find";
+$langArray[0]['howToRec']     		= "Geben Sie hier Ihren Usernamen ein. Es wird ein vorr&uuml;bergehendes Passwort f&uuml; Sie erstellt.
+Achtung! Wenn Sie ein neues Passwort beantragen wird Ihr altes ung&uuml;ltig. Denken Sie daran es neu zu setzen, wenn Sie sich wieder eingeloggt haben,";
+$langArray[1]['howToRec']     		= "Enter your username here. A temporary password will be created. Careful! if you request a new password
+, your old one will become invalid. Remember to choose a new one once you have logged in again";
+$langArray[0]['Wages']     		    = "Gehaltsabrechnungen";
+$langArray[1]['Wages']     		    = "Payslips";
+$langArray[0]['PrintInvoice']       = "Drucken (Pdf)";
+$langArray[1]['PrintInvoice']     	= "Print(Pdf)";
+$langArray[0]['brutto']             = "Bruttoeinkommen";
+$langArray[1]['brutto']     	    = "Total Earnings";
+$langArray[0]['bonusForMonth']      = "Bonus f&uuml;r den Monat: ";
+$langArray[1]['bonusForMonth']     	= "Bonus for: ";
+$langArray[0]['grundeinkommen']     = "Grundeinkommen: 3000";
+$langArray[1]['grundeinkommen']     = "Basic Income: 3000";
+$langArray[0]['toCart']             = "in den Warenkorb";
+$langArray[1]['toCart']             = "Add to Cart";
+$langArray[0]['placeOrder']         = "Bestellen";
+$langArray[1]['placeOrder']         = "PLace Order";
+$langArray[0]['bestellungenSee']    = "Bestellungen aus diesem Zeitraum:";
+$langArray[1]['bestellungenSee']    = "Orders From selected Time";
+$langArray[0]['addAdress']          = "Adresse hinyuf&uuml;gen";
+$langArray[1]['addAdress']          = "Add an Address";
 $langArray[0]['pwRepeatNew']        = "neues Passwort wiederholen";
 $langArray[1]['pwRepeatNew']        = "reenter new Password";
+$langArray[0]['outYes']             = "Sie wurden erfolgreich abgemeldet und werden in wenigen Sekungen weitergeleitet...";
+$langArray[1]['outYes']             = "You have logged out successfully. You will be redirected shortly..";

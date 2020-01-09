@@ -20,9 +20,11 @@ Template: Administratoren bearbeiten, wird nur dem Superadmin als Option gegeben
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
 	<div class="card bg-light mb-4" >	
     <div class="card-body text-left">
-        <p>Vorname:&nbsp;			<b><?php echo $vorname  ?></b></p>
-        <p>Nachname:&nbsp; 			<b><?php echo $nachname ?></b></p>
-        <p>Status:&nbsp; 			<b><?php echo $langArray[$opt][$status] ?></b></p>
+        <p><?php  echo $langArray[$opt]['vorname']?>  <b><?php echo $vorname  ?></b></p>
+        <p><?php  echo $langArray[$opt]['nachname']?>  <b><?php echo $nachname ?></b></p>
+        <p><?php  echo $langArray[$opt]['status']?>:&nbsp;
+            <b><?php echo $status==0 ?  $langArray[$opt]['active'] : $langArray[$opt]['blocked']?></b>
+        </p>
     <p class="p-4"> <form action="admin-verwalten/" class="text-center" method="GET">
    <input type="hidden"  name="id" value ="<?php echo $id ?>">
     <button type="submit" class="btn  btn-danger">Bearbeiten</button>

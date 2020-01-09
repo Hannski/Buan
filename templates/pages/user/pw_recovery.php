@@ -4,7 +4,7 @@
     <div class="row p-3">
         <div class="card col-12 p-0">
             <div class="card-header">
-                <h5>Passowrt vergessen</h5>
+                <h5><?php echo $langArray[$opt]['pwForgot']; ?></h5>
             </div>
             <form action="" method="post">
                 <div class="card-body">
@@ -13,8 +13,7 @@
                         <!--   Infobox-->
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                             <p class="p-3">
-                                geben Sie hier iHren usernamen ein, wir informaieren sie per email.
-                                !achtung ihr altes passwort ist damit nihctmehr gueltig!
+                               <?php echo $langArray[$opt]['howToRec']; ?>
                             </p>
                         </div>
 <!--                        Eingabe Username-->
@@ -24,7 +23,9 @@
                         </div>
                     </div>
                     <div class="d-flex flex-column align-items-center">
-                        <button type="submit" class="btn btn-outline-secondary" name="forgotPw">neues Passwort beantragen</button>
+                        <button type="submit" class="btn btn-outline-secondary" name="forgotPw">
+                            <?php echo $langArray[$opt]['requestNew']; ?>
+                        </button>
                     </div>
                 </div>
             </form>

@@ -42,9 +42,9 @@
 		?>
 	</div>
 	<div class=" h-25 m-1 input-group d-flex align-items-center">
-		<h5 class="col-md-12 col-xs-12 col-lg-12">Bestand:</h5>
+		<h5 class="col-md-12 col-xs-12 col-lg-12"><?php echo $langArray[$opt]["anzahl"]?></h5>
 		<?php
-		echo "<input class=\"form-control col-md-12 col-xs-12 col-lg-12\" type=\"number\"  name=\"menge\" placeholder=".$langArray[$opt]['Platzh_P_preis'].">";
+		echo "<input class=\"form-control col-md-12 col-xs-12 col-lg-12\" type=\"number\"  name=\"menge\" placeholder=".$langArray[$opt]['anzahl'].">";
 		?>
 	</div>
 	

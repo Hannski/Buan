@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Controller\CheckoutCtrl;
+use Form\MatchForm;
 use Form\PasswordMatchForm;
 use Form\PwRecoveryForm;
 use Form\StatusForm;
@@ -10,16 +11,16 @@ use Form\UserAdressForm;
 use Form\UserDataForm;
 use Form\UsernameForm;
 use Form\UserNewPasswordForm;
-use Model\ProduktMdl;
 use Model\Resource\AdressMdl;
 use Model\Resource\BestellungenMdl;
 use Model\Resource\CheckoutMdl;
 use \Model\Resource\UserMdl;
 use \Form\UserLoginForm;
 use \Form\UserRegisterForm;
+use Model\Resource\ProduktMdl;
 
 
-class UserCtrl extends AbstractController
+class UserCtrl extends AbstractCtrl
 {
     /*
      * USer-Register
@@ -33,6 +34,9 @@ class UserCtrl extends AbstractController
 
     public function registerAction()
     {
+        //nur uneingeloggte mitglieder
+        $this->guestOnly();
+
         //Model
         $user = new UserMdl();
         if ($this->isPost("u_register")) {
@@ -67,9 +71,11 @@ class UserCtrl extends AbstractController
 
 
     //einzelnen User bearbeiten
-
+    //Template:pages/admin/updateUser
     public function bearbeitenAction()
     {
+        //nur administratoren
+        $this->allAdminsOnly();
 
         //Resource-model
         $resource = new UserMdl();
@@ -130,31 +136,35 @@ class UserCtrl extends AbstractController
                     echo $this->render('pages/admin/updateUser', array('userArray' => $userArray));
                 }
             }
-        } else {
+        }
+        else {
 
             $this->getNav();
             echo $this->render('pages/admin/updateUser', array('userArray' => $userArray));
         }
-
-
     }
+
 
 
     /*
     *  Buan/user-login
-    * user anmeldung
+    *  user anmeldung
     */
     public function loginAction()
-    {        //resource-Model
+    {
+        //nur uneingeloggte Nutzer
+        $this->guestOnly();
+
+        //resource-Model
         $userMdl = new UserMdl();
         if ($this->isPost("userLogin")) {
+
             //Fehler abfangen.
             $form = new UserLoginForm();
             $errorArray = $form->getErrorList();
             if (!empty($errorArray)) {
                 //Formularfehler
-                echo $this->render('seitenkomponenten/header');
-                echo $this->render('pages/user/UserNav');
+                $this->getNav();
                 echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
                 echo $this->render('pages/user/user-login');
             } //keine Fehler-> in der DB User authentifizieren
@@ -181,8 +191,7 @@ class UserCtrl extends AbstractController
                 else{
                     //anzeigeFehler
                     $errorArray[] = 'nameNot';
-                    echo $this->render('seitenkomponenten/header');
-                    echo $this->render('pages/user/UserNav');
+                    $this->getNav();
                     echo $this->render('seitenkomponenten/errors', array("errorArray" => $errorArray));
                     echo $this->render('pages/user/user-login');
                 }
@@ -191,8 +200,7 @@ class UserCtrl extends AbstractController
         //post ist nicht gesetzt:
         else
         {
-            echo $this->render('seitenkomponenten/header');
-            echo $this->render('pages/user/UserNav');
+            $this->getNav();
             echo $this->render('pages/user/user-login');
         }
     }
@@ -205,8 +213,12 @@ class UserCtrl extends AbstractController
      *      2. keine Email mit im POST-Feld, da in diesem Simulationsfall nicht notwendig
      *      3. Versandt der Email kann getstet werden: dazu eine Mailadresse in die Variable $mail schreiben.
      * */
+
     public function recoveryAction()
     {
+        //nur uneingeloggte nutzer
+        $this->guestOnly();
+
         if ($this->isPost('forgotPw'))
         {
         //Fehlerausgabe: wenn keine eingabe:
@@ -292,7 +304,11 @@ class UserCtrl extends AbstractController
     //pdf datei anzeigen
     public function recoverydataAction()
     {
+        //nur uneingeloggte user
+        $this->guestOnly();
+        //pdf hat als Namen dern gehashten Usernamen
         $hash = $_GET['hash'];
+
         header("content-type: application/pdf");
         echo file_get_contents($hash);
     }
@@ -404,13 +420,13 @@ class UserCtrl extends AbstractController
         }
         //nein: nur abmelden
         //User-Sessionvariablen leeren
-        if (isset($_SESSION['user'])) {
-            $_SESSION['user'] = '';
-            $_SESSION['username'] = '';
-            $_SESSION['userId'] = '';
-        }
-        //header-weiterleitung auf stratseite nach 5 sekunden
-        header("refresh:5;url=./");
+
+           unset($_SESSION['user']);
+           unset($_SESSION['username']);
+           unset($_SESSION['userId']);
+
+        //header-weiterleitung auf stratseite
+        header("refresh:1;url=./");
         //Anzeige
         $this->getNav();
         echo $this->render('pages/alerts/logout');
@@ -419,6 +435,8 @@ class UserCtrl extends AbstractController
     //passwort aendern oder neu setzten wenn user in einer Passwort-recovery Situation ist
     public function passwortAction()
     {
+        //nur wer nicht schon eingeloggt ist.
+        $this->userOnly();
         /*
           * Besitzt dieser user ein PAsswort? wenn nein, dann wurde ein temporaeres Passwort
           * angefordert und User muss ein neues Pw setzen:
@@ -435,7 +453,6 @@ class UserCtrl extends AbstractController
     }
 
 
-    //Nutzer authorisierung
 
     /*
     *Nutzer authoriesierung:
@@ -446,6 +463,10 @@ class UserCtrl extends AbstractController
     */
     public function authorisierungAction()
     {
+
+        //nur fuer administratoren
+        $this->allAdminsOnly();
+
         //ResourceModel
         $resource = new UserMdl();
         if ($this->isPost('auth') && isset($_POST['status']))
@@ -469,9 +490,13 @@ class UserCtrl extends AbstractController
     }
 
 
-    //einzelne Nutzerdaten  verwalten
+    //einzelne Nutzerdaten  verwalten, Listenuebersicht ueber alle Nutzer( auch gesperrte )
+    // Template: 'pages/admin/editUsers'
     public function verwaltenAction()
     {
+        //nur fuer administratoren
+        $this->allAdminsOnly();
+
         //Anzeige
         $this->getNav();
         $resource = new UserMdl();
@@ -487,14 +512,25 @@ class UserCtrl extends AbstractController
     -Artikel in den Warenkorb legen
     */
     public function homeAction()
-    {    $this->getNav();
+    {
+        //nur angemeldete nutzer duerfen hier her.
+        $this->getNav();
+
+        $this->userOnly();
+
         if ($this->isPost('toCart')) {
             $cart = new CheckoutCtrl();
             //Wenn warenkorb leer:insert, sonst:update
             $cart->addToCart();
         }
-        $produkte = new \Controller\ProduktCtrl();
-        echo $this->render('pages/home', $produkte->showProducts());
+        //Resourcemodel
+        $resource = new ProduktMdl();
+
+        //alle Produkte aus der Datenbank
+        $produkteArray = $resource->getAllProducts();
+
+        // Anzeige
+        echo $this->render('pages/home', array('produkteArray' => $produkteArray));
         echo $this->render('seitenkomponenten/footer');
 
     }
@@ -503,6 +539,9 @@ class UserCtrl extends AbstractController
     //eigenen Username aendern
     public function datenAction()
     {
+        //nur angemeldete nutzer duerfen hier her.
+        $this->userOnly();
+
         //ResourceModel
         $user = new UserMdl();
         $userArray[] = $user->getUserById($_SESSION['userId']);
@@ -549,6 +588,9 @@ class UserCtrl extends AbstractController
     //template: pages/user/updateUserAdress;
     public function adresseAction()
     {
+        //nur angemeldete nutzer duerfen hier her.
+        $this->userOnly();
+
         //Formularfehler
         $form = new UserAdressForm();
         $errorArray = $form->getErrorList();
@@ -609,6 +651,9 @@ class UserCtrl extends AbstractController
     // template: "pages/bestellungen/user-bestellungen-anzeigen" fuer Anzeige Bestellungen in diesem Zeitraum
     public function bestellungenAction()
     {
+        //nur angemeldete nutzer duerfen hier her.
+        $this->userOnly();
+
         $this->getNav();
         //resourceModel
         $resource = new BestellungenMdl();
@@ -639,6 +684,9 @@ class UserCtrl extends AbstractController
     //einzelne Rechnung PDF
     public function invoiceAction()
     {
+        //nur angemeldete nutzer duerfen hier her.
+        $this->userOnly();
+
         $bestellung = new BestellungenMdl();
         $order=$bestellung->getBestellungById($_GET['id']);
         require_once('./fpdf/fpdf.php');
@@ -648,8 +696,10 @@ class UserCtrl extends AbstractController
         $height =10;
         foreach($order as $order )
         {
-
             $pdf->SetXY(10,$height);
+            $pdf->Cell(40,40,$order->getOrderID());
+            $pdf->Cell(40,40,$order->getDatum());
+            $pdf->Cell(40,40,$order->getMenge());
             $pdf->Cell(40,40,$order->getPNameD());
             $height+=10;
         }

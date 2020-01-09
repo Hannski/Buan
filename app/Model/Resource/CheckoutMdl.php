@@ -93,13 +93,66 @@ class CheckoutMdl extends Base
     public function fixItemStock($userId):void
     {
         $base= new Base();
-        $sql = "UPDATE items SET bestand= bestand+(SELECT menge FROM cart where items.id=cart.item_id AND user_id=:userId )
+        $sql = "UPDATE items SET bestand= bestand +(SELECT menge FROM cart where items.id=cart.item_id AND user_id=:userId )
                WHERE (SELECT cart.item_id FROM cart )= items.id";
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         $stmt->bindValue(':userId', $_SESSION['userId']);
         $stmt->execute();
     }
+
+    //Bestand der Produkte anpassen, wenn user im Warenkorb gewuenschre Produktanzahl aendert
+    public function editStock($bestand,$itemId)
+    {
+        $base= new Base();
+        $sql = "UPDATE items SET bestand = :bestand WHERE id = :itemId";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue('bestand', $bestand);
+        $stmt->bindValue('itemId', $itemId);
+        $stmt->execute();
+    }
+
+    //Anzahl der gewunschten Artikel im Warenkorb werden angepasst. Aendern der Tabelle cart in der Datenbank
+    public function updateQuantity($menge,$itemId,$userId)
+    {
+        $base= new Base();
+        $sql = "UPDATE cart SET menge =:menge WHERE item_id = :i_id AND user_id = :u_id";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue('menge', $menge);
+        $stmt->bindValue('i_id', $itemId);
+        $stmt->bindValue('u_id', $userId);
+        $stmt->execute();
+
+    }
+
+    //Artikel wird aus dem Warenkorb entfernt. Bestand in der Artikeltabelle wieder anpassen
+    public function reStockItem($itemId)
+    {
+        $base= new Base();
+        $sql = "UPDATE items JOIN cart ON items.id = cart.item_id
+                SET items.bestand = items.bestand + cart.menge
+                WHERE user_id=:uid AND item_id = :item_id";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(':uid', $_SESSION['userId']);
+        $stmt->bindValue(':item_id', $itemId);
+        $stmt->execute();
+    }
+
+    //Artikel aus dem Warenkorb entfernen
+    public function removeItemFromCart($itemId,$userId)
+    {
+        $base= new Base();
+        $sql = "DELETE FROM cart WHERE user_id=:userId AND item_id = :item_id";
+        $connection = $base->connect();
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(':userId', $_SESSION['userId']);
+        $stmt->bindValue(':item_id', $itemId);
+        $stmt->execute();
+    }
+
     //Usersession beendet: Warenkorb leeren
     public function deleteSessionCart($userId):void
     {

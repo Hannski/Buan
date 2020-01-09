@@ -12,7 +12,7 @@
         <div class="card col-12 p-0">
             <!--            Card header-->
             <div class="card-header">
-                <h5>WiederherstellungsDaten:</h5>
+                <h5><?php echo $langArray[$opt]['recData'] ?></h5>
             </div>
             <!--                Daten-->
             <div class="card-body">

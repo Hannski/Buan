@@ -185,14 +185,8 @@ class AdminMdl extends Base
             $admin->setANname($row['a_nname']);
             $admin->setAVorname($row['a_vorname']);
             $admin->setAPw($row['a_pwmd5']);
-            if ($row['gesperrt']==0)
-            {
-                $admin->setStatus("aktiv");
-            }
-            else
-            {
-                $admin->setStatus("locked");
-            }
+            $admin->setStatus($row['gesperrt']);
+
 
            return $admin;
         }

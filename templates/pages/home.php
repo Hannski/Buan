@@ -31,7 +31,7 @@
         	<label for="quan">Menge:</label><br>
         	<input type="number" name="quan">
         	<input type="hidden"  name="id" value ="<?php echo $id ?>">
-        	<button type="submit" class="btn btn-danger" name = "toCart">in den Warenkorb</button>
+        	<button type="submit" class="btn btn-danger" name = "toCart"><?php echo $langArray[$opt]['toCart']; ?></button>
            </form>
     	</p>	
       </div>

@@ -26,7 +26,7 @@
 
                 </select>
 
-                <button type="submit" name="seeWages" class="btn btn-success">suchen</button>
+                <button type="submit" name="seeWages" class="btn btn-success"><?php echo $langArray[$opt]["search"]?></button>
 
             </form>
         </div> <!--    Ende Col-12-->

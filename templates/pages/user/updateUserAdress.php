@@ -53,12 +53,12 @@ require_once './countries/countries.php';
                         <div class="form-row">
                             <div class="form-group col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                                 <!--Vorname-->
-                                <label for="vornameInput" >Vorname</label>
+                                <label for="vornameInput" ><?php echo $langArray[$opt]['vorname']; ?></label>
                                 <input id="vornameInput" class="form-control" type="text"  name="vorname">
                             </div>
                             <!-- Nachname -->
                             <div class="form-group col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
-                                <label for="nachname" >Nachname</label>
+                                <label for="nachname" ><?php echo $langArray[$opt]['nachname']; ?></label>
                                 <input class="form-control" id="nachname" type="text"  name="nachname">
                             </div>
                         </div>

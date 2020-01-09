@@ -59,17 +59,23 @@
                 <hr>
             <div class="row">
                 <div class="col-12 col-sm-12 text-sm-center col-md-12">
-                    <form action="" method="post">
 
+                    <form action="" method="post">
                         <input type="hidden" name="id" value="<?php echo $id ?>">
-                        <input type="number" step="1"  name="quan" placeholder=" anzahl aendern" >
-                        <button type="button" name = "updateQuan" class="btn btn-outline-success btn-xs">
+                        <input type="hidden" name="menge" value="<?php echo $menge ?>">
+                        <input type="number"  name="quan" placeholder="<?php echo $menge?>">
+                        <button type="submit" name = "updateQuan" class="btn btn-outline-success btn-xs">
                             <i class="fa fa-edit" aria-hidden="true"></i>
                         </button>
-                        <button type="button" name = "unselectItem" class="btn btn-outline-danger btn-xs">
+                    </form>
+                    <form action="" method="post">
+                        <input type="hidden" name="id" value="<?php echo $id ?>">
+                        <input type="hidden" name="menge" value="<?php echo $menge ?>">
+                        <button type="submit" name = "unselectItem" class="btn btn-outline-danger btn-xs">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                     </form>
+
                     </div>
 
          </div>
@@ -119,7 +125,7 @@
 
                         }}else{
                             //noch keine adresse hinterlegt?>
-                       <li class="data list-group-item">Adresse Hinzufuegen</li>
+                       <li class="data list-group-item"><?php echo $langArray[$opt]['addAdress'] ?></li>
                         <?php
                         }
                         ?>

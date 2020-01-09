@@ -7,7 +7,7 @@
  */
 
 namespace Model\Resource;
-
+use Model\BestellverwaltungMdl as BestellverwaltungModel;
 
 class Bestellverwaltung extends Base
 {
@@ -15,9 +15,9 @@ class Bestellverwaltung extends Base
 //bestellung hinzufuegen
     public function insertOrder($userId)
     {
-        $base=new Base();
+
         $base = new Base();
-        $sql = "INSERT INTO bestellverwaltung (user_id,datum) VALUES (:user_id,CURRENT_DATE()) ";
+        $sql = "INSERT INTO bestellverwaltung (datum) VALUES (CURRENT_DATE()) ";
         $connection = $base->connect();
         $stmt = $connection->prepare($sql);
         $stmt->bindValue('user_id', $userId);
@@ -25,5 +25,9 @@ class Bestellverwaltung extends Base
         $stmt->execute();
         return $connection->lastInsertId();
     }
+
+
+
+
 
 }

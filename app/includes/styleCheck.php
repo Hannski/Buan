@@ -1,5 +1,5 @@
 <?php
-		
+
 		/*
 		Style ueber Buttonklick in der Navigationsleiste pruefen*/		
 		if(!isset($_SESSION['style']))
@@ -7,7 +7,7 @@
 			/* Standardwahl: Heller Modus, mit Standardsprache Deutsch*/
 			if (!isset($langArray))
 			{
-				include_once  BASEPATH.'/app/includes/languageCheck.php';
+				require BASEPATH.'/app/includes/languageCheck.php';
 			}
 
 			$_SESSION['style']= $langArray[0]['styleLight'];

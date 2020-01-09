@@ -1,7 +1,12 @@
 <?php
 
-/* In dieser Datei werden Url-Parameter geprüft und entsprechend verarbeitet. */
-use Controller\DefaultController;
+/* Willkommen im Router. Diese Datei dient dazu, eine angewaehlte URL im Browser zu interpretieren.
+* Die URL wird nach dem Schema Controller "-" Methode interpretiert. Bei Einhaltung des Schemas
+ * wird der gefragte Controller (insofern vorhanden) mit der gefagten Methode (insofern vorhanden) instanziert.
+ * */
+
+use Controller\DefaultCtrl;
+
 /*DEBUGGING*/
 //echo $_SESSION['admin'];
 //echo $_SESSION['adminId'];
@@ -19,7 +24,7 @@ class Router
     {
         //Ist die Url nicht gesetzt-> index.php, dann default controller mit default action
         if (!array_key_exists('url', $_GET)) {
-            (new DefaultController())->defaultAction();
+            (new DefaultCtrl())->defaultAction();
             return;
         }
 
@@ -29,16 +34,15 @@ class Router
 
 
         $urlChunks = explode('-', $url);
-        //ist an stelle 1 ueberhaupt etwas?
-        if(count($urlChunks)!=2)
-        {
-            echo  Controller\AbstractController::render('seitenkomponenten/header');
-            echo  Controller\AbstractController::render('seitenkomponenten/nav');
-            echo Controller\AbstractController::render('pages/alerts/404');
+        //url besteht nur aus einem wert oder aus mehr als 2
+        if (count($urlChunks) != 2) {
+            echo Controller\AbstractCtrl::render('seitenkomponenten/header');
+            echo Controller\AbstractCtrl::render('seitenkomponenten/nav');
+            echo Controller\AbstractCtrl::render('pages/alerts/404');
             return;
         }
         //nach welchem Controller wird gesucht?
-        list($controllerName,$actionName)=$urlChunks;
+        list($controllerName, $actionName) = $urlChunks;
 
         //Controllerklasse laden aus Namespace: Controller/$varCtrl;
         $controllerClass = sprintf('Controller\\%sCtrl', ucfirst($controllerName));
@@ -55,20 +59,18 @@ class Router
                 $controller->$methodName();
 
             } else {
-                //Problem: Kontroller gefunden, Methode nicht.
-                echo Controller\AbstractController::render('seitenkomponenten/header');
-                echo  Controller\AbstractController::render('seitenkomponenten/nav');
-                echo Controller\AbstractController::render('pages/alerts/404');
+                //Problem: Controller gefunden, Methode nicht.
+                echo Controller\AbstractCtrl::render('seitenkomponenten/header');
+                echo Controller\AbstractCtrl::render('seitenkomponenten/nav');
+                echo Controller\AbstractCtrl::render('pages/alerts/404');
 
             }
         } else {
-          echo  Controller\AbstractController::render('seitenkomponenten/header');
-          echo  Controller\AbstractController::render('seitenkomponenten/nav');
-          echo Controller\AbstractController::render('pages/alerts/404');
-
+            echo Controller\AbstractCtrl::render('seitenkomponenten/header');
+            echo Controller\AbstractCtrl::render('seitenkomponenten/nav');
+            echo Controller\AbstractCtrl::render('pages/alerts/404');
 
         }
-
 
     }
 }

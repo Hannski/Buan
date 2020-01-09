@@ -26,7 +26,7 @@
 		?>
 		
 	</div>
-<h6>geben Sie eine kurze begründung ein, warum sie beitreten wollen(500 zeichen)</h6>
+<h6><?php echo $langArray[$opt]["reasonToJoin"]?></h6>
 	<div class="mt-2 input-group input-group-lg mr-sm-2">
 		
 

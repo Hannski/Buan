@@ -9,7 +9,7 @@
 
 <!--    anzeige-->
     <div class="col-12">
-<div class="col-12 text-center"> Das Ergebnis ihrer Anfrage: Achtung: Ergebnise werden zurzeit noch nach Tag angezeigt. wir arebeiten dran</div>
+<div class="col-12 text-center"><?php echo $langArray[$opt]['bestellungenSee']?></div>
 
         <div class="card mt-2 mb-2">
             <?php
@@ -18,19 +18,27 @@
             {
                 ?>
                 <div class="card-header">
-                    <h3><?php echo $order[0]->getDatum(); ?></h3>
+                    <h3><?php $date=date("d.m.Y",strtotime($order[0]->getDatum()));echo $date; ?></h3>
                 </div>
                 <?php
                 foreach ($order as $item)
                 {
-
             ?>
 
 
             <ul class="list-group list-group-flush text-lg-left text-md-left text-sm-center text-xl-left ">
-                <li class="list-group-item-dark list-group-item font-reverse">ArtikelName:<?php echo $item->getPNameD(); ?></span> &nbsp;</li>
-                <li class="list-group-item-dark list-group-item font-reverse">Artikel anzahl:&nbsp;<?php ?></li>
-                <li class="list-group-item-dark list-group-item font-reverse">Summe:&nbsp;<?php ?></li>
+                <li class="list-group-item-dark list-group-item font-reverse">
+                    <?php echo $langArray[$opt]['productName']?>: <?php echo $opt==0? $item->getPNameD():$item->getPNameE(); ?></span> &nbsp
+                </li>
+                <li class="list-group-item-dark list-group-item font-reverse">
+                    <?php echo $langArray[$opt]['anzahl']?>: &nbsp;<?php echo $item->getMenge();?>
+                </li>
+                <li class="list-group-item-dark list-group-item font-reverse">
+                    <?php echo $langArray[$opt]['singlePrice']?>: &nbsp;<?php echo $item->getPreis();?> EUR
+                </li>
+                <li class="list-group-item-dark list-group-item font-reverse">
+                    <?php echo $langArray[$opt]['subTotal']?>:&nbsp;<?php echo $item->getMenge() * $item->getPreis()?> EUR
+                </li>
             </ul>
             <!--Card Formular -->
 
@@ -39,7 +47,7 @@
                 }  ?>
              <div class="card-body">
 
-                     <?php echo "<a class=\"btn btn-success btn-sm\" href=\"user-invoice?id=$orderId\">Rechnung DRucken</a>"; ?>
+                     <?php echo "<a class=\"btn btn-success btn-sm\" href=\"user-invoice?id=$orderId\">".$langArray[$opt]['PrintInvoice']."</a>"; ?>
 
                     </div>
             <?php }?>

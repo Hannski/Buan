@@ -15,8 +15,9 @@ class Template
         extract($data);
         extract($data2);
         ob_start();
-        include BASEPATH. "/app/includes/languageCheck.php";
-        include BASEPATH.'/countries/countries.php';
+        require BASEPATH."/app/includes/styleCheck.php";
+        require BASEPATH."/app/includes/languageCheck.php";
+        require BASEPATH.'/countries/countries.php';
         require_once BASEPATH . '/templates/' . $this->_tmplFile.".php";
         $htmlResponse  = ob_get_contents();
         ob_end_clean();

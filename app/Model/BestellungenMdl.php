@@ -21,6 +21,43 @@ private $month;
 private $pNameD;
 private $pNameE;
 private $preis;
+private $username;
+private $gesperrt;
+
+    /**
+     * @return mixed
+     */
+    public function getGesperrt()
+    {
+        return $this->gesperrt;
+    }
+
+    /**
+     * @param mixed $gesperrt
+     */
+    public function setGesperrt($gesperrt): void
+    {
+        $this->gesperrt = $gesperrt;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username): void
+    {
+        $this->username = $username;
+    }
+
 
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 05. Jan 2020 um 14:23
+-- Erstellungszeit: 07. Jan 2020 um 09:26
 -- Server-Version: 10.1.36-MariaDB
 -- PHP-Version: 7.2.11
 
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
   `a_vorname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `a_pwmd5` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `superAdmin` tinyint(1) NOT NULL DEFAULT '0',
-  `gesperrt` tinyint(1) DEFAULT '0'
+  `gesperrt` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -42,10 +42,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`a_id`, `a_nname`, `a_vorname`, `a_pwmd5`, `superAdmin`, `gesperrt`) VALUES
-(2, 'eckhardt', 'hannah', '93715d17a0a3ac5dbc553e90926499d1', 1, 0),
-(15, 'hannah', 'hhjkh', '7e98b8a17c0aad30ba64d47b74e2a6c1', 0, 0),
-(17, 'cc', 'cc', 'e0323a9039add2978bf5b49550572c7c', 0, 0),
-(20, 'Mueller', 'Armin', '4124bc0a9335c27f086f24ba207a4912', 0, 1),
+(1, 'eckhardt', 'hannah', '93715d17a0a3ac5dbc553e90926499d1', 1, 0),
 (35, 'Maier', 'Jana', 'f5d7e2532cc9ad16bc2a41222d76f269', 0, 0);
 
 -- --------------------------------------------------------
@@ -59,24 +56,21 @@ CREATE TABLE `bestellungen` (
   `order_id` int(10) NOT NULL,
   `u_id` int(100) NOT NULL,
   `item_id` int(12) NOT NULL,
-  `menge` int(11) NOT NULL
+  `menge` int(11) NOT NULL,
+  `b_gesperrt` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `bestellungen`
 --
 
-INSERT INTO `bestellungen` (`id`, `order_id`, `u_id`, `item_id`, `menge`) VALUES
-(1, 37, 26, 89, 3),
-(2, 38, 26, 90, 5),
-(3, 38, 26, 91, 13),
-(4, 38, 26, 92, 2),
-(5, 38, 26, 89, 12),
-(6, 39, 28, 90, 23),
-(7, 41, 28, 89, 44),
-(8, 41, 28, 90, 336),
-(9, 41, 28, 91, 444),
-(10, 41, 28, 92, 222);
+INSERT INTO `bestellungen` (`id`, `order_id`, `u_id`, `item_id`, `menge`, `b_gesperrt`) VALUES
+(1, 1, 28, 89, 2, 0),
+(4, 2, 28, 89, 7, 0),
+(5, 2, 28, 94, 6, 0),
+(6, 2, 28, 90, 4, 0),
+(7, 2, 28, 91, 4, 0),
+(8, 2, 28, 93, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -86,7 +80,6 @@ INSERT INTO `bestellungen` (`id`, `order_id`, `u_id`, `item_id`, `menge`) VALUES
 
 CREATE TABLE `bestellverwaltung` (
   `order_id` int(50) NOT NULL,
-  `user_id` int(50) NOT NULL,
   `datum` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -94,14 +87,9 @@ CREATE TABLE `bestellverwaltung` (
 -- Daten für Tabelle `bestellverwaltung`
 --
 
-INSERT INTO `bestellverwaltung` (`order_id`, `user_id`, `datum`) VALUES
-(35, 26, '2020-01-04'),
-(36, 26, '2020-01-04'),
-(37, 26, '2020-01-04'),
-(38, 26, '2020-01-04'),
-(39, 28, '2020-01-05'),
-(40, 28, '2020-01-05'),
-(41, 28, '2015-01-05');
+INSERT INTO `bestellverwaltung` (`order_id`, `datum`) VALUES
+(1, '2020-01-07'),
+(2, '2015-01-07');
 
 -- --------------------------------------------------------
 
@@ -139,15 +127,12 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `name_de`, `name_en`, `beschreibung_de`, `beschreibung_en`, `preis`, `dateiname`, `bestand`, `gesperrt`) VALUES
-(89, 'teh Tings', 'the ting tings', 'Tolles Album', 'nice album', 50, 'BlackLight.jpg', -99984, 0),
-(90, 'Super critical ist ein Album', 'Sper Critical - Studio Album from 2014', 'Das vierte Album  der britischen Band the Ting Tings', 'The fourth Album by the british Band The Ting Tings', 100, 'MatchOfTheDay.jpg', -392339, 0),
-(91, 'Sounds From Nowhere - Album von 2012', 'Sounds From Nowhere - Album from 2012', 'erstes Album', 'first Album', 150, 'SoundsFromNowhere.jpg', 2513, 0),
-(92, 'We Started Nothing- Album von 2009', 'We Started Nothing- Album from 2009', 'weiteres Album', 'another Album', 200, 'WeStartetNothing.jpg', -175222, 0),
-(93, 'Match Of The Day- Album von 2009', 'Match Of The Day- Album from 2009', 'wirklich das erste', 'Really the first one', 250, 'MatchOfTheDay.jpg', 8000, 0),
-(94, 'Mehr raushauen paket', 'get on it package', 'bestes paket', 'best package', 500, 'flight_sitzplatz.JPG', 100000, 0),
-(95, 'dd', 'dd', 'df', 'adf', 8, 'abfrage_bestellungen.JPG', 55555, 0),
-(96, 'ss', 'ss', 'sAS', 'DS', 44, 'Bildschirmfoto von 2019-08-10 12-06-19.png', 55, 0),
-(97, 'ss', 'ss', 'sAS', 'DS', 44, 'Bildschirmfoto von 2019-08-10 12-06-19.png', 55, 0);
+(89, 'Kuechenkonzert', 'Kitchen Concert', '30 Downloads, 30 Aufkleber (selbstklebend, 2-farbig) ', '30 downloads, 30 stickers (self-adhering, dual-toned)', 50, 'kuchenkonzert.jpg', 91, 0),
+(90, 'Flurkonzert', 'Hallway Concert', '50 Aufkleber, 50 Downloads, 5 Flaschenoeffner, 5 Audiokassetten', '50 stickers, 50 downloads, 5 bottle openers, 5 tapes', 100, 'flur.jpg', 96, 0),
+(91, 'Wohnzimmerkonzert', 'Living Room Concert', '50 Downloads, 20 bedruckte Beutel, 10 Motifshirts, 10 CDs, 50 Postkarten', '50 downloads,20 printed tote bags, 10 printed shirts, 10 CDs, 50 postcards', 150, 'wohnzimmer.jpg', 46, 0),
+(93, 'Kneipenkonzert', 'Pub Concert', '100 Downloads, 100 Kurze, 50 Motifshirts, 25 CDS, 60 Feuerzeuge', '100 Downloads, 100 shots, 50 printes shirts, 25 CDs, 60 lighters', 250, 'kneipe.jpg', 99, 0),
+(94, 'Dachbodenkonzert', 'Attic Concert', '100 Downloads, 25 CDs, 5 Audiokassetten oder 5 Lathe-Cut 7\", 25 Motifshirts', '100 downloads, 25 CDs, 5 tapes or 5 lathe-cut 7\", 25 printed shirts', 200, 'dachboden.jpg', 94, 0),
+(101, 'as', 'sas', 'as', 'dsf', 6, 'Unbenannt.JPG', 56, 0);
 
 -- --------------------------------------------------------
 
@@ -158,7 +143,7 @@ INSERT INTO `items` (`id`, `name_de`, `name_en`, `beschreibung_de`, `beschreibun
 CREATE TABLE `user` (
   `id` int(10) NOT NULL,
   `username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `pwmd5` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `pwmd5` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `confirm_datum` date DEFAULT '0000-00-00',
   `gesperrt` tinyint(1) NOT NULL DEFAULT '0',
   `temp_pw` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -170,12 +155,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `pwmd5`, `confirm_datum`, `gesperrt`, `temp_pw`, `msg`) VALUES
-(23, 'hannes', 'eb09d5e396183f4b71c3c798158f7c07', '2019-12-12', 1, '5db35e5a4c8d01301678ae8b760a6464', 'sSaf'),
-(24, 'hannah', 'peter', '2019-12-28', 0, '', ''),
-(25, 'katze', 'ee6b4548f10eadbac6e13fe798c4f831', '2019-12-28', 0, '', 'uhu'),
-(26, 'uhu', 'ee6b4548f10eadbac6e13fe798c4f831', '2019-12-28', 1, '5eb529d6933ce1e201a529c5aa856c8b', 'uhu'),
-(27, 'hummel', 'e612686f8244f5aa3edab76c75ce7cfd', '2020-01-01', 0, '', 'kjahsdfsdfsdvcxcsdfg'),
-(28, 'hans', 'f2a0ffe83ec8d44f2be4b624b0f47dde', '2015-01-05', 0, NULL, 'oh');
+(28, 'hans', 'b2fe440cb7a0b127f1a90ffea296313b', '2015-01-05', 0, NULL, 'Mein Name ist hans Mueller. Ich habe grosses interresse an einem Job bei Ihnen. Meine Handznummer lauetet: 09889 097 778. Rufen Sie gerne an.'),
+(29, 'Werner', '80d5f512d443c9573b5a408fb01d2e3a', '2020-01-15', 1, NULL, 'Hallo, ich bin es. Werner. Ich hatte letzte Woche meine Nummer bei Peter Hochmann hinterlassen. Er meinte ich soll mich nochmal melden. VG'),
+(31, 'Maria', '84c63835ca2fcac8636cf7d36aa48fa4', '2019-07-16', 0, NULL, 'Maria Sanchez. 989 786 654. Ich hatte mit Peter gesprochen...'),
+(32, 'Nelida', '1753ec1889f70aa87845cc5bfd3b4409', '2020-01-13', 0, NULL, 'Nelida Hruiyga. ich sollte mich melden, meine Nummer habt ihr');
 
 -- --------------------------------------------------------
 
@@ -189,7 +172,7 @@ CREATE TABLE `useradressen` (
   `nachname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `strasse` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `nummer` int(50) NOT NULL,
-  `plz` int(50) NOT NULL,
+  `plz` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `ort` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `land` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `id` int(100) NOT NULL
@@ -200,8 +183,10 @@ CREATE TABLE `useradressen` (
 --
 
 INSERT INTO `useradressen` (`u_id`, `vorname`, `nachname`, `strasse`, `nummer`, `plz`, `ort`, `land`, `id`) VALUES
-(26, 'aa', 'aa', 'asdasd', 4, 3456345, 'sfsadfsdf', 'AT', 1),
-(28, 'ss', 'ss', 'ss', 5, 345, 'saf', 'BS', 2);
+(28, 'Hans', 'Mueller', 'Im Broog', 897, '67886', 'Statthausen', 'GD', 3),
+(29, 'Werner', 'Irishman', 'Countryroad', 1000, '39183', 'Schull', 'IE', 4),
+(31, 'Maria', 'Sanchez', 'Steinweg', 445, 'JU89I', 'Barcelona', 'ES', 5),
+(32, 'Nelida', 'Hruiyga', 'kaschtschstr', 2, '8U77ZT', 'Prag', 'CZ', 6);
 
 --
 -- Indizes der exportierten Tabellen
@@ -227,8 +212,7 @@ ALTER TABLE `bestellungen`
 -- Indizes für die Tabelle `bestellverwaltung`
 --
 ALTER TABLE `bestellverwaltung`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`order_id`);
 
 --
 -- Indizes für die Tabelle `cart`
@@ -265,43 +249,43 @@ ALTER TABLE `useradressen`
 -- AUTO_INCREMENT für Tabelle `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `a_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `a_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT für Tabelle `bestellungen`
 --
 ALTER TABLE `bestellungen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT für Tabelle `bestellverwaltung`
 --
 ALTER TABLE `bestellverwaltung`
-  MODIFY `order_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `order_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT für Tabelle `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT für Tabelle `useradressen`
 --
 ALTER TABLE `useradressen`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints der exportierten Tabellen
@@ -314,12 +298,6 @@ ALTER TABLE `bestellungen`
   ADD CONSTRAINT `bestellungen_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `bestellverwaltung` (`order_id`),
   ADD CONSTRAINT `bestellungen_ibfk_2` FOREIGN KEY (`u_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `bestellungen_ibfk_3` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`);
-
---
--- Constraints der Tabelle `bestellverwaltung`
---
-ALTER TABLE `bestellverwaltung`
-  ADD CONSTRAINT `bestellverwaltung_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints der Tabelle `cart`

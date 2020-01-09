@@ -1,4 +1,9 @@
 <?php
+/*
+ *Willkommen in der Indexdatei. Hier wird das Programm gestartet.
+ * Bevor das Projekt laufen kann, definieren Sie bitte die Variable 'WEB_ROOT'
+ * mit dem entsprechneden Pfad in Ihrem Server Rootdirectory
+ * */
 class Start
 {
 	function __construct()
@@ -6,19 +11,16 @@ class Start
         if(session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+
 		//Basis defienieren
 		define ("BASEPATH",dirname(__FILE__));
 		define("BASE", __DIR__);
-		//webroot: muss angepasst werden.
-		define ('WEB_ROOT', 'http://localhost/Buan/');
-		 
-		 /*
-		  TODO:: besteht noch ein cart->Cookie? Wenn nicht-> Warenkorb in DB löschen
-		*/
-		
-		require BASEPATH."/app/includes/styleCheck.php";
 
-		//Klassen laden
+		//webroot: muss angepasst werden.
+		define ('WEB_ROOT', 'http://localhost:8080/Buan/');
+		//define ('WEB_ROOT', 'Path-to-projekt/Buan/');
+
+		//Klassen automatisch laden:
 	    spl_autoload_register(function($class)
 	    {
 			$newName = str_replace('\\', '/', $class);
@@ -35,11 +37,13 @@ class Start
 				}
 			}
 		});
+        // neuen Router.
+        $router = new Router();
+        //Url interpretieren
+        $router->resolveUrl();
 
-		//start
-		
-		$app = new App();	
 	}
+
 
 }
 //Progammstart
@@ -47,9 +51,9 @@ $hi = new Start();
 
 
 
-		
 
-	
+
+
 
 
 

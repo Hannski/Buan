@@ -23,7 +23,7 @@
         <div class="col-4"></div>
         <input type="hidden" name="dateiAlt" value="<?php echo $file ?>">
         <input type="file" name="dateiname">
-         <button type="submit" name="datei" class="btn btn-sm btn-submit border" value="name_de">
+         <button type="submit" name="dateiname" class="btn btn-sm btn-submit border" value="dateiname">
             <?php echo $langArray[$opt]["aendern"] ?>
             </button>
         <div class="col-4"></div>

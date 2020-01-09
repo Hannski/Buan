@@ -16,8 +16,7 @@
 
             </div>
             <div class="card-body d-flex flex-column align-items-center">
-                <strong>successfully logged out</strong>
-                Sie werden in wneigen Sekunden weitergeleitet
+                <p><?php echo $langArray[$opt]['outYes'] ?></p>
             </div>
         </div>
     </div>

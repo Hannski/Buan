@@ -10,7 +10,7 @@
 	<div class="card col-12 p-0">
 
     <div class="card-header">
-        <h6>Daten fuer den user "<?php echo $username ?>" aendern</h6>
+        <h6><?php echo $langArray[$opt]["changeDataForUser"]." : ".$username ?></h6>
     </div>
 
 

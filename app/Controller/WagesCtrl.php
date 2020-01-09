@@ -16,14 +16,16 @@ namespace Controller;
 use Model\Resource\BestellungenMdl;
 use Model\Resource\UserMdl;
 
-class WagesCtrl extends AbstractController
+class WagesCtrl extends AbstractCtrl
 {
     //monatliches Grundgehalt
     const MIN_WAGE = 3000;
 
     //uebersicht ueber Zahlungen und Boni+ PDF ausdruck Moeglichkeit
+    //Template: pages/user/rechnungen
     public function overviewAction()
     {
+        //$this->userOnly();
         $user = new UserMdl();
         //erster Monat des EInstellungsverhaeltnisses
         $user = $user->getUserById($_SESSION['userId']);
@@ -45,15 +47,16 @@ class WagesCtrl extends AbstractController
         //neueste Eintraege zuerst
         $wageMonths = array_reverse($wageMonths);
 
+        //gewahlte abrechnung anzeigen
         if ($this->isPost('seeWages')) {
             $dateCHunks = explode('-', $_POST['jahrMonat']);
             $jahr = $dateCHunks[0];
             $monat = $dateCHunks[1];
 
-        $ausgaben = $this->calcGehalt($jahr,$monat);
+            //gehalt ausrechnen
+            $ausgaben = $this->calcGehalt($jahr,$monat);
             //Bonus fuer diesen Monat anhand der gesamtausgaben des Nutzers
-        $bonus = $this->calcBonus($ausgaben);
-
+            $bonus = $this->calcBonus($ausgaben);
 
             $this->getNav();
             echo $this->render('pages/user/rechnungen', array('wageMonths' => $wageMonths));
@@ -73,21 +76,22 @@ class WagesCtrl extends AbstractController
 
     }
 
+
     public function diagrammAction(): void
     {
+        //Parameter fuer graphische darstellung
         $jahr = $_GET['jahr'];
         $monat = $_GET['monat'];
         $diagrammBreite = 500;
         $diagrammHoehe = 50;
-
+        //Farben,groesse
         $image = imagecreatetruecolor($diagrammBreite, $diagrammHoehe);
-
         $white = imagecolorallocate($image, 255, 255, 255);
         $red = imagecolorallocate($image, 255, 0, 0);
         $green = imagecolorallocate($image, 0, 255, 0);
-
+        //Bild nicht durchsichtig.
         imagefill($image, 0, 0, $white);
-
+        //Nur basisgehalt oder mehr verdiehnt?
         $wage = $this->calcGehalt($jahr, $monat);
         if($wage) {
             $bonus = $this->calcBonus($wage);
@@ -99,23 +103,26 @@ class WagesCtrl extends AbstractController
         //gesmatbreite diagramm: 300 px : anteile der Farben berrechnen:
         $gesamtAuszahlung = $wage + $bonus;
 
+        //Breitenanteil berrechnen
         $breiteGehalt = $diagrammBreite / $gesamtAuszahlung * $wage;
         $breiteBonus = $diagrammBreite / $gesamtAuszahlung * $bonus;
 
+        //rechtecke farbig malen
         imagefilledrectangle($image, 0, 0, $breiteGehalt, $diagrammHoehe, $red);
         imagefilledrectangle($image, $breiteGehalt + 1, 0, $breiteGehalt + $breiteBonus, $diagrammHoehe, $green);
 
-        imagettftext($image, 14, 0, 20, 20, $white, 'app/includes/font24.ttf', 'Basisgehalt: '.$wage);
-        imagettftext($image, 14, 0, $breiteGehalt + 20, 20, $white, 'app/includes/font24.ttf', 'Bonus: '.$bonus);
+        //text ausgabe
+        imagettftext($image, 14, 0, 20, 20, $white, BASEPATH.'/app/includes/font24.ttf', 'Basisgehalt: '.$wage);
+        imagettftext($image, 14, 0, $breiteGehalt + 20, 20, $white, BASEPATH.'/app/includes/font24.ttf', 'Bonus: '.$bonus);
 
         header('Content-type: image/png');
-
+        //zu png umwandeln
         imagepng($image);
+        //speicher leeren
         imagedestroy($image);
-
     }
 
-
+    //gehaltsPDF
     public function gehaltsabrechnungAction()
     {
         $ausgaben = $this->calcGehalt($_GET['jahr'],$_GET['monat']);
@@ -128,6 +135,7 @@ class WagesCtrl extends AbstractController
         $pdf->Output();
 
     }
+
     //Bonus ausrechnen
     protected function calcBonus($umsatz)
     {
@@ -141,6 +149,7 @@ class WagesCtrl extends AbstractController
             return 0;
     }
 
+    //gehalt ausrechnen
     protected function calcGehalt(int $jahr, int $monat): int
     {
         $bestellDaten = new BestellungenMdl();
