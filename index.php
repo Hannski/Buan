@@ -17,8 +17,8 @@ class Start
 		define("BASE", __DIR__);
 
 		//webroot: muss angepasst werden.
-		define ('WEB_ROOT', 'http://localhost:8080/Buan/');
-		//define ('WEB_ROOT', 'Path-to-projekt/Buan/');
+		define ('WEB_ROOT', 'http://localhost/Buan/');
+
 
 		//Klassen automatisch laden:
 	    spl_autoload_register(function($class)

@@ -9,13 +9,12 @@
 namespace Controller;
 
 
-class Access extends AbstractCtrl
+class AccessCtrl extends AbstractCtrl
 {
     public function deniedAction()
     {
-        echo "hi";
         $this->getNav();
-        echo $this->render('pages/alerts/404');
+        echo $this->render('pages/alerts/accessDenied');
         $this->getFooter();
     }
 }

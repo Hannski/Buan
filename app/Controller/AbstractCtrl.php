@@ -6,12 +6,12 @@
  * Time: 12:56
  *
  */
+declare(strict_types=1);
 
-declare(strict_types=1);//typisierung strickt beibehalten.
 namespace Controller;
 
 
-abstract class AbstractController
+abstract class AbstractCtrl
 {
     //Template rendern:
     public function render(string $template, array $data = [], array $data2 = []): string
@@ -44,32 +44,58 @@ abstract class AbstractController
     {
         //html-header ausgeben
         echo $this->render("seitenkomponenten/header");
-        echo $this->render("pages/user/UserNav");
+        echo $this->render("seitenkomponenten/navigation");
     }
 
     //footer ausgeben
     public function getFooter()
     {
-        echo $this->render("seitenkomponenten/header");
+        echo $this->render("seitenkomponenten/footer");
     }
 
 
-    //du bist userRolle und eingeloggt?
-    public function userAccessOnly($role)
+    public function allAdminsOnly()
     {
-        if (!isset($_SESSION[$role]) && $_SESSION[$role] !== 'loggedIn') {
-            echo $this->render('alerts/404');
+        if(($this->isAdmin() == false && $this->isSuperAdmin() == false))
+        {
+            header("Location:".WEB_ROOT."access-denied");
         }
     }
 
-    // bezieht sich auf seiten wie die login seite. hier haben eingeloggte nutzer nichts verloren.
-    public function redirectingYou($role, $redirect)
+    public function superOnly()
     {
-        //wer bist du un wo sollst du hin?
-        if (isset($_SESSION[$role]) && $_SESSION[$role] == 'loggedIn') {
-            header(sprintf("Location: " . WEB_ROOT . "%s", $redirect));
+        if(!$this->isSuperAdmin() == true )
+        {
+            header("Location:".WEB_ROOT."access-denied");
         }
     }
+    public function userOnly()
+    {
+        if(!$this->isUser() == true)
+        {
+            header("Location:".WEB_ROOT."access-denied");
+        }
+    }
+
+
+    public function guestOnly()
+    {
+        if ($this->isUser()){
+            header("Location:".WEB_ROOT."access-denied");
+        }
+     elseif ($this->isSuperAdmin())
+     {
+         header("Location:".WEB_ROOT."access-denied");
+     }
+        elseif($this->isAdmin())
+        {
+            header("Location:".WEB_ROOT."access-denied");
+        }
+        else{}
+
+    }
+
+
 
     /* admin und admin eingeloggt? */
     public function isSuperAdmin(): bool
@@ -83,7 +109,7 @@ abstract class AbstractController
         return array_key_exists('admin', $_SESSION) && $_SESSION['admin'] == "loggedIn";
     }
 
-    /*User und User eingeloogt?*/
+    /*User und User eingeloggt?*/
     public function isUser()
     {
         return array_key_exists('user', $_SESSION) && $_SESSION['user'] == "loggedIn";

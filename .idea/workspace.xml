@@ -5,64 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d4d1ded-8f56-4313-a16d-8c38d0041420" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Controller/AccessCtrl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Model/BestellverwaltungMdl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/pages/admin/listOrders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/pages/admin/pickOrderMonth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/pages/alerts/accessDenied.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Bildschirmfoto von 2019-08-10 12-06-19.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BlackLight.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MatchOfTheDay.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SoundsFromNowhere.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/WeStartetNothing.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/abfrage_bestellungen.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/flight_sitzplatz.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/App.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Autoloader.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controller/AbstractController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/AbstractCtrl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controller/AdminCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/AdminCtrl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controller/CheckoutCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/CheckoutCtrl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/DefaultCtrl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controller/ProduktCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/ProduktCtrl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controller/UserCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/UserCtrl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controller/WagesCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/WagesCtrl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/BestellungenMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/BestellungenMdl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Resource/AdminMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Resource/AdminMdl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Resource/BestellungenMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Resource/BestellungenMdl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Resource/Bestellverwaltung.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Resource/Bestellverwaltung.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Resource/CheckoutMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Resource/CheckoutMdl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Resource/ProduktMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Resource/ProduktMdl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Router.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/View/Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/View/Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/includes/styleCheck.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/includes/styleCheck.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/countries/countries.php" beforeDir="false" afterPath="$PROJECT_DIR$/countries/countries.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controller/AbstractCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/AbstractCtrl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controller/AccessCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/AccessCtrl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controller/DefaultCtrl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controller/DefaultCtrl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Model/BestellverwaltungMdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/BestellverwaltungMdl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/language/lang.php" beforeDir="false" afterPath="$PROJECT_DIR$/language/lang.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style/customStyles/dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/style/customStyles/dark.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/admin/AddAdmins.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/admin/AddAdmins.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/admin/UpdateAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/admin/UpdateAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/admin/adminlogin.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/admin/adminlogin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/admin/editUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/admin/editUsers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/admin/listAdmins.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/admin/listAdmins.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/admin/updateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/admin/updateUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/alerts/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/alerts/logout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/bestellungen/user-bestellungen-anzeigen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/bestellungen/user-bestellungen-anzeigen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/cart/warenkorb.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/cart/warenkorb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/products/add_p.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/products/add_p.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/products/updateProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/products/updateProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/RecoveryData.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/RecoveryData.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/UserNav.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/seitenkomponenten/navigation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/diagrams.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/diagrams.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/enterSite.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/enterSite.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/pw_recovery.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/pw_recovery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/rechnungen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/rechnungen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/recoveryPage.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/recoveryPage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/updateUserAdress.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/updateUserAdress.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pages/user/userRegistration.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pages/user/userRegistration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/seitenkomponenten/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/seitenkomponenten/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/seitenkomponenten/nav.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +92,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Controller/UserCtrl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6974">
+            <state relative-caret-position="3801">
               <caret line="332" column="26" selection-start-line="332" selection-start-column="26" selection-end-line="332" selection-end-column="26" />
               <folding>
                 <element signature="e#30#58#0#PHP" expanded="true" />
@@ -154,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Controller/CheckoutCtrl.php">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1672">
-              <caret line="86" column="33" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
+            <state relative-caret-position="440">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -204,22 +151,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="638">
               <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-              <folding>
-                <element signature="e#493#499#0#HTML" expanded="true" />
-                <element signature="e#832#838#0#HTML" expanded="true" />
-                <element signature="e#1170#1176#0#HTML" expanded="true" />
-                <element signature="e#1558#1564#0#HTML" expanded="true" />
-                <element signature="e#1954#1960#0#HTML" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/View/Template.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="44">
-              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -228,7 +168,7 @@
         <entry file="file://$PROJECT_DIR$/templates/pages/user/enterSite.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
-              <caret line="9" column="6" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -329,7 +269,6 @@
         <option value="$PROJECT_DIR$/templates/pages/user/recoveryPage.php" />
         <option value="$PROJECT_DIR$/app/Controller/UserCtrl.php" />
         <option value="$PROJECT_DIR$/templates/pages/user/updateUserAdress.php" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/countries/countries.php" />
         <option value="$PROJECT_DIR$/app/Model/Resource/Bestellverwaltung.php" />
         <option value="$PROJECT_DIR$/templates/pages/user/userRegistration.php" />
@@ -338,6 +277,7 @@
         <option value="$PROJECT_DIR$/templates/pages/products/add_p.php" />
         <option value="$PROJECT_DIR$/app/includes/styleCheck.php" />
         <option value="$PROJECT_DIR$/app/View/Template.php" />
+        <option value="$PROJECT_DIR$/index.php" />
       </list>
     </option>
   </component>
@@ -364,6 +304,12 @@
               <item name="Buan" type="b2602c69:ProjectViewProjectNode" />
               <item name="Buan" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Buan" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Buan" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Buan" type="b2602c69:ProjectViewProjectNode" />
@@ -458,11 +404,12 @@
       <workItem from="1578134764815" duration="18266000" />
       <workItem from="1578220369563" duration="643000" />
       <workItem from="1578385058216" duration="451000" />
+      <workItem from="1579091856515" duration="308000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="296165000" />
+    <option name="totallyTimeSpent" value="296473000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -477,7 +424,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15991472" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16151386" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -846,13 +793,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/countries/countries.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="682">
@@ -872,16 +812,6 @@
             <element signature="e#111#117#0" expanded="true" />
             <element signature="e#27#33#0" expanded="true" />
             <element signature="e#27#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Controller/UserCtrl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6974">
-          <caret line="332" column="26" selection-start-line="332" selection-start-column="26" selection-end-line="332" selection-end-column="26" />
-          <folding>
-            <element signature="e#30#58#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -925,20 +855,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="638">
           <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-          <folding>
-            <element signature="e#493#499#0#HTML" expanded="true" />
-            <element signature="e#832#838#0#HTML" expanded="true" />
-            <element signature="e#1170#1176#0#HTML" expanded="true" />
-            <element signature="e#1558#1564#0#HTML" expanded="true" />
-            <element signature="e#1954#1960#0#HTML" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/pages/user/enterSite.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="9" column="6" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -952,7 +875,24 @@
     <entry file="file://$PROJECT_DIR$/app/View/Template.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Controller/UserCtrl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3801">
+          <caret line="332" column="26" selection-start-line="332" selection-start-column="26" selection-end-line="332" selection-end-column="26" />
+          <folding>
+            <element signature="e#30#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>

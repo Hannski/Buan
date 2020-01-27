@@ -11,16 +11,14 @@ namespace Controller;
 use App;
 use View\View;
 
-class DefaultController extends AbstractController
+class DefaultCtrl extends AbstractCtrl
 {
     public function defaultAction():void
     {
-        $this->guestAccessOnly('admin','home-login');
         echo $this->render('seitenkomponenten/header');
-        echo $this->render('pages/user/UserNav');
+        echo $this->render('seitenKomponenten/navigation');
         echo $this->render('pages/user/enterSite');
-        echo $this->render('seitenkomponenten/footer');
-
+       $this->getFooter('guest','none');
     }
 
 }
